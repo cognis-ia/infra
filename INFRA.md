@@ -1,6 +1,6 @@
 # INFRA — OpenClaw (Bruno Eduardo)
 _Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo._
-_Última atualização: 2026-05-12 (sessão 2)_
+_Última atualização: 2026-05-12 (sessão 3)_
 
 ---
 
@@ -35,8 +35,8 @@ Claude vai: 1) buscar o INFRA.md pela URL, 2) ler a chave `vps_key` da pasta, 3)
 | 🪨 Rocky | `main` (default) | @Rocky_Bruno_bot | `~/.openclaw/workspace` | `cognis-ia/clawdio-workspace-backup` |
 | 🦁 Léo | `leo` | `telegram:leo` | `~/.openclaw/workspace-leo` | `cognis-ia/leo-workspace-backup` |
 | 🧡 BrIA | `bria` | `telegram:bria` | `~/.openclaw/workspace-bria` | `cognis-ia/bria-workspace-backup` |
-| 💜 Gabi | `gabi` | _(bot pendente)_ | `~/.openclaw/workspace-gabi` | _(backup pendente)_ |
-| 💚 Max | `max` | _(bot pendente)_ | `~/.openclaw/workspace-max` | _(backup pendente)_ |
+| 💜 Gabi | `gabi` | @BE_Gabi_bot | `~/.openclaw/workspace-gabi` | _(backup pendente)_ |
+| 💚 Max | `max` | @BE_Max_bot | `~/.openclaw/workspace-max` | _(backup pendente)_ |
 
 **GitHub org:** `cognis-ia` — token no VPS em `~/.openclaw/workspace/.env`
 
@@ -49,7 +49,7 @@ Claude vai: 1) buscar o INFRA.md pela URL, 2) ler a chave `vps_key` da pasta, 3)
 
 - **BrIA supervisiona Gabi e Max** — cron pendente de configuração; alerta vai para Bruno via Telegram da BrIA
 - Personas salvas em `IDENTITY.md`, `SOUL.md` e `USER.md` nos respectivos workspaces
-- Tokens Telegram de Gabi e Max pendentes (criar via @BotFather)
+- Tokens Telegram de Gabi (@BE_Gabi_bot) e Max (@BE_Max_bot) configurados e ativos
 
 ---
 
@@ -120,4 +120,4 @@ Instalado em Rocky, Léo e BrIA. 19 skills cada:
 
 - **Empresa:** Bernardelli Ensino (Jane Bernardelli — "A Arte Transforma")
 - **Produtos:** Pintando Telas, Arte Abstrata, Rosas Perfeitas, Arte Derramada
-- **Plataformas:** Hotmart (vendas) + Astron M
+- **Plataformas:** Hotmart (vendas) +
