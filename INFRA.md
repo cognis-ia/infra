@@ -47,7 +47,7 @@ Claude vai: 1) buscar o INFRA.md pela URL, 2) ler a chave `vps_key` da pasta, 3)
 | 💜 Gabi | Jane Bernardelli | Criação de conteúdo, edição visual (Canva), vendas, lançamentos | BrIA monitora |
 | 💚 Max | Marilia | Planejamento, copy, mapeamento de cursos, YouTube, dados de lançamentos | BrIA monitora |
 
-- **BrIA supervisiona Gabi e Max** — cron ativo a cada 30min (`*/30 * * * *`); script em `~/supervisao-bernardelli.sh`; log em `~/.openclaw/supervisao-bernardelli.log`; alerta para Bruno (ID `1950767646`) via Telegram da BrIA se gateway cair ou canal Gabi/Max sair do ar
+- **BrIA supervisiona Gabi e Max** — cron ativo a cada 30min (`*/30 * * * *`); script em `~/supervisao-bernardelli.sh`; log em `~/.openclaw/supervisao-bernardelli.log`; alerta para Bruno (ID `1950767646`) via Telegram da BrIA se gateway cair ou canal Gabi/Max sair do ar. Corrigido em 2026-05-12 para rodar corretamente em ambiente cron (`systemctl --user` + fallback por processo/CLI), evitando falso positivo de gateway parado.
 - Personas salvas em `IDENTITY.md`, `SOUL.md` e `USER.md` nos respectivos workspaces
 - Tokens Telegram de Gabi (@BE_Gabi_bot) e Max (@BE_Max_bot) configurados e ativos
 
