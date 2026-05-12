@@ -1,6 +1,6 @@
 # INFRA — OpenClaw (Bruno Eduardo)
 _Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo._
-_Última atualização: 2026-05-11_
+_Última atualização: 2026-05-12_
 
 ---
 
@@ -76,8 +76,8 @@ Claude vai: 1) buscar o INFRA.md pela URL, 2) ler a chave `vps_key` da pasta, 3)
 Todas as credenciais ficam no VPS — nunca neste arquivo.
 Para acessá-las quando necessário, usar SSH e ler os arquivos de config do VPS.
 
-- **OpenAI Codex OAuth:** conta `contato@pintandotelas.com.br` — **expira ~15 maio 2026**
-  - Para renovar: SSH no VPS → `~/.npm-global/bin/openclaw models auth login --provider openai-codex` (precisa de TTY, fazer direto no terminal)
+- **OpenAI Codex OAuth:** conta `contato@pintandotelas.com.br` — **expira ~22 maio 2026** (tem refresh_token; deve renovar automaticamente)
+  - Para renovar manualmente se necessário: SSH no VPS → `~/.npm-global/bin/openclaw models auth login --provider openai-codex` (precisa de TTY, fazer direto no terminal)
 - Tokens de API: `~/.config/systemd/user/openclaw-gateway.service.d/`
 - GitHub token: `~/.openclaw/workspace/.env`
 
@@ -116,7 +116,7 @@ Instalado em Rocky, Léo e BrIA. 19 skills cada:
 
 ## Pendências
 
-1. **Renovar token OpenAI Codex** — até ~15 maio, rodar direto no terminal SSH (precisa TTY)
+1. **Renovar token OpenAI Codex** — expira ~22 maio; tem refresh_token (provável renovação automática). Monitorar perto do dia 22. Se falhar: SSH com TTY → `openclaw models auth login --provider openai-codex`
 2. **Skills hunt** — pesquisar em clawhub.ai e github.com/okjpg/openclaw-BrunoOkamoto
 3. **Heartbeat Rocky e Léo** — ainda não configurado (só BrIA tem)
 4. **TOOLS.md migration** — Rocky e Léo têm TOOLS.md legado; migrar para MAPAs por pasta
@@ -124,12 +124,4 @@ Instalado em Rocky, Léo e BrIA. 19 skills cada:
 
 ---
 
-## Regra absoluta (todos os agentes)
-
-**NUNCA assinar, contratar ou comprar** qualquer coisa sem o expresso consentimento do Bruno Eduardo.
-
----
-
-## Atualização deste arquivo
-
-Ao final de cada sessão, pedir:
+## Regra abso
