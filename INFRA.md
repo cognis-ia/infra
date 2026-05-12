@@ -1,6 +1,6 @@
 # INFRA — OpenClaw (Bruno Eduardo)
 _Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo._
-_Última atualização: 2026-05-12_
+_Última atualização: 2026-05-12 (sessão 2)_
 
 ---
 
@@ -35,8 +35,21 @@ Claude vai: 1) buscar o INFRA.md pela URL, 2) ler a chave `vps_key` da pasta, 3)
 | 🪨 Rocky | `main` (default) | @Rocky_Bruno_bot | `~/.openclaw/workspace` | `cognis-ia/clawdio-workspace-backup` |
 | 🦁 Léo | `leo` | `telegram:leo` | `~/.openclaw/workspace-leo` | `cognis-ia/leo-workspace-backup` |
 | 🧡 BrIA | `bria` | `telegram:bria` | `~/.openclaw/workspace-bria` | `cognis-ia/bria-workspace-backup` |
+| 💜 Gabi | `gabi` | _(bot pendente)_ | `~/.openclaw/workspace-gabi` | _(backup pendente)_ |
+| 💚 Max | `max` | _(bot pendente)_ | `~/.openclaw/workspace-max` | _(backup pendente)_ |
 
 **GitHub org:** `cognis-ia` — token no VPS em `~/.openclaw/workspace/.env`
+
+### Bernardelli Ensino — estrutura de agentes
+
+| Agente | Serve | Foco | Supervisão |
+|--------|-------|------|------------|
+| 💜 Gabi | Jane Bernardelli | Criação de conteúdo, edição visual (Canva), vendas, lançamentos | BrIA monitora |
+| 💚 Max | Marilia | Planejamento, copy, mapeamento de cursos, YouTube, dados de lançamentos | BrIA monitora |
+
+- **BrIA supervisiona Gabi e Max** — cron pendente de configuração; alerta vai para Bruno via Telegram da BrIA
+- Personas salvas em `IDENTITY.md`, `SOUL.md` e `USER.md` nos respectivos workspaces
+- Tokens Telegram de Gabi e Max pendentes (criar via @BotFather)
 
 ---
 
@@ -107,21 +120,4 @@ Instalado em Rocky, Léo e BrIA. 19 skills cada:
 
 - **Empresa:** Bernardelli Ensino (Jane Bernardelli — "A Arte Transforma")
 - **Produtos:** Pintando Telas, Arte Abstrata, Rosas Perfeitas, Arte Derramada
-- **Plataformas:** Hotmart (vendas) + Astron Members (área de membros)
-- **Persona das alunas:** Maria, 62 anos, aposentada, apaixonada por arte
-- **Tom:** acolhedor, caloroso, premium — assina com 🧡
-- **Pareamento Telegram:** ID `1950767646` (Bruno) aprovado
-
----
-
-## Pendências
-
-1. **Renovar token OpenAI Codex** — expira ~22 maio; tem refresh_token (provável renovação automática). Monitorar perto do dia 22. Se falhar: SSH com TTY → `openclaw models auth login --provider openai-codex`
-2. **Skills hunt** — pesquisar em clawhub.ai e github.com/okjpg/openclaw-BrunoOkamoto
-3. **Heartbeat Rocky e Léo** — ainda não configurado (só BrIA tem)
-4. **TOOLS.md migration** — Rocky e Léo têm TOOLS.md legado; migrar para MAPAs por pasta
-5. **Deletar bot antigo** — @Clawdio_Bruno_bot no BotFather (Bruno faz manualmente: /deletebot)
-
----
-
-## Regra abso
+- **Plataformas:** Hotmart (vendas) + Astron M
