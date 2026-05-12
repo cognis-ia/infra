@@ -118,10 +118,10 @@ Instalado em Rocky, Léo e BrIA. 19 skills cada:
 
 ## Como usar este arquivo
 
-Anexe o `INFRA.md` no início de cada nova sessão com:
-> "Segue o INFRA.md com o contexto da nossa infra OpenClaw. Vamos continuar."
+**Opção 1 — Pasta conectada (mais simples):**
+Selecione a pasta `D:\COGNIS\Curso Openclaw` ao iniciar o Cowork e diga:
+> "Leia o INFRA.md que está na pasta conectada e vamos continuar."
 
-Ao final de cada sessão, peça para atualizar:
-> "Atualize o INFRA.md com o que fizemos hoje."
-
-**Nunca criar um novo arquivo** — sempre editar este.
+**Opção 2 — Sem pasta conectada (sempre funciona):**
+Diga na nova sessão:
+> "Busque o INFRA
