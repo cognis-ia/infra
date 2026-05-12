@@ -80,7 +80,18 @@ Claude vai: 1) buscar o INFRA.md pela URL, 2) ler a chave `vps_key` da pasta, 3)
 - **TTS voz Rocky:** `messages.tts.providers.openai.voice: "echo"` (robótica/metálica)
 - **TTS auto:** `messages.tts.auto: "inbound"` (só quando usuário manda áudio)
 - **Brave Search:** ativo — chave no VPS em `~/.openclaw/openclaw.json`
-- **Telegram accounts:** `default` (Rocky), `leo` (Léo), `bria` (BrIA)
+- **Telegram accounts:** `default` (Rocky), `leo` (Leo), `bria` (BrIA), `gabi` (Gabi), `max` (Max)
+
+
+---
+
+## Seguranca VPS
+
+- **SSH:** acesso por senha desabilitado; `PubkeyAuthentication yes`; `PasswordAuthentication no`; `KbdInteractiveAuthentication no`; `PermitRootLogin no`.
+- **Acesso normal:** usuario `openclaw` via chave privada `vps_key`.
+- **Acesso de emergencia:** VNC/RealVNC da Contabo. Usar apenas para recuperacao; credenciais nao ficam neste arquivo.
+- **sudo:** `NOPASSWD: ALL` removido. Arquivo `/etc/sudoers.d/openclaw` mantem apenas comandos de leitura/status para `systemctl`, `sshd -t`, `ufw status`, `fail2ban-client status` e `journalctl -u openclaw-gateway`.
+- **Nota 2026-05-12:** durante hardening, o sudoers precisou ser restaurado via VNC/root; depois foi restringido e validado com `visudo`.
 
 ---
 
@@ -116,6 +127,42 @@ Instalado em Rocky, Léo e BrIA. 19 skills cada:
 
 ---
 
-## BrIA — Bernardelli Ensino
 
-- **Empresa:** Bernardelli Ensino (
+## BrIA - Bernardelli Ensino
+
+- **Empresa:** Bernardelli Ensino (Jane Bernardelli - "A Arte Transforma")
+- **Produtos:** Pintando Telas, Arte Abstrata, Rosas Perfeitas, Arte Derramada
+- **Plataformas:** Hotmart (vendas) + Astron Members (area de membros)
+- **Persona das alunas:** Maria, 62 anos, aposentada, apaixonada por arte
+- **Tom BrIA:** acolhedor, caloroso, premium; assina com coracao laranja
+- **Pareamento Telegram:** ID `1950767646` (Bruno) aprovado
+
+---
+
+## Pendencias
+
+1. **OpenAI Codex OAuth** - expira ~22 maio; tem refresh_token (provavel renovacao automatica). Monitorar perto do dia 22. Se falhar: SSH com TTY -> `openclaw models auth login --provider openai-codex`.
+2. **Skills Gabi e Max** - mapear e criar skills iniciais da Bernardelli Ensino.
+3. **Backups Gabi e Max** - criar repositorios GitHub/workspace backups para `workspace-gabi` e `workspace-max`.
+4. **Heartbeat Rocky e Leo** - ainda nao configurado (BrIA ja tem heartbeat; BrIA tambem supervisiona Gabi/Max via cron de VPS).
+5. **TOOLS.md migration** - Rocky e Leo tem TOOLS.md legado; migrar para MAPAs por pasta.
+6. **Deletar bot antigo** - @Clawdio_Bruno_bot no BotFather (Bruno faz manualmente: /deletebot).
+7. **Revisao de seguranca completa** - continuar auditoria apos restauracao do sudo/VNC.
+
+---
+
+## Regra absoluta (todos os agentes)
+
+**NUNCA assinar, contratar ou comprar** qualquer coisa sem o expresso consentimento do Bruno Eduardo.
+
+Para Bernardelli Ensino: Max nunca aprova contratacoes, assinaturas ou pagamentos; assuntos financeiros vao para Jane ou Bruno.
+
+---
+
+## Atualizacao deste arquivo
+
+Ao final de cada sessao, pedir:
+> "Atualize o INFRA.md com o que fizemos hoje."
+
+Claude/Codex atualiza o arquivo local e faz push para `cognis-ia/infra` no GitHub.
+**Nunca criar um novo arquivo - sempre editar este.**
