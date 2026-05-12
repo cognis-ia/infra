@@ -91,7 +91,10 @@ Claude vai: 1) buscar o INFRA.md pela URL, 2) ler a chave `vps_key` da pasta, 3)
 - **Acesso normal:** usuario `openclaw` via chave privada `vps_key`.
 - **Acesso de emergencia:** VNC/RealVNC da Contabo. Usar apenas para recuperacao; credenciais nao ficam neste arquivo.
 - **sudo:** `NOPASSWD: ALL` removido. Arquivo `/etc/sudoers.d/openclaw` mantem apenas comandos de leitura/status para `systemctl`, `sshd -t`, `ufw status`, `fail2ban-client status` e `journalctl -u openclaw-gateway`.
+- **Permissoes endurecidas em 2026-05-12:** `/home/openclaw` passou para `750`; configs/tokens/logs sensiveis passaram para `600/700`; URLs remotos Git nao carregam mais token embutido (autenticacao via `~/.git-credentials`, permissao `600`).
 - **Nota 2026-05-12:** durante hardening, o sudoers precisou ser restaurado via VNC/root; depois foi restringido e validado com `visudo`.
+- **Pendente critico:** remover `openclaw` do grupo `sudo` e bloquear senha Linux do usuario via VNC/root (`deluser openclaw sudo` e `passwd -l openclaw`) depois de confirmar acesso root/VNC.
+- **Pendente segredo:** rotacionar a chave OpenAI API que apareceu como exemplo real em `wizard-whisper-quick/SKILL.md`; arquivos atuais foram limpos e publicados, mas o valor antigo ainda existe no historico Git dos backups Rocky/Leo/BrIA.
 
 ---
 
