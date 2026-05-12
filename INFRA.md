@@ -93,7 +93,7 @@ Claude vai: 1) buscar o INFRA.md pela URL, 2) ler a chave `vps_key` da pasta, 3)
 - **sudo:** `NOPASSWD: ALL` removido. Arquivo `/etc/sudoers.d/openclaw` mantem apenas comandos de leitura/status para `systemctl`, `sshd -t`, `ufw status`, `fail2ban-client status` e `journalctl -u openclaw-gateway`.
 - **Permissoes endurecidas em 2026-05-12:** `/home/openclaw` passou para `750`; configs/tokens/logs sensiveis passaram para `600/700`; URLs remotos Git nao carregam mais token embutido (autenticacao via `~/.git-credentials`, permissao `600`).
 - **Nota 2026-05-12:** durante hardening, o sudoers precisou ser restaurado via VNC/root; depois foi restringido e validado com `visudo`.
-- **Pendente critico:** remover `openclaw` do grupo `sudo` e bloquear senha Linux do usuario via VNC/root (`deluser openclaw sudo` e `passwd -l openclaw`) depois de confirmar acesso root/VNC.
+- **Fechado em 2026-05-12:** `openclaw` removido do grupo `sudo` e senha Linux bloqueada (`passwd -S openclaw` => `L`). Administracao privilegiada fica via VNC/root da Contabo.
 - **Pendente segredo:** rotacionar a chave OpenAI API que apareceu como exemplo real em `wizard-whisper-quick/SKILL.md`; arquivos atuais foram limpos e publicados, mas o valor antigo ainda existe no historico Git dos backups Rocky/Leo/BrIA.
 
 ---
@@ -150,7 +150,7 @@ Instalado em Rocky, Léo e BrIA. 19 skills cada:
 4. **Heartbeat Rocky e Leo** - ainda nao configurado (BrIA ja tem heartbeat; BrIA tambem supervisiona Gabi/Max via cron de VPS).
 5. **TOOLS.md migration** - Rocky e Leo tem TOOLS.md legado; migrar para MAPAs por pasta.
 6. **Deletar bot antigo** - @Clawdio_Bruno_bot no BotFather (Bruno faz manualmente: /deletebot).
-7. **Revisao de seguranca completa** - continuar auditoria apos restauracao do sudo/VNC.
+7. **Revisao de seguranca completa** - etapa VPS concluida em 2026-05-12; pendente rotacao da chave OpenAI API exposta em historico Git.
 
 ---
 
