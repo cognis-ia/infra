@@ -1,6 +1,6 @@
 # INFRA — OpenClaw (Bruno Eduardo)
 _Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo._
-_Última atualização: 2026-05-12 (sessão 3)_
+_Última atualização: 2026-05-12 (sessão 4)_
 
 ---
 
@@ -47,7 +47,7 @@ Claude vai: 1) buscar o INFRA.md pela URL, 2) ler a chave `vps_key` da pasta, 3)
 | 💜 Gabi | Jane Bernardelli | Criação de conteúdo, edição visual (Canva), vendas, lançamentos | BrIA monitora |
 | 💚 Max | Marilia | Planejamento, copy, mapeamento de cursos, YouTube, dados de lançamentos | BrIA monitora |
 
-- **BrIA supervisiona Gabi e Max** — cron pendente de configuração; alerta vai para Bruno via Telegram da BrIA
+- **BrIA supervisiona Gabi e Max** — cron ativo a cada 30min (`*/30 * * * *`); script em `~/supervisao-bernardelli.sh`; log em `~/.openclaw/supervisao-bernardelli.log`; alerta para Bruno (ID `1950767646`) via Telegram da BrIA se gateway cair ou canal Gabi/Max sair do ar
 - Personas salvas em `IDENTITY.md`, `SOUL.md` e `USER.md` nos respectivos workspaces
 - Tokens Telegram de Gabi (@BE_Gabi_bot) e Max (@BE_Max_bot) configurados e ativos
 
@@ -118,6 +118,4 @@ Instalado em Rocky, Léo e BrIA. 19 skills cada:
 
 ## BrIA — Bernardelli Ensino
 
-- **Empresa:** Bernardelli Ensino (Jane Bernardelli — "A Arte Transforma")
-- **Produtos:** Pintando Telas, Arte Abstrata, Rosas Perfeitas, Arte Derramada
-- **Plataformas:** Hotmart (vendas) +
+- **Empresa:** Bernardelli Ensino (
