@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-14
+Última atualização: 2026-05-15
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -23,11 +23,11 @@ Agentes ativos (5)
 
 | Agente | ID | Emoji | Papel | Canal Telegram | Workspace | GitHub backup |
 |--------|-----|-------|-------|---------------|-----------|---------------|
-| Rocky | main (default) | Agente pessoal do Bruno | telegram:default (@Rocky_Bruno_bot) | ~/.openclaw/workspace | cognis-ia/clawdio-workspace-backup |
-| Leo | leo | Agente profissional (COGNIS IA) | telegram:leo (@CG_Leo_Bot) | ~/.openclaw/workspace-leo | cognis-ia/leo-workspace-backup |
-| BrIA | bria | Suporte de alunas — Bernardelli Ensino | telegram:bria (@BE_BrIA_bot) | ~/.openclaw/workspace-bria | cognis-ia/bria-workspace-backup |
-| Gabi | gabi | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | nao criado |
-| Max | max | Operacional da Marilia — Bernardelli Ensino | telegram:max (@BE_Max_bot) | ~/.openclaw/workspace-max | nao criado |
+| Rocky | main (default) | | Agente pessoal do Bruno | telegram:default (@Rocky_Bruno_bot) | ~/.openclaw/workspace | cognis-ia/clawdio-workspace-backup |
+| Leo | leo | 🦁 | Agente profissional (COGNIS IA) | telegram:leo (@CG_Leo_Bot) | ~/.openclaw/workspace-leo | cognis-ia/leo-workspace-backup |
+| BrIA | bria | 🧡 | Suporte de alunas — Bernardelli Ensino | telegram:bria (@BE_BrIA_bot) | ~/.openclaw/workspace-bria | cognis-ia/bria-workspace-backup |
+| Gabi | gabi | 💜 | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | nao criado |
+| Max | max | | Operacional da Marilia — Bernardelli Ensino | telegram:max (@BE_Max_bot) | ~/.openclaw/workspace-max | nao criado |
 
 GitHub org: cognis-ia — token no VPS em ~/.openclaw/workspace/.env
 
@@ -35,6 +35,10 @@ Perfis Bernardelli:
 - BrIA: suporte de alunas, Hotmart, Astron Members — persona Maria, 62 anos
 - Gabi: criativa, conteúdo, voz da marca Jane — mentora de arte
 - Max: operacional, analítica, parceira da Marilia
+
+Usuários com acesso liberado:
+- Bruno Eduardo: Telegram ID 1950767646 (todos os agentes)
+- Jane Bernardelli: Telegram ID 938877898 (Gabi)
 
 ---
 
@@ -80,6 +84,22 @@ Valores válidos:
   ask: "off" (nunca pedir) | "on-miss" | "always"
 
 Se voltar a pedir aprovação: checar esses campos e reiniciar o gateway.
+
+---
+
+Voz dos agentes (TTS)
+
+Configuração global (openclaw.json → messages.tts):
+  auto: "inbound" — responde com áudio SOMENTE quando receber áudio
+  provider: openai
+  model: gpt-4o-mini-tts
+  voice: "echo" (padrão global — masculino)
+
+Overrides por agente (agents.list[].tts):
+  Gabi: voice = "nova" (feminino, animado)
+
+Para trocar voz da Gabi: editar agents.list onde id=gabi → tts.providers.openai.voice
+Vozes femininas disponíveis: nova, coral, shimmer, sage, alloy
 
 ---
 
@@ -131,14 +151,27 @@ Max: analytics-tracking, ab-test-setup, openclaw-guardian, remembering-conversat
 
 ---
 
+Segurança — Historico de incidentes
+
+2026-05-15: Brave Search e DeepSeek API keys expostas no repo cognis-ia/infra (git history).
+  - Keys antigas revogadas nas plataformas
+  - Historico reescrito com git filter-branch + force push
+  - Novas keys configuradas no VPS
+  - Brave: openclaw.json → plugins.entries.brave.config.webSearch.apiKey
+  - DeepSeek: ~/.config/systemd/user/openclaw-gateway.service.d/deepseek.conf
+
+REGRA: NUNCA colocar valores de API keys no INFRA.md — apenas indicar onde estão armazenadas.
+
+---
+
 Pendências
 
 1. GitHub backup Gabi e Max — cognis-ia/gabi-workspace-backup e max-workspace-backup
 2. Crons com erro — rocky-backup-diario (sem route) e bria heartbeat+backup (sem chatId)
 3. Heartbeat Rocky e Leo — não configurado
 4. Segundo cérebro Gabi e Max
-5. Renovar token OpenAI Codex — ate 22 maio 2026 (SSH com TTY)
-6. Rotacionar chave OpenAI — exposta em historico Git
+5. Renovar token OpenAI Codex — ate 22 maio 2026 (SSH com TTY) — URGENTE
+6. Rotacionar chave OpenAI exposta em historico Git (diferente do incidente acima)
 7. TOOLS.md legado — Rocky e Leo, migrar para MAPAs distribuídos
 8. Deletar @Clawdio_Bruno_bot no BotFather — acao manual Bruno
 
