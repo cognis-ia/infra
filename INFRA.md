@@ -142,7 +142,8 @@ Rocky: remembering-conversations, openclaw-guardian, meta-ads-api
 Leo: content-strategy, copywriting, social-content, email-sequence,
      analytics-tracking, openclaw-guardian, meta-ads-api, dispatching-parallel-agents
 BrIA: copy-editing, email-sequence, marketing-psychology, openclaw-guardian,
-      remembering-conversations, hotmart-api, astron-members-api, meta-ads-api
+      remembering-conversations, hotmart-api, astron-members-api, meta-ads-api,
+      analytics-tracking, ab-test-setup, content-strategy, dispatching-parallel-agents
 Gabi: copywriting, social-content, content-strategy, marketing-ideas,
       marketing-psychology, openclaw-guardian, remembering-conversations,
       hotmart-api, astron-members-api, meta-ads-api
