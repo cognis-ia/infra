@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-18
+Última atualização: 2026-05-18 (sessão 2)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -114,6 +114,17 @@ META ADS
   Base: https://graph.facebook.com/v21.0/
   Skill: workspace-leo/skills/meta-ads-api/SKILL.md
 
+NOTION (workspace Trabalho - 2025 — Jane + Marilia)
+  Agentes: Gabi, Max
+  Token compartilhado: NOTION_TOKEN_TRABALHO (em .env de cada agente)
+  Workspace ID: 5f58405d-3718-47c7-802d-1e36cb1b777d (dono: Bruno)
+  Database Atividades: 16327f4e-477c-813f-8a26-c8c855efffc5
+  Página raiz (Banco de Dados): 17427f4e-477c-80fd-bb36-f29b5011f34a
+  Skill: workspace-gabi/skills/notion-api/SKILL.md (igual para Max)
+  CRITICO: .env está no .gitignore — tokens não vão para o GitHub backup.
+    Tokens salvos apenas nos .env do VPS (nunca commitar).
+    Para recriar: notion.so/my-integrations → workspace correspondente.
+
 ---
 
 Skills instaladas (além do Starter Kit v2.5.6)
@@ -127,9 +138,9 @@ BrIA: copy-editing, email-sequence, marketing-psychology, openclaw-guardian,
   exec-approvals bria.ask = "on-miss" (crons rodam sem aprovacao, novos comandos pedem)
 Gabi: copywriting, social-content, content-strategy, marketing-ideas,
       marketing-psychology, openclaw-guardian, remembering-conversations,
-      hotmart-api, astron-members-api, meta-ads-api
+      hotmart-api, astron-members-api, meta-ads-api, notion-api
 Max: analytics-tracking, ab-test-setup, openclaw-guardian, remembering-conversations,
-     dispatching-parallel-agents, astron-members-api, meta-ads-api
+     dispatching-parallel-agents, astron-members-api, meta-ads-api, notion-api
 
 ---
 
@@ -232,3 +243,19 @@ Historico da sessao - 2026-05-18
 - finance-config.json salvo em ~/.openclaw/workspace/memory/.
 - Tudo commitado e pushed para cognis-ia/clawdio-workspace-backup. Gateway reiniciado OK.
 - CRITICO PENDENTE: Renovar token OpenAI Codex ate 22/05/2026 (4 dias).
+
+---
+
+Historico da sessao - 2026-05-18 (continuação)
+
+- Notion integrado para Gabi e Max no workspace "Trabalho - 2025" (dono: Bruno).
+  Token compartilhado salvo em .env de ambas as agentes (NOTION_TOKEN_TRABALHO).
+  Token do "Espaço de Marilia" também salvo (NOTION_TOKEN) em cada .env como reserva.
+  Acesso validado via API: database Atividades e página raiz Banco de Dados acessíveis.
+  Página de teste criada com sucesso pelo VPS.
+  Skill notion-api v1.0 instalada em workspace-gabi e workspace-max.
+  OBS: .env está no .gitignore dos repos de Gabi e Max — tokens não sincronizam.
+       Backups GitHub de Gabi e Max ainda não criados (pendência).
+- Marilia usa email institucional marilia@janebernardelli.com.br (não Gmail).
+  Não há necessidade de gog para Max por enquanto — só Notion.
+                                                                                                                          
