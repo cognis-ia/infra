@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-18 (sessão 2)
+Última atualização: 2026-05-19 (sessão 3)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -13,7 +13,7 @@ Infraestrutura
 
 VPS: 217.77.10.26 — usuário openclaw
 SSH: ssh -i <caminho>/vps_key -o IdentitiesOnly=yes openclaw@217.77.10.26
-OpenClaw versão: 2026.5.3-1
+OpenClaw versão: 2026.5.18
 Binário: ~/.npm-global/bin/openclaw
 Serviço: systemctl --user restart openclaw-gateway
 
@@ -129,18 +129,18 @@ NOTION (workspace Trabalho - 2025 — Jane + Marilia)
 
 Skills instaladas (além do Starter Kit v2.5.6)
 
-Rocky: remembering-conversations, openclaw-guardian, meta-ads-api, expense-tracker, fitness-coach
+Rocky: remembering-conversations, openclaw-guardian, meta-ads-api, expense-tracker, fitness-coach, pdf-reports, whatsapp-monitor
 Leo: content-strategy, copywriting, social-content, email-sequence,
-     analytics-tracking, openclaw-guardian, meta-ads-api, dispatching-parallel-agents
+     analytics-tracking, openclaw-guardian, meta-ads-api, dispatching-parallel-agents, pdf-reports
 BrIA: copy-editing, email-sequence, marketing-psychology, openclaw-guardian,
       remembering-conversations, hotmart-api, astron-members-api, meta-ads-api,
-      analytics-tracking, ab-test-setup, content-strategy, dispatching-parallel-agents
+      analytics-tracking, ab-test-setup, content-strategy, dispatching-parallel-agents, pdf-reports
   exec-approvals bria.ask = "on-miss" (crons rodam sem aprovacao, novos comandos pedem)
 Gabi: copywriting, social-content, content-strategy, marketing-ideas,
       marketing-psychology, openclaw-guardian, remembering-conversations,
-      hotmart-api, astron-members-api, meta-ads-api, notion-api
+      hotmart-api, astron-members-api, meta-ads-api, notion-api, pdf-reports
 Max: analytics-tracking, ab-test-setup, openclaw-guardian, remembering-conversations,
-     dispatching-parallel-agents, astron-members-api, meta-ads-api, notion-api
+     dispatching-parallel-agents, astron-members-api, meta-ads-api, notion-api, pdf-reports
 
 ---
 
@@ -154,6 +154,7 @@ Pendências
 6. Rotacionar chave OpenAI — exposta em historico Git
 7. TOOLS.md legado — Rocky e Leo, migrar para MAPAs distribuídos
 8. Deletar @Clawdio_Bruno_bot no BotFather — acao manual Bruno
+9. Verificar se allowFrom da Gabi devia ter ID da Jane (938877898) — se sim, adicionar de volta
 
 ---
 
@@ -258,4 +259,29 @@ Historico da sessao - 2026-05-18 (continuação)
        Backups GitHub de Gabi e Max ainda não criados (pendência).
 - Marilia usa email institucional marilia@janebernardelli.com.br (não Gmail).
   Não há necessidade de gog para Max por enquanto — só Notion.
-                                                                                                                          
+
+---
+
+Historico da sessao - 2026-05-19
+
+- OpenClaw atualizado de 2026.5.3-1 para 2026.5.18.
+  Método: rm -rf do diretório antigo + npm install -g openclaw@latest --prefix ~/.npm-global.
+  Necessário para compatibilidade com plugin WhatsApp (@openclaw/whatsapp 2026.5.18).
+- Plugin WhatsApp instalado e configurado:
+  Canal: channels.whatsapp.accounts.default (em openclaw.json).
+  Binding: whatsapp default -> agente main (Rocky).
+  Skill whatsapp-monitor criada em workspace/skills/whatsapp-monitor/SKILL.md.
+  Bruno escaneou QR code via SSH -t; status: linked e ativo.
+  Rocky monitora grupos silenciosamente e avisa Bruno no Telegram quando houver novidade
+  relevante sobre IA/automação. Regra gravada no SOUL.md: nunca responde nos grupos.
+- Limpeza de config pós-atualização:
+  Removido claude-mem de plugins.entries, plugins.allow e plugins.slots.memory
+  (plugin renomeado/removido na versão 2026.5.18).
+  Removido whatsapp de plugins.allow (era stale — whatsapp é canal, não plugin).
+  plugins.bundledDiscovery = "compat" definido pelo doctor --fix.
+- Infraestrutura de PDF finalizada (continuação da sessão anterior):
+  weasyprint instalado (apt-get como root + ~/.local/bin/weasyprint).
+  Fontes Inter instaladas em ~/.local/share/fonts/.
+  Templates: ~/.openclaw/templates/template-cognis.html e template-bernardelli.html.
+  Skill pdf-reports instalada em todos os 5 workspaces (Rocky, Leo, BrIA, Gabi, Max).
+- URGENTE PENDENTE: Renovar token OpenAI Codex — expira 22/05/2026 (3 dias).
