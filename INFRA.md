@@ -146,13 +146,29 @@ Max: analytics-tracking, ab-test-setup, openclaw-guardian, remembering-conversat
 
 Pendências
 
+URGENTE
+5. Renovar token OpenAI Codex — ate 22 maio 2026 (SSH com TTY)
+6. Rotacionar chave OpenAI — exposta em historico Git
+
+Curso Openclaw — implementação pendente (ordem de prioridade)
+A. TOOLS.md → MAPAs distribuídos — Rocky e Leo (A6)
+   Migrar TOOLS.md monolítico para MAPA.md em cada pasta do workspace
+   (memory/, content/, skills/, archive/). Gabi/Max/BrIA: verificar estado.
+B. Heartbeat Rocky e Leo (A9)
+   Criar HEARTBEAT.md e configurar proatividade passiva.
+   BrIA tem heartbeat mas está com erro (sem chatId).
+C. USER.md com 8 blocos — Rocky (A5)
+   Verificar e completar: perfil, negócios, família, equipe, tom,
+   restrições, valores, contexto operacional.
+D. AGENTS.md atualizado em todos os workspaces (A5/A13)
+   Organograma com 5 agentes, canais, modelos, escopo, WhatsApp.
+E. Crons: Revisão do Dia (18h) e meta-cron de auditoria (7h) — Rocky (A9)
+F. Mission Control (A14) — dashboard visual, projeto maior, sessão dedicada
+
+Infraestrutura
 1. GitHub backup Gabi e Max — cognis-ia/gabi-workspace-backup e max-workspace-backup
 2. Crons com erro — rocky-backup-diario (sem route) e bria heartbeat+backup (sem chatId)
-3. Heartbeat Rocky e Leo — não configurado
 4. Segundo cérebro Gabi e Max
-5. Renovar token OpenAI Codex — ate 22 maio 2026 (SSH com TTY) — URGENTE
-6. Rotacionar chave OpenAI — exposta em historico Git
-7. TOOLS.md legado — Rocky e Leo, migrar para MAPAs distribuídos
 8. Deletar @Clawdio_Bruno_bot no BotFather — acao manual Bruno
 9. Verificar se allowFrom da Gabi devia ter ID da Jane (938877898) — se sim, adicionar de volta
 
@@ -274,14 +290,4 @@ Historico da sessao - 2026-05-19
   Bruno escaneou QR code via SSH -t; status: linked e ativo.
   Rocky monitora grupos silenciosamente e avisa Bruno no Telegram quando houver novidade
   relevante sobre IA/automação. Regra gravada no SOUL.md: nunca responde nos grupos.
-- Limpeza de config pós-atualização:
-  Removido claude-mem de plugins.entries, plugins.allow e plugins.slots.memory
-  (plugin renomeado/removido na versão 2026.5.18).
-  Removido whatsapp de plugins.allow (era stale — whatsapp é canal, não plugin).
-  plugins.bundledDiscovery = "compat" definido pelo doctor --fix.
-- Infraestrutura de PDF finalizada (continuação da sessão anterior):
-  weasyprint instalado (apt-get como root + ~/.local/bin/weasyprint).
-  Fontes Inter instaladas em ~/.local/share/fonts/.
-  Templates: ~/.openclaw/templates/template-cognis.html e template-bernardelli.html.
-  Skill pdf-reports instalada em todos os 5 workspaces (Rocky, Leo, BrIA, Gabi, Max).
-- URGENTE PENDENTE: Renovar token OpenAI Codex — expira 22/05/2026 (3 dias).
+- Limpeza de config pó
