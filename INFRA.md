@@ -1,11 +1,116 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-19 (sessão 3)
+Última atualização: 2026-05-21 (sessão 4 — Imersão Pixel AI Hub)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
 automaticamente a skill openclaw-session-start, que busca este arquivo e configura SSH.
 Arquivo necessário na pasta: vps_key (chave SSH privada — nunca compartilhe)
+
+---
+
+Arquitetura conceitual (Imersão Pixel AI Hub)
+
+Tese: Claude = estação · GitHub = memória · OpenClaw = operação.
+- Claude/Cowork: estação de trabalho da pessoa (escreve, decide, captura).
+- GitHub: fonte de verdade da memória, versionada, portátil.
+- OpenClaw: runtime sempre ligado (canais, crons, heartbeats, agentes 24/7).
+
+3 níveis de memória (entender em qual cada agente está):
+1. Amnésia total — sessão isolada, esquece tudo.
+2. Memória isolada — agente lembra, mas só ele.
+3. Cérebro compartilhado — memória no repositório. Qualquer agente acessa.
+Objetivo do stack: tudo no nível 3.
+
+3 cérebros (separação de permissão e contexto):
+- Pessoal — privado, individual, auto-commit ok.
+  Hoje no stack: workspace dos agentes individuais (Rocky, BrIA, Gabi, Max, Leo).
+- Empresa — compartilhado pelo time, auto-commit p/ dados não-sensíveis, gatilhos roteiam sensíveis pra diretoria.
+  Hoje no stack: parcial — shared/bria-shared, sem segregação formal por área.
+- Diretoria — sem auto-commit. Tudo passa por staging → revisão humana → main.
+  Hoje no stack: NÃO existe (gap aberto — ver Pendências).
+
+Áreas vs Agentes (não misturar):
+- areas/ = conhecimento que existe independente de quem opera (vendas, marketing, atendimento, operações).
+- agentes/ = operadores que leem e executam o conhecimento. Pode trocar o agente; o conhecimento da área permanece.
+
+4 estágios de evolução multi-agente (onde estamos):
+1. Agente pessoal dos sócios (1 agente no privado, acessa cérebro inteiro).
+2. Agente geral no grupo (1 agente compartilhado com a equipe).
+3. Segmentação por BU (agente que cobre 3-4 áreas correlatas).
+4. 1 agente por área + master coordenador.
+Hoje no stack: misto entre 1 e 2 (Rocky/Leo pessoais; BrIA/Gabi/Max especialistas Bernardelli; sem master coordenador).
+
+---
+
+Padrões obrigatórios (do curso Pixel)
+
+Sempre que criar/auditar workspace de agente, exigir:
+
+1. Tríade de identidade por agente: SOUL.md (quem é) + AGENTS.md (o que pode) + USER.md (quem serve).
+   Complementares: HEARTBEAT.md (proatividade), MEMORY.md (memória curada), IDENTITY.md (papel base), TOOLS.md (ferramentas).
+
+2. MAPA.md em cada nível do cérebro.
+   Sem mapa, agente entra em todas as pastas pra trazer informação — torra tokens e se perde.
+   Cobertura mínima: raiz/cerebro, cerebro/empresa, cerebro/areas/<area>, cerebro/agentes/<agente>.
+
+3. _index.md em toda pasta de skills/rotinas.
+   Lista o que existe + o que cada item faz + onde está.
+
+4. Estrutura canônica por área: contexto/ + skills/ + rotinas/ + projetos/.
+   contexto = geral.md + people.md + decisions.md + lessons.md.
+
+5. Anatomia de skill em 4 níveis progressivos (não começar pesado):
+   N1 só SKILL.md → N2 +examples/ → N3 +scripts/ → N4 completo.
+
+6. Cron vs Heartbeat (não confundir):
+   - Cron: agenda por tempo, determinístico, cria os eventos (relatório 8h, follow-up segunda).
+   - Heartbeat: decide por estado, adaptativo, reage aos eventos (priorizar leads, pausar campanha ruim, recuperar cron falho).
+
+7. Regra dos 3 gatilhos (DIRETORIA, não cérebro empresa):
+   - Dinheiro com nome próprio (salário, comissão, pró-labore, dívida nominal).
+   - Pessoa específica (avaliação, conflito, contratação, desligamento, performance).
+   - Peso jurídico/contratual (contrato, NDA, litígio, LGPD, governança).
+   Se disparar qualquer dos 3 → não vai pro cérebro do time, vai pro repo de diretoria com revisão humana.
+
+8. Permissionamento Telegram em 2 camadas: estar no grupo + estar na whitelist de IDs do agente.
+
+9. Workspace separado obrigatório para bot de suporte (não compartilhar contexto com agente principal).
+
+---
+
+Segurança em 3 camadas (OWASP LLM Top 10 2026)
+
+Referência: 21k+ instâncias OpenClaw/agentes expostas com chaves vazadas, 88% das empresas
+com agentes IA tiveram incidente, Prompt Injection é o risco #1, hardening correto reduz ~90% da superfície de ataque.
+
+Camada 1 — Servidor (fundação)
+  - SSH key-only — login com senha desabilitado.                          [ok no VPS atual]
+  - Fail2ban — ban automático após 5 tentativas.                          [validar]
+  - UFW Firewall — só portas 22, 80, 443 abertas.                         [validar]
+  - Gateway em localhost — nunca expor 18789.                             [validar]
+  - Updates automáticos — fecha CVEs conhecidas.                          [validar]
+
+Camada 2 — Agente (comportamento)
+  - dmPolicy: allowlist — só IDs autorizados falam.                       [aplicado WhatsApp read-only 2026-05-20]
+  - Credenciais no .env — chmod 600, nunca no código.                     [verificar todos os workspaces]
+  - Skills auditadas — ler código antes de instalar.                      [Starter Kit v2.5.6 ok]
+  - Tool restrictions — allowlist de comandos.                            [exec.security=full hoje; reavaliar]
+  - requireMention: true — bot só responde mencionado.                    [WhatsApp ok; Telegram revisar por grupo]
+
+Camada 3 — Processo (disciplina operacional)
+  - Dupla autorização — 2 confirmações antes de prod.                     [não implementado]
+  - Audit crons — auditoria diária automática.                            [não implementado — ver Pendências]
+  - Logs completos — toda ação com timestamp.                             [validar]
+  - Rotação de tokens — trocar chaves a cada 90 dias.                     [pendência aberta — OpenAI exposta]
+  - Memória no GitHub — backup de decisões críticas.                      [parcial: backups por agente ok, diretoria não existe]
+
+OWASP TOP 5 que as 3 camadas cobrem:
+Prompt Injection · Tool Misuse · Goal Hijack · Memory Poisoning · Privilege Abuse.
+
+Lição do curso (caso Supabase): agente com acesso direto a banco identificou anomalia
+e tentou corrigir sozinho — subiu update sem autorização. Restringir ferramentas e
+comandos é obrigatório; default deve ser conversar por queries/mirrors/edge functions.
 
 ---
 
@@ -150,7 +255,7 @@ URGENTE
 5. Renovar token OpenAI Codex — ate 22 maio 2026 (SSH com TTY)
 6. Rotacionar chave OpenAI — exposta em historico Git
 
-Curso Openclaw — implementação pendente (ordem de prioridade)
+Curso Openclaw (mini) — implementação pendente (ordem de prioridade)
 A. TOOLS.md → MAPAs distribuídos — Rocky e Leo (A6)
    Migrar TOOLS.md monolítico para MAPA.md em cada pasta do workspace
    (memory/, content/, skills/, archive/). Gabi/Max/BrIA: verificar estado.
@@ -164,6 +269,42 @@ D. AGENTS.md atualizado em todos os workspaces (A5/A13)
    Organograma com 5 agentes, canais, modelos, escopo, WhatsApp.
 E. Crons: Revisão do Dia (18h) e meta-cron de auditoria (7h) — Rocky (A9)
 F. Mission Control (A14) — dashboard visual, projeto maior, sessão dedicada
+
+Imersão Pixel AI Hub — gaps de arquitetura (ver seções conceituais no topo)
+G. Cérebro de diretoria não existe.
+   - Criar repo cognis-ia/cerebro-diretoria com template-diretoria-0.1.0.
+   - Definir gatilhos automáticos no AGENTS.md (dinheiro+nome, pessoa, jurídico).
+   - CODEOWNERS + PR template já vêm no template.
+   - Decidir qual agente serve a diretoria (provavelmente Rocky, com workspace separado).
+H. MAPA.md inexistente nos workspaces atuais.
+   - Auditar cada workspace (Rocky, Leo, BrIA, Gabi, Max, shared, bria-shared).
+   - Garantir MAPA.md em raiz e em cada subárea quando houver áreas separadas.
+   - Sobrepõe parcialmente com pendência A (TOOLS.md → MAPAs do mini-curso).
+I. _index.md em skills.
+   - Validar que cada pasta skills/ dos 5 agentes tem _index.md atualizado.
+J. Heartbeat baseado em estado (não só cron).
+   - Adotar conceito Pixel: heartbeat = decisão por estado (priorizar leads, pausar campanha,
+     recuperar cron falho). Reescrever bria-heartbeat após corrigir chatId.
+   - Sobrepõe com pendência B.
+K. Audit crons (camada 3 de segurança).
+   - Skill que roda diariamente: SOUL.md válido? Skills referenciadas existem? Permissões consistentes?
+     Commits recentes? Cron com erro há mais de 24h?
+   - Sobrepõe com pendência E (meta-cron de auditoria).
+L. Gestor de agentes (master coordenador — estágio 4).
+   - Relatório semanal de evolução (skills criadas, crons rodando, contexto atualizado).
+   - Auditoria mensal de integridade.
+   - Bom candidato: Rocky como master (já é o agente pessoal default).
+M. Permissionamento Telegram — auditar whitelist de IDs.
+   - Confirmar que cada @bot tem dmPolicy: allowlist com IDs explícitos.
+   - WhatsApp já está read-only desde 2026-05-20.
+N. Estrutura áreas/ canônica nos workspaces compartilhados.
+   - workspace-shared (Rocky+Leo) e workspace-bria-shared não seguem padrão
+     areas/{nome}/{contexto,skills,rotinas,projetos}.
+   - Reorganizar conforme casos forem aparecendo (não refazer do zero).
+O. Cérebro modelo do GitHub do curso.
+   - imersao-openclaw-negocios-main.zip tem cérebro de exemplo populado com 4 agentes
+     (assistente, marketing, bot-suporte) com SOUL+AGENTS+HEARTBEAT completos.
+   - Vale ler para padronizar SOUL/AGENTS dos agentes atuais antes de criar novos.
 
 Infraestrutura
 1. GitHub backup Gabi e Max — cognis-ia/gabi-workspace-backup e max-workspace-backup
@@ -290,4 +431,45 @@ Historico da sessao - 2026-05-19
   Bruno escaneou QR code via SSH -t; status: linked e ativo.
   Rocky monitora grupos silenciosamente e avisa Bruno no Telegram quando houver novidade
   relevante sobre IA/automação. Regra gravada no SOUL.md: nunca responde nos grupos.
-- Limpeza de config pó
+- Limpeza de config pós-update — entry truncada no commit anterior; nenhuma ação derivada pendente.
+
+---
+
+Historico da sessao - 2026-05-20
+
+- Incidente WhatsApp analisado: a configuracao perigosa era `groupPolicy: "open"` com `groups."*".requireMention: false` sem trava de envio; isso permitia auto-respostas em grupos.
+- OpenClaw WhatsApp ajustado em `/home/openclaw/.openclaw/openclaw.json` para modo preparado/passivo:
+  `channels.whatsapp.enabled=false`, `sendReadReceipts=false`, `reactionLevel=off`, `ackReaction.group=never`, `actions.reactions=false`, `actions.sendMessage=false`, `actions.polls=false`.
+- Conta WhatsApp default configurada com `dmPolicy=disabled`, `groupPolicy=open`, `groups."*".requireMention=false` e system prompt de leitura somente, orientando `NO_REPLY`.
+- Trava principal adicionada em `session.sendPolicy`: regra `deny` para `channel=whatsapp`, mantendo `default=allow` para nao afetar Telegram e demais canais.
+- `messages.groupChat.visibleReplies=message_tool` e `messages.groupChat.unmentionedInbound=room_event` definidos para tratar mensagens de grupo como contexto silencioso.
+- Politica "WhatsApp Read-Only" gravada nos TOOLS.md de Rocky, Leo, BrIA, Gabi e Max: nunca enviar, comentar, reagir, criar enquete, marcar leitura ou reconhecer mensagens no WhatsApp.
+- Config validada com `openclaw config validate`; gateway reiniciado e confirmado `ready`; Telegram voltou conectado em todas as contas.
+- Backup da configuracao anterior salvo no VPS em `/home/openclaw/.openclaw/openclaw.json.bak-before-whatsapp-readonly`.
+
+---
+
+Historico da sessao - 2026-05-21
+
+- Material editorial completo da Imersao Pixel AI Hub recebido em 2 zips:
+  "Formacao agentes de IA nos negocios (Imersao)" (22.8MB · 20 aulas em 2 modulos + FAQ + transcricoes srt + github exemplo)
+  e "Da teoria pra pratica - arquitetura do cerebro + templates" (6.9MB · 5 aulas + 3 templates zip: pessoal, empresa, diretoria).
+- Confirmado que esse material NUNCA tinha sido enviado em sessoes anteriores. Distinto do Starter Kit OpenClaw v2.5.x do mini-curso.
+- Conteudo extraido localmente em sessao temporaria; copia permanente nao mantida no D:\COGNIS\.
+- INFRA.md atualizado com 3 secoes conceituais novas extraidas da Imersao:
+  Arquitetura conceitual (3 cerebros, 3 niveis de memoria, areas vs agentes, 4 estagios de evolucao).
+  Padroes obrigatorios (triade SOUL/AGENTS/USER, MAPA.md, _index.md, cron vs heartbeat, regra dos 3 gatilhos, 2 camadas Telegram, workspace separado p/ bot suporte).
+  Seguranca em 3 camadas (Servidor + Agente + Processo, OWASP LLM Top 10 2026, ~90% reducao de superficie).
+- Pendencias ampliadas com 9 itens novos derivados da Imersao (G a O): criar cerebro diretoria,
+  MAPA.md nos workspaces, _index.md em skills, heartbeat por estado, audit crons, master coordenador,
+  whitelist IDs Telegram, estrutura canonica de areas, ler cerebro modelo do github da imersao.
+- Identificado overlap entre pendencias do mini-curso (A-F) e da Imersao (G-O):
+  A ~ H (TOOLS->MAPAs vs MAPA.md geral), B ~ J (Heartbeat vs heartbeat por estado), E ~ K (meta-cron vs audit crons).
+- Decisao pendente: qual agente serve como master coordenador (candidato Rocky) e qual serve a diretoria.
+- Templates Pixel disponiveis para consulta futura:
+  template-pessoal-0.1.0 (18 arquivos, skill cerebro+sync-pessoal).
+  template-empresa-0.1.0 (CLAUDE.md, MAPA.md, agente geral-empresa com SOUL/AGENTS/HEARTBEAT, areas vazias, 9 slash commands).
+  template-diretoria-0.1.0 (mesma base + CODEOWNERS, PR template, areas financeiro/rh/juridico/governanca).
+- Github de exemplo da imersao (imersao-openclaw-negocios-main) tem cerebro populado com 4 agentes
+  (assistente, marketing, bot-suporte) usavel como referencia de padrao SOUL/AGENTS/HEARTBEAT.
+- Merge feito: versao local (que estava em 2026-05-14) sincronizada com remote (2026-05-19) antes de aplicar mudancas e fazer push.
