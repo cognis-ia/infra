@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-21 (sessão 4 — Imersão Pixel AI Hub)
+Última atualização: 2026-05-22 (sessão 5 — governança + diretoria)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -131,8 +131,8 @@ Agentes ativos (5)
 | Rocky | main (default) | Agente pessoal do Bruno | telegram:default (@Rocky_Bruno_bot) | ~/.openclaw/workspace | cognis-ia/clawdio-workspace-backup |
 | Leo | leo | Agente profissional (COGNIS IA) | telegram:leo (@CG_Leo_Bot) | ~/.openclaw/workspace-leo | cognis-ia/leo-workspace-backup |
 | BrIA | bria | Suporte de alunas — Bernardelli Ensino | telegram:bria (@BE_BrIA_bot) | ~/.openclaw/workspace-bria | cognis-ia/bria-workspace-backup |
-| Gabi | gabi | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | nao criado |
-| Max | max | Operacional da Marilia — Bernardelli Ensino | telegram:max (@BE_Max_bot) | ~/.openclaw/workspace-max | nao criado |
+| Gabi | gabi | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | cognis-ia/gabi-workspace-backup |
+| Max | max | Operacional da Marilia — Bernardelli Ensino | telegram:max (@BE_Max_bot) | ~/.openclaw/workspace-max | cognis-ia/max-workspace-backup |
 
 GitHub org: cognis-ia — token no VPS em ~/.openclaw/workspace/.env
 
@@ -149,8 +149,10 @@ Segundos Cérebros
 |-----------|----------|--------|
 | ~/.openclaw/workspace-shared/ | Rocky + Leo | cognis-ia/shared-workspace-backup |
 | ~/.openclaw/workspace-bria-shared/ | BrIA (isolado) | cognis-ia/bria-shared-backup |
+| ~/.openclaw/cerebro-governanca/ | Constituição/padrões dos 5 agentes | cognis-ia/cerebro-governanca |
+| ~/.openclaw/cerebro-diretoria/ | Sensível/diretoria (Bruno + Jane) | cognis-ia/cerebro-diretoria |
 
-Gabi e Max sem segundo cérebro ainda.
+Gabi e Max ainda sem cérebro operacional compartilhado próprio; por enquanto operam em workspaces independentes.
 
 ---
 
@@ -254,6 +256,8 @@ Pendências
 URGENTE
 5. Renovar token OpenAI Codex — ate 22 maio 2026 (SSH com TTY)
 6. Rotacionar chave OpenAI — exposta em historico Git
+7. Rotacionar PAT GitHub que estava exposto no remote antigo do Rocky (remote corrigido em 2026-05-22, token ainda deve ser revogado).
+8. Rotacionar tokens Notion de Gabi/Max (valores foram encontrados em historico local antigo; repos novos foram sanitizados antes do primeiro push).
 
 Curso Openclaw (mini) — implementação pendente (ordem de prioridade)
 A. TOOLS.md → MAPAs distribuídos — Rocky e Leo (A6)
@@ -265,17 +269,16 @@ B. Heartbeat Rocky e Leo (A9)
 C. USER.md com 8 blocos — Rocky (A5)
    Verificar e completar: perfil, negócios, família, equipe, tom,
    restrições, valores, contexto operacional.
-D. AGENTS.md atualizado em todos os workspaces (A5/A13)
-   Organograma com 5 agentes, canais, modelos, escopo, WhatsApp.
+D. AGENTS.md atualizado em todos os workspaces (A5/A13) — CONCLUIDO em 2026-05-22.
+   Adendo de governança aplicado aos 5 agentes com marcador BEGIN_COGNIS_GOVERNANCA_ADENDO_v0.1.0.
 E. Crons: Revisão do Dia (18h) e meta-cron de auditoria (7h) — Rocky (A9)
 F. Mission Control (A14) — dashboard visual, projeto maior, sessão dedicada
 
 Imersão Pixel AI Hub — gaps de arquitetura (ver seções conceituais no topo)
-G. Cérebro de diretoria não existe.
-   - Criar repo cognis-ia/cerebro-diretoria com template-diretoria-0.1.0.
-   - Definir gatilhos automáticos no AGENTS.md (dinheiro+nome, pessoa, jurídico).
-   - CODEOWNERS + PR template já vêm no template.
-   - Decidir qual agente serve a diretoria (provavelmente Rocky, com workspace separado).
+G. Cérebro de diretoria — CONCLUIDO em 2026-05-22.
+   - Repo privado cognis-ia/cerebro-diretoria criado e clonado em ~/.openclaw/cerebro-diretoria.
+   - Estrutura inicial: financeiro, rh, juridico, governanca, sociedade-bernardelli, inbox, staging.
+   - CODEOWNERS e PR template criados; branch protection falhou via API (403), manter disciplina manual por enquanto.
 H. MAPA.md inexistente nos workspaces atuais.
    - Auditar cada workspace (Rocky, Leo, BrIA, Gabi, Max, shared, bria-shared).
    - Garantir MAPA.md em raiz e em cada subárea quando houver áreas separadas.
@@ -307,7 +310,7 @@ O. Cérebro modelo do GitHub do curso.
    - Vale ler para padronizar SOUL/AGENTS dos agentes atuais antes de criar novos.
 
 Infraestrutura
-1. GitHub backup Gabi e Max — cognis-ia/gabi-workspace-backup e max-workspace-backup
+1. GitHub backup Gabi e Max — CONCLUIDO em 2026-05-22 (snapshots sanitizados, sem historico com tokens Notion)
 2. Crons com erro — rocky-backup-diario (sem route) e bria heartbeat+backup (sem chatId)
 4. Segundo cérebro Gabi e Max
 8. Deletar @Clawdio_Bruno_bot no BotFather — acao manual Bruno
@@ -473,3 +476,40 @@ Historico da sessao - 2026-05-21
 - Github de exemplo da imersao (imersao-openclaw-negocios-main) tem cerebro populado com 4 agentes
   (assistente, marketing, bot-suporte) usavel como referencia de padrao SOUL/AGENTS/HEARTBEAT.
 - Merge feito: versao local (que estava em 2026-05-14) sincronizada com remote (2026-05-19) antes de aplicar mudancas e fazer push.
+
+---
+
+Historico da sessao - 2026-05-22
+
+- Retomada da sessao iniciada no Claude Opus 4.7 apos criacao do cerebro-governanca e cerebro-diretoria.
+- Auditoria as-is dos 5 agentes feita antes pelo Claude:
+  AGENTS.md dos 5 era basicamente Starter Kit; Rocky mais completo; Gabi/Max sem heartbeat ativo;
+  MEMORY.md da Max fraco; nenhum agente conhecia regra dos 3 gatilhos.
+- Repo privado cognis-ia/cerebro-governanca criado:
+  clone VPS em ~/.openclaw/cerebro-governanca/; copia local em D:\COGNIS\Curso Openclaw\cerebro-governanca\.
+  Conteudo v0.1.0: CONSTITUICAO.md, padroes SOUL/USER/AGENTS/HEARTBEAT/MAPA/MEMORY/TOOLS,
+  regra dos 3 gatilhos, seguranca 3 camadas, checklist de auditoria e mapa dos agentes.
+- Repo privado cognis-ia/cerebro-diretoria criado:
+  clone VPS em ~/.openclaw/cerebro-diretoria/.
+  Areas: financeiro, rh, juridico, governanca, sociedade-bernardelli.
+  Fluxo: inbox -> staging -> revisao humana -> main. Sem auto-commit para dados sensiveis.
+  Branch protection via API falhou com 403; manter revisao manual enquanto Jane nao estiver como collaborator.
+- Housekeeping antes do adendo:
+  remote do Rocky corrigido para remover PAT GitHub da URL; token ainda deve ser revogado/rotacionado.
+  repos cognis-ia/gabi-workspace-backup e cognis-ia/max-workspace-backup criados.
+  Léo confirmado com origin e backup apontando para cognis-ia/leo-workspace-backup.
+  Lixo regeneravel removido: tmp/wa_* do Rocky, reports/__pycache__ da BrIA, backups .bak antigos de Gabi/Max.
+  .gitignore atualizado em Rocky e BrIA para evitar retorno de scratch/cache.
+- Backups dos workspaces:
+  Rocky: commit c55232b backup-2026-05-22 + 2bc53b2 governanca-agents-adendo-2026-05-22.
+  Leo: commit b1c6e7b backup-2026-05-22 + 2f9a1db governanca-agents-adendo-2026-05-22.
+  BrIA: commit 85aefef backup-2026-05-22 + c14cddc governanca-agents-adendo-2026-05-22.
+  Gabi: snapshot inicial sanitizado 8d002cc + adendo d5bf95e.
+  Max: snapshot inicial sanitizado 18ee053 + adendo 4610b2a.
+- Tokens Notion reais foram encontrados em skills/notion-api/SKILL.md de Gabi/Max antes do primeiro push.
+  Arquivos atuais foram sanitizados com [REDACTED_NOTION_TOKEN].
+  Historico local de Gabi/Max foi substituido por branch orphan sanitizada antes do primeiro push.
+  Pendencia urgente: rotacionar os tokens Notion mesmo assim.
+- AGENTS-adendo.md da governanca aplicado nos 5 workspaces com marcador:
+  BEGIN_COGNIS_GOVERNANCA_ADENDO_v0.1.0.
+  Validado: cada AGENTS.md contem exatamente 1 marcador e working trees ficaram limpas.
