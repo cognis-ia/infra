@@ -537,3 +537,16 @@ Historico da sessao - 2026-05-22
 - Auditoria rerodada apos correcoes:
   Resultado atualizado: 141/150 checks (94.0%), 0 criticos, 0 altos, 7 medios, 2 baixos.
   Commit governanca: ee1f5a6 chore: atualiza auditoria sem alertas altos.
+
+- Watchers Markdown de Gabi e Max migrados para rotina deterministica fora do agente:
+  skills criadas em skills/operacional/vigiar-markdowns/ nos workspaces Gabi e Max.
+  O script roda via systemd --user, le git/status diretamente e envia Telegram via openclaw message send somente quando houver novidade.
+  Timers ativos: vigiar-markdowns-gabi.timer e vigiar-markdowns-max.timer, ambos diarios as 20:00 America/Sao_Paulo.
+  Crons antigos OpenClaw desativados: c8341652-9185-4a38-a4b5-7d200bb8c6ba (Gabi) e eb52f8fe-cd22-4601-846f-b152c77dc207 (Max).
+  Estado operacional memory/md-watch-state.json removido do Git e mantido local/ignorado para nao sujar worktree a cada execucao.
+  Commits Gabi: b9d0df4 feat watcher, ebf7300 sync state, 87bd8b0 estado local.
+  Commits Max: a620872 feat watcher, 67cb32f sync state, 4e421e6 estado local.
+  Unit files versionados em cognis-ia/infra: systemd/user/vigiar-markdowns-{gabi,max}.{service,timer}.
+- Auditoria rerodada apos migracao deterministica:
+  Resultado: 141/150 checks (94.0%), 0 criticos, 0 altos, 7 medios, 2 baixos.
+  Commit governanca: 8eee16b chore: atualiza auditoria apos watchers deterministos.

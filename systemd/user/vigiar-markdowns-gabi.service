@@ -1,0 +1,12 @@
+[Unit]
+Description=Vigiar markdowns da Gabi
+
+[Service]
+Type=oneshot
+Environment=WORKSPACE=/home/openclaw/.openclaw/workspace-gabi
+Environment=AGENT_NAME=Gabi
+Environment=TELEGRAM_ACCOUNT=gabi
+Environment=TELEGRAM_TARGET=1950767646
+ExecStart=/home/openclaw/.openclaw/workspace-gabi/skills/operacional/vigiar-markdowns/scripts/run_watch.sh
+WorkingDirectory=/home/openclaw/.openclaw/workspace-gabi
+

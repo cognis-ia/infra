@@ -1,0 +1,11 @@
+[Unit]
+Description=Timer diario do watcher markdowns da Gabi
+
+[Timer]
+OnCalendar=*-*-* 20:00:00
+Persistent=true
+Unit=vigiar-markdowns-gabi.service
+
+[Install]
+WantedBy=timers.target
+
