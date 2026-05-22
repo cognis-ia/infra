@@ -560,3 +560,13 @@ Historico da sessao - 2026-05-22
   Resultado: 144/150 checks (96.0%), 0 criticos, 0 altos, 4 medios, 2 baixos.
   Gabi e Max ficaram 30/30 (100%) no Rocky Auditor.
   Commit governanca: 5e951ae chore: atualiza auditoria apos heartbeat gabi max.
+
+- Auditoria dos 5 agentes fechada em 100%:
+  Leo: USER.md expandido para contexto profissional COGNIS IA e memory/2026-05-22.md criada.
+  Commit Leo: 0ed66d2 feat: completa user e memoria recente do leo.
+  Rocky: skills/documentos/SKILL.md criado como indice da area de documentos; backup antigo de TOOLS arquivado fora da raiz.
+  Commits Rocky: fe9d179 feat: indice de skills documentos; 309324a chore: arquiva backup antigo de tools.
+  BrIA: skills/design/SKILL.md criado como indice da area de design; relatorios Arte Derramada movidos da raiz para reports/arte-derramada/.
+  Commits BrIA: 1396eb8 feat: indice de skills design; a426b18 chore: organiza relatorios arte derramada.
+  Resultado final do Rocky Auditor: 150/150 checks (100.0%), 0 criticos, 0 altos, 0 medios, 0 baixos.
+  Commit governanca: 0b19f01 chore: auditoria agentes 100 por cento.
