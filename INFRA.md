@@ -271,7 +271,10 @@ C. USER.md com 8 blocos — Rocky (A5)
    restrições, valores, contexto operacional.
 D. AGENTS.md atualizado em todos os workspaces (A5/A13) — CONCLUIDO em 2026-05-22.
    Adendo de governança aplicado aos 5 agentes com marcador BEGIN_COGNIS_GOVERNANCA_ADENDO_v0.1.0.
-E. Crons: Revisão do Dia (18h) e meta-cron de auditoria (7h) — Rocky (A9)
+E. Crons: Revisão do Dia (18h) e meta-cron de auditoria (7h) — PARCIAL.
+   Meta-cron de auditoria criado em 2026-05-22:
+   rocky-auditoria-agentes-semanal, segunda 07:00 America/Sao_Paulo, agente main, Telegram Bruno.
+   Revisão do Dia 18h ainda pendente.
 F. Mission Control (A14) — dashboard visual, projeto maior, sessão dedicada
 
 Imersão Pixel AI Hub — gaps de arquitetura (ver seções conceituais no topo)
@@ -289,14 +292,15 @@ J. Heartbeat baseado em estado (não só cron).
    - Adotar conceito Pixel: heartbeat = decisão por estado (priorizar leads, pausar campanha,
      recuperar cron falho). Reescrever bria-heartbeat após corrigir chatId.
    - Sobrepõe com pendência B.
-K. Audit crons (camada 3 de segurança).
-   - Skill que roda diariamente: SOUL.md válido? Skills referenciadas existem? Permissões consistentes?
-     Commits recentes? Cron com erro há mais de 24h?
-   - Sobrepõe com pendência E (meta-cron de auditoria).
-L. Gestor de agentes (master coordenador — estágio 4).
-   - Relatório semanal de evolução (skills criadas, crons rodando, contexto atualizado).
-   - Auditoria mensal de integridade.
-   - Bom candidato: Rocky como master (já é o agente pessoal default).
+K. Audit crons (camada 3 de segurança) — PARCIAL.
+   - Skill auditoria-agentes v0.1.0 criada no Rocky em 2026-05-22.
+   - Roda semanalmente: arquivos canônicos, adendo de governança, memory recente,
+     git limpo, commits recentes, upstream, possíveis segredos, scratch/backups e crons com erro.
+   - Primeiro relatório salvo em ~/.openclaw/cerebro-governanca/auditorias/reports/auditoria-agentes-2026-05-22.md.
+   - Evoluir depois para auditoria mensal mais profunda.
+L. Gestor de agentes (master coordenador — estágio 4) — PARCIAL.
+   - Rocky Auditor implementado como gestor read-only: lê, sinaliza, não corrige.
+   - Relatório semanal ativo; coordenação operacional mais ampla ainda pendente.
 M. Permissionamento Telegram — auditar whitelist de IDs.
    - Confirmar que cada @bot tem dmPolicy: allowlist com IDs explícitos.
    - WhatsApp já está read-only desde 2026-05-20.
@@ -513,3 +517,15 @@ Historico da sessao - 2026-05-22
 - AGENTS-adendo.md da governanca aplicado nos 5 workspaces com marcador:
   BEGIN_COGNIS_GOVERNANCA_ADENDO_v0.1.0.
   Validado: cada AGENTS.md contem exatamente 1 marcador e working trees ficaram limpas.
+
+- Rocky Auditor implementado conforme estrutura da Imersão Pixel (gestor dos agentes read-only):
+  skill auditoria-agentes v0.1.0 criada em ~/.openclaw/workspace/skills/operacional/auditoria-agentes/.
+  Commits Rocky: 22cea70 feat: cria skill auditoria-agentes; 2cfd2b9 chore: ignora cache python da auditoria.
+- Primeiro relatório de auditoria salvo em cerebro-governanca:
+  ~/.openclaw/cerebro-governanca/auditorias/reports/auditoria-agentes-2026-05-22.md.
+  Resultado: 139/150 checks (92.7%), 0 críticos, 2 altos, 7 médios, 2 baixos.
+  Altos atuais: cron Monitorar jogos do Corinthians em erro; cron vigiar-markdowns-gabi em erro.
+- Cron semanal criado para o Rocky Auditor:
+  id 2afeecdc-c292-4521-8a3b-1bcd8f51d0af, nome rocky-auditoria-agentes-semanal, segunda 07:00 America/Sao_Paulo, agente main, session isolated, Telegram Bruno.
+- Governança atualizada com checklist apontando para auditoria-agentes e relatório versionado.
+  Commits governança: 53b0108 feat: registra primeira auditoria dos agentes; 1355dc4 chore: atualiza primeira auditoria apos instalacao.
