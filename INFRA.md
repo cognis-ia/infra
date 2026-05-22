@@ -550,3 +550,13 @@ Historico da sessao - 2026-05-22
 - Auditoria rerodada apos migracao deterministica:
   Resultado: 141/150 checks (94.0%), 0 criticos, 0 altos, 7 medios, 2 baixos.
   Commit governanca: 8eee16b chore: atualiza auditoria apos watchers deterministos.
+
+- Heartbeats de Gabi e Max ativados conforme padrao Pixel/governanca:
+  Gabi: HEARTBEAT.md substituido por checks de estado para demandas criativas, agenda/email Jane, Notion, watcher markdown e regra dos 3 gatilhos.
+  Commit Gabi: af22570 feat: heartbeat por estado da Gabi.
+  Max: HEARTBEAT.md substituido por checks de estado operacional; MEMORY.md expandido com contexto Bernardelli, pessoas, ferramentas, autoridade, decisoes e licoes aprendidas.
+  Commit Max: 3537ce3 feat: heartbeat e memoria operacional da Max.
+- Auditoria rerodada apos heartbeats:
+  Resultado: 144/150 checks (96.0%), 0 criticos, 0 altos, 4 medios, 2 baixos.
+  Gabi e Max ficaram 30/30 (100%) no Rocky Auditor.
+  Commit governanca: 5e951ae chore: atualiza auditoria apos heartbeat gabi max.
