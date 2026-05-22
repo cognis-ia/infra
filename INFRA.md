@@ -570,3 +570,26 @@ Historico da sessao - 2026-05-22
   Commits BrIA: 1396eb8 feat: indice de skills design; a426b18 chore: organiza relatorios arte derramada.
   Resultado final do Rocky Auditor: 150/150 checks (100.0%), 0 criticos, 0 altos, 0 medios, 0 baixos.
   Commit governanca: 0b19f01 chore: auditoria agentes 100 por c
+Historico da sessao - 2026-05-22 (continuacao via Cowork)
+
+- Skill alternativa criada em paralelo via Cowork: skills/operacional/auditor-integridade-agentes/ (Bash, 540 linhas).
+  Foi desenvolvida sem conhecimento da skill auditoria-agentes do codex (que e em Python e mais robusta).
+  Decisao Bruno: deixar as 2 skills coexistirem por enquanto. A do codex e o caminho de producao
+  (referenciada pelo cron rocky-auditoria-agentes-semanal). A em Bash fica como alternativa standalone.
+  Commit Rocky: 6d60e8e chore: fecha gaps da auditoria + instala skill auditor-integridade-agentes.
+- Cron rocky-auditoria-agentes-semanal validado end-to-end via execucao manual:
+  Comando: openclaw cron run 2afeecdc-c292-4521-8a3b-1bcd8f51d0af
+  Duracao: 63s
+  Status: ok, delivered=true
+  Resultado: 150/150 checks (100%), Telegram do Bruno (1950767646) recebeu o resumo conforme esperado.
+  Proxima execucao automatica: segunda-feira 25/05/2026 07:00 BRT.
+- Higiene adicional fechada nesta sessao:
+  IDENTITY.md de Rocky/Leo/Gabi/Max ganhou linha 'Agent ID: <slug>' (formato dossie do BrIA generalizado).
+  skills/_index.md gerado automaticamente em todos os 5 workspaces (34/31/37/34/31 skills indexadas).
+  chmod 600 nos .env de Gabi e Max (permissao estava 664).
+  Working tree de todos os 5 workspaces limpo + push sincronizado com origin/main.
+- Pendencias urgentes seguem em aberto (item de seguranca):
+  Rotacionar PAT GitHub antigo do Rocky (exposto em URL antes da correcao).
+  Rotacionar NOTION_TOKEN_TRABALHO de Gabi e Max (apareceram em logs antes da sanitizacao).
+  Rotacionar NOTION_TOKEN reserva da Marilia.
+  Renovar token OpenAI Codex (prazo 22/05/2026 = hoje).
