@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-22 (sessão 5 — governança + diretoria)
+Última atualização: 2026-05-22 (sessão 6 — auditoria validada end-to-end)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -569,4 +569,4 @@ Historico da sessao - 2026-05-22
   BrIA: skills/design/SKILL.md criado como indice da area de design; relatorios Arte Derramada movidos da raiz para reports/arte-derramada/.
   Commits BrIA: 1396eb8 feat: indice de skills design; a426b18 chore: organiza relatorios arte derramada.
   Resultado final do Rocky Auditor: 150/150 checks (100.0%), 0 criticos, 0 altos, 0 medios, 0 baixos.
-  Commit governanca: 0b19f01 chore: auditoria agentes 100 por cento.
+  Commit governanca: 0b19f01 chore: auditoria agentes 100 por c
