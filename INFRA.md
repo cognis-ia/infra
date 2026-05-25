@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-22 (sessão 6 — auditoria validada end-to-end)
+Última atualização: 2026-05-25 (sessão 7 — governanca v0.2.0 + benchmark Amora)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -593,3 +593,61 @@ Historico da sessao - 2026-05-22 (continuacao via Cowork)
   Rotacionar NOTION_TOKEN_TRABALHO de Gabi e Max (apareceram em logs antes da sanitizacao).
   Rotacionar NOTION_TOKEN reserva da Marilia.
   Renovar token OpenAI Codex (prazo 22/05/2026 = hoje).
+
+Historico da sessao - 2026-05-25 (sessao 7 — Cowork + codex em paralelo)
+
+- Bruno enviou Downloads.rar (75MB) com material consolidado da Pixel AI Hub:
+  Mod 2 (Mini-curso v2 Managed — 17 aulas + Starter Kit v2.5.7 + Templates + Cases + Refs + Transcricoes),
+  Mod 3 (Imersao — ja tinhamos da sessao 5),
+  Mod 4 e Mod 6 (Da teoria pra pratica — versoes 22/05 e 25/05, identicas entre si e ao que ja tinhamos),
+  Mod 5 (Pixel AI Hub HQ — so meta-orientacao geral).
+- Conteudo realmente novo identificado: Mini-curso v2 inteiro + Templates da Amora (referencia madura mes 6+).
+- Conteudo duplicado: Imersao Mod 3, Da teoria pra pratica Mod 4/6 (templates 0.1.0 idem ao que tinhamos).
+
+- Frente A executada: Benchmark qualitativo Amora 4.0 vs os 5 agentes do Bruno.
+  Documento gerado: D:\COGNIS\Curso Openclaw\BENCHMARK-AMORA-2026-05-25.md
+  17 padroes da Amora analisados; 5 quick wins priorizados (Tom especifico, Continuidade,
+  IDENTITY dossie expandido, Regra de Prioridade explicita pra Rocky, Protocolo Repeticao->Skill).
+
+- Fase 1 do plano executada: constituicao bumpada para v0.2.0.
+  Commit cerebro-governanca: c11b663 feat: bumpa constituicao para v0.2.0 - quick wins da Amora
+  Mudancas (8 arquivos, +463 / -32 linhas):
+  - SOUL-template.md: +2 blocos obrigatorios (Tom especifico proibindo bajulacao + Continuidade)
+  - IDENTITY-template.md: formato dossie expandido (Territories, cerebros compartilhados, historico, ponteiros).
+    Tamanho-alvo bumpa de 15-25 linhas para 1200-1800 bytes.
+  - AGENTS-adendo.md: matriz Auto-Resolver (Age sem perguntar | Pede antes | Nunca faz) com tabelas por situacao.
+  - USER-template.md: +3 blocos OPCIONAIS Modo A (Vocabulario/Expressoes, Rotina detalhada, Tom por plataforma).
+  - CONSTITUICAO.md: versao 0.1.0 -> 0.2.0, capitulos 2/3/5/7 atualizados.
+  - CHANGELOG.md: NOVO. Historico de versoes do repo.
+
+- Auditoria mais recente disponivel em cerebro-governanca/auditorias/reports/auditoria-agentes-2026-05-25.md
+  (gerada antes do bump v0.2.0).
+
+- PENDENTE — Fase 2: aplicar v0.2.0 nos 5 agentes
+  1. Editar SOUL.md de cada (adicionar Tom especifico + Continuidade)
+  2. Editar IDENTITY.md de cada (formato dossie expandido com Territories)
+  3. Anexar matriz Auto-Resolver no AGENTS.md de cada (substituindo/complementando v0.1.0 do adendo)
+  4. Opcional: editar USER.md de Rocky e Leo (blocos 9-11)
+  5. Commit + push nos 5 backups
+  6. Re-rodar auditoria; esperado retornar a 100% conformidade com checklist atualizado
+
+- PENDENTE — Skill auditoria-agentes (codex) precisa de atualizacao pra v0.2.0:
+  - Checar string "BEGIN_COGNIS_GOVERNANCA_ADENDO_v0.2.0" no AGENTS.md (em vez de v0.1.0)
+  - Checar presenca de "Tom especifico" e "Continuidade" no SOUL
+  - Checar presenca de "Territories" e "Historico" no IDENTITY
+  - Caso contrario, auditoria continua passando 150/150 mas nao reflete profundidade nova
+
+- Demais Frentes do benchmark (B/C/D) NAO atacadas — ficam pra proximas sessoes:
+  Frente B — 10 adendos tematicos do Mini-curso v2 (refs como crons-do-seu-agente, mission-control, etc)
+    -> viriam pra cerebro-governanca/referencias/
+  Frente C — Skill prompts-library com os 38 prompts da Pixel (6 categorias)
+  Frente D — Mission Control (pendencia F do INFRA.md ainda em aberto)
+  Frente bonus — atualizar Starter Kit v2.5.6 -> v2.5.7
+
+- Documentos gerados nesta sessao salvos no D:\COGNIS\Curso Openclaw\:
+  BENCHMARK-AMORA-2026-05-25.md (analise qualitativa Amora vs 5 agentes)
+  cerebro-governanca/ (atualizado in-place com v0.2.0)
+
+- Conteudo da Pixel extraido em /tmp/pixel_unzipped no VPS (95MB) para referencia futura.
+  Material da Amora (6 arquivos canonicos) em:
+  /tmp/pixel_unzipped/Modulo 2/Construindo seus primeiros agentes (Mini-curso Openclaw v2)/🧰 Templates (soul, user, identity, tools, etc)/📂 Exemplos da Amora (Agente Bruno Okamoto)/
