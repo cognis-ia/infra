@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer diario backup workspace BrIA
+
+[Timer]
+OnCalendar=*-*-* 23:10:00 America/Sao_Paulo
+Persistent=true
+Unit=backup-workspace-bria.service
+
+[Install]
+WantedBy=timers.target

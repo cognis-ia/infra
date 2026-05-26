@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer diario backup workspace Rocky
+
+[Timer]
+OnCalendar=*-*-* 23:00:00 America/Sao_Paulo
+Persistent=true
+Unit=backup-workspace-rocky.service
+
+[Install]
+WantedBy=timers.target

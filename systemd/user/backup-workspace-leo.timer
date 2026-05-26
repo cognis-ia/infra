@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer diario backup workspace Léo
+
+[Timer]
+OnCalendar=*-*-* 23:05:00 America/Sao_Paulo
+Persistent=true
+Unit=backup-workspace-leo.service
+
+[Install]
+WantedBy=timers.target

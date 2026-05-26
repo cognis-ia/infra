@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer diario backup workspace Max
+
+[Timer]
+OnCalendar=*-*-* 23:20:00 America/Sao_Paulo
+Persistent=true
+Unit=backup-workspace-max.service
+
+[Install]
+WantedBy=timers.target
