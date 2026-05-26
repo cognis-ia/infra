@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-25 (sessão 7 — governanca v0.2.0 + benchmark Amora)
+Última atualização: 2026-05-25 (sessão 8 — Fase 2 v0.2.0 nos 5 agentes + skill auditoria v0.2.0)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -651,3 +651,64 @@ Historico da sessao - 2026-05-25 (sessao 7 — Cowork + codex em paralelo)
 - Conteudo da Pixel extraido em /tmp/pixel_unzipped no VPS (95MB) para referencia futura.
   Material da Amora (6 arquivos canonicos) em:
   /tmp/pixel_unzipped/Modulo 2/Construindo seus primeiros agentes (Mini-curso Openclaw v2)/🧰 Templates (soul, user, identity, tools, etc)/📂 Exemplos da Amora (Agente Bruno Okamoto)/
+
+Historico da sessao - 2026-05-25 (sessao 8 — Cowork, Fase 2 v0.2.0)
+
+- Fase 2 do plano benchmark-amora-2026-05-25.md executada completa nos 3 arquivos canonicos principais:
+
+  Item 1 — SOUL.md dos 5 agentes (+2 blocos obrigatorios v0.2.0):
+    Tom especifico (proibe bajulacao: "Otima pergunta!", "Espero ter ajudado", etc) +
+    Continuidade (lista dos 8 arquivos canonicos que sao o agente).
+    Para BrIA/Gabi/Max foi aplicada versao com excecao autorizada "tom acolhedor com clientes/alunas".
+    Tamanhos: Rocky 4946→6654, Leo 6574→8282, BrIA 2937→5467, Gabi 2924→5454, Max 2916→5446.
+    Commits: dc78403, 01928d8, 60b49cd, 6116cb7, 2a8cf85.
+
+  Item 2 — IDENTITY.md dos 5 agentes expandido para formato dossie v0.2.0:
+    Adicionado: Versao semantica, Workspace path, Reportagem (operador tecnico/funcional),
+    Territories (canais + topics + cerebros compartilhados com permissoes), Empresa que sirvo,
+    Ponteiros para os 7 outros arquivos canonicos, Historico de versoes.
+    Tamanhos: Rocky 303→2148, Leo 285→2109, BrIA 452→2630 (v2.0 — ja era dossie parcial),
+    Gabi 630→2594, Max 527→2683.
+    Commits: 565841a, c503c55, 56d79c5, 4b5beae, d417c22.
+    Backups .bak-v010-* mantidos localmente no VPS, nao no git.
+
+  Item 3 — AGENTS.md dos 5 agentes com matriz Auto-Resolver:
+    Inserida entre "## Auditoria semanal" e "## Versao deste adendo" do bloco governanca.
+    3 categorias: "Age sem perguntar" (leitura, organizacao interna), "Pede antes" (externo, custos,
+    config), "Nunca faz" (gatilhos sensiveis, push direto main, WhatsApp send, etc).
+    Inclui anti-pattern "terceirizacao excessiva".
+    Entrada v0.2.0 adicionada ao historico do adendo.
+    Tamanhos: Rocky/Leo/BrIA 364→436 linhas, Gabi/Max 347→419 linhas (+72 cada).
+    Commits: 4064fcd, 224ca11, 65ecd98, b51c46b, 6dae721.
+    Marcador BEGIN_COGNIS_GOVERNANCA_ADENDO_v0.1.0 mantido (formato literal "\\n" do codex em 22/05).
+
+  Item 5 — Skill auditoria-agentes bumpada para v0.2.0:
+    audit_agents.py: 5 patches.
+      ADENDO_MARKER_V01 mantido + 5 marcadores novos
+        (V02_AUTO_RESOLVER, SOUL_MARKER_TOM, SOUL_MARKER_CONTINUIDADE,
+        IDENTITY_MARKER_TERRITORIES, IDENTITY_MARKER_HISTORICO).
+      5 checks novos no audit_agent() — severidade MEDIO.
+      REQUIRED_FILES bumpa: IDENTITY.md 250→1200 bytes, SOUL.md 800→4500 bytes.
+      Header do relatorio: v0.1.0 → v0.2.0.
+    SKILL.md: version frontmatter 0.1.0 → 0.2.0; lista de checks reflete os 5 novos.
+    Commit Rocky: de2f4ad feat(auditoria-agentes): bumpa skill para v0.2.0.
+
+  Item 4 — USER blocos 9-11 (Vocabulario, Rotina, Tom por plataforma) — PENDENTE.
+    Depende de entrevistar Bruno para extrair vocabulario proprio + rotina + tom de comunicacao.
+    Pode entrar em proxima sessao via conversa estruturada.
+
+- Auditoria pos-Fase 2 (rodada manual via python3 audit_agents.py):
+  Resultado: 170/175 checks (97.1%), 0 criticos, 3 altos, 2 medios, 0 baixos.
+  TODOS os 5 agentes passaram nos 5 checks v0.2.0 novos (Tom, Continuidade, Auto-Resolver, Territories, Historico).
+  Leo: 35/35 (100%).
+  Issues restantes sao operacionais reais (nao da migracao):
+    Rocky: working tree dirty (skill recem-modificada, resolvido pelo commit de2f4ad) + cron rocky-backup-diario em erro (pendencia conhecida).
+    BrIA: working tree dirty (memory/2026-05-25.md untracked do agente em uso ativo).
+    Gabi e Max: sem nota memory recente — agentes nao usados nos ultimos 7 dias (Jane/Marilia inativas).
+
+- Constituicao cerebro-governanca v0.2.0 publicada na sessao 7 ja estava no remote — Fase 2 desta sessao consumiu os templates atualizados.
+
+- Pendencia urgente que continua: rotacionar tokens (PAT GitHub antigo do Rocky + Notion Gabi/Max + OpenAI Codex se ainda nao renovado).
+
+- Relatorio final da auditoria 2026-05-25 atualizado em:
+  /home/openclaw/.openclaw/cerebro-governanca/auditorias/reports/auditoria-agentes-2026-05-25.md
