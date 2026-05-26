@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-25 (sessão 8 — Fase 2 v0.2.0 nos 5 agentes + skill auditoria v0.2.0)
+Última atualização: 2026-05-26 (sessão 9 — backup-workspace systemd + fim do cron quebrado)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -315,7 +315,7 @@ O. Cérebro modelo do GitHub do curso.
 
 Infraestrutura
 1. GitHub backup Gabi e Max — CONCLUIDO em 2026-05-22 (snapshots sanitizados, sem historico com tokens Notion)
-2. Crons com erro — rocky-backup-diario (sem route) e bria heartbeat+backup (sem chatId)
+2. Cron bria heartbeat sem chatId — pendente. rocky-backup-diario migrado para systemd em 2026-05-26 (sessao 9).
 4. Segundo cérebro Gabi e Max
 8. Deletar @Clawdio_Bruno_bot no BotFather — acao manual Bruno
 9. Verificar se allowFrom da Gabi devia ter ID da Jane (938877898) — se sim, adicionar de volta
@@ -712,3 +712,54 @@ Historico da sessao - 2026-05-25 (sessao 8 — Cowork, Fase 2 v0.2.0)
 
 - Relatorio final da auditoria 2026-05-25 atualizado em:
   /home/openclaw/.openclaw/cerebro-governanca/auditorias/reports/auditoria-agentes-2026-05-25.md
+
+Historico da sessao - 2026-05-26 (sessao 9 — Cowork, backup-workspace systemd)
+
+- Pendencia operacional fechada: cron OpenClaw rocky-backup-diario (1a645071-e3b0-4494-b266-73eb5e587636) deletado.
+  Estava disabled + quebrado por arquitetura ruim: pedia para LLM (gpt-5.4) em sessao isolated rodar git commit/push.
+  LLM nao tem acesso real ao filesystem em sessao isolated → todo run terminava como "[blocked] Nao consegui executar".
+  Padrao errado do cron (heartbeat de LLM) substituido pelo padrao correto do curso Pixel Mod1 Aula 08: cron deterministico via systemd.
+
+- Nova infra de backup deterministica (sem LLM):
+  Script bash unico reusavel: ~/.openclaw/workspace/skills/operacional/backup-workspace/scripts/run_backup.sh
+    Le env WORKSPACE + AGENT_NAME. Idempotente: tree clean → loga e sai OK; dirty → git add + commit + push.
+    Mensagem de commit padrao: "chore: automated backup YYYY-MM-DD HH:MM ZZZ".
+    Faz alerta de seguranca se detectar .env/secrets/.key/.pem nos arquivos a commitar (defesa em profundidade alem do .gitignore).
+  SKILL.md documentando o padrao em ~/.openclaw/workspace/skills/operacional/backup-workspace/SKILL.md
+  
+  5 systemd user services + 5 timers (escalonados a cada 5min a partir das 23h BRT):
+    backup-workspace-rocky.{service,timer} → 23:00 → cognis-ia/clawdio-workspace-backup
+    backup-workspace-leo.{service,timer}   → 23:05 → cognis-ia/leo-workspace-backup
+    backup-workspace-bria.{service,timer}  → 23:10 → cognis-ia/bria-workspace-backup
+    backup-workspace-gabi.{service,timer}  → 23:15 → cognis-ia/gabi-workspace-backup
+    backup-workspace-max.{service,timer}   → 23:20 → cognis-ia/max-workspace-backup
+  
+  Habilitados via: systemctl --user daemon-reload + enable --now backup-workspace-{agent}.timer
+  Persistent=true em todos (recupera se VPS estiver fora do ar na hora).
+  Logam via journalctl --user -u backup-workspace-{agent}.service
+
+- Validacao end-to-end (run manual dos 5 services):
+  Rocky: commit + push (5c21226 - skill backup-workspace adicionada)
+  Leo: tree clean, nada a fazer
+  BrIA: commit + push (38d3fb2 - memory/2026-05-25.md)
+  Gabi: tree clean
+  Max: tree clean
+  Duracao tipica: ~2s por agente.
+
+- Tudo versionado em cognis-ia/infra:
+  systemd/user/backup-workspace-*.service (5 arquivos)
+  systemd/user/backup-workspace-*.timer (5 arquivos)
+  Commit: 0188fc4 feat(systemd): backup-workspace timers determinísticos para os 5 agentes
+  Segue padrao identico ao vigiar-markdowns-{gabi,max} criado pelo codex na sessao 7.
+
+- Commit de migracao do Rocky para backup deterministico:
+  Commit Rocky (workspace): 5c21226 chore: automated backup 2026-05-26 16:45 -03
+
+- Comandos uteis pos-instalacao:
+  systemctl --user list-timers backup-workspace-\*       # ver proximos disparos
+  systemctl --user start backup-workspace-rocky.service  # disparar manual
+  journalctl --user -u backup-workspace-rocky -n 20      # logs
+  systemctl --user disable --now backup-workspace-rocky.timer  # desligar se precisar
+
+- Pendencia BrIA heartbeat (sem chatId) continua em aberto — mesmo padrao do problema do rocky-backup-diario.
+  Provavelmente vale aplicar a mesma solucao (substituir por systemd) na proxima rodada.
