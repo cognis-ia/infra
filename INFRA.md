@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-27 (sessão 10 — heartbeat-runner systemd + LLM por estado)
+Última atualização: 2026-05-27 (sessão 10 — heartbeat-runner + focus-guard Rocky)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -814,3 +814,36 @@ Historico da sessao - 2026-05-27 (sessao 10 — Codex, heartbeat-runner systemd 
   systemctl --user start heartbeat-runner-rocky.service
   journalctl --user -u heartbeat-runner-bria.service -n 40 --no-pager
   journalctl --user -u heartbeat-runner-rocky.service -n 40 --no-pager
+
+- Extensao da sessao 10: focus-guard do Rocky.
+  Objetivo: Rocky mandar check-ins surpresa entre 09h e 20h e usar contexto local
+  sanitizado do Chrome para cobrar foco sem ler dados sensiveis.
+
+  Privacidade do Chrome:
+  - Windows Task Scheduler roda D:\COGNIS\Curso Openclaw\tools\focus-guard\run_chrome_focus_monitor.ps1
+    a cada 10 minutos.
+  - O script ignora fora da janela 09h-20h.
+  - Le copia local do SQLite History do Chrome, agrega somente dominios.
+  - Nao envia URL completa, titulo da pagina, cookies, formularios, senhas ou conteudo.
+  - Dominios sensiveis de auth/banco/governo/pagamento/senhas sao mascarados.
+  - Upload privado para:
+    ~/.openclaw/workspace/memory/local-private/focus-monitor/latest.json
+  - .gitignore do Rocky inclui memory/local-private/ para nao versionar historico local.
+
+  Check-ins surpresa:
+  - Skill: ~/.openclaw/workspace/skills/operacional/focus-guard/
+  - Timer VPS: rocky-focus-checkin.timer
+  - Agenda: oportunidades a cada hora de 09h a 19h com RandomizedDelaySec=55m.
+  - Script aplica sorteio interno, limite maximo 4 mensagens/dia e gap minimo 75 min.
+  - Se houver dominios de distracao recentes, chance de mensagem aumenta.
+  - Mensagem manual validada em 2026-05-27 16h22 BRT.
+
+  Versionamento:
+  - Commit Rocky: 34a61cf feat(rocky): adiciona focus-guard com check-ins surpresa
+  - Commit infra: 089c36d feat(systemd): check-ins surpresa do Rocky
+
+  Comandos uteis:
+  - Windows: Get-ScheduledTask -TaskName 'OpenClaw Chrome Focus Monitor'
+  - Windows: Start-ScheduledTask -TaskName 'OpenClaw Chrome Focus Monitor'
+  - VPS: systemctl --user list-timers rocky-focus-checkin\*
+  - VPS: journalctl --user -u rocky-focus-checkin.service -n 40 --no-pager
