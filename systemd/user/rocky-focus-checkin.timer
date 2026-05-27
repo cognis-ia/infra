@@ -1,0 +1,11 @@
+[Unit]
+Description=Timer aleatorio para Rocky focus check-in
+
+[Timer]
+OnCalendar=*-*-* 09..19:00:00 America/Sao_Paulo
+RandomizedDelaySec=55m
+Persistent=false
+Unit=rocky-focus-checkin.service
+
+[Install]
+WantedBy=timers.target

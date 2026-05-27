@@ -1,0 +1,11 @@
+[Unit]
+Description=Rocky focus check-in surpresa
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/openclaw/.openclaw/workspace/skills/operacional/focus-guard/scripts/rocky_focus_checkin.sh
+WorkingDirectory=/home/openclaw/.openclaw/workspace
+StandardOutput=journal
+StandardError=journal
