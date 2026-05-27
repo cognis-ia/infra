@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-26 (sessão 9 — backup-workspace systemd + fim do cron quebrado)
+Última atualização: 2026-05-27 (sessão 10 — heartbeat-runner systemd + LLM por estado)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -761,5 +761,56 @@ Historico da sessao - 2026-05-26 (sessao 9 — Cowork, backup-workspace systemd)
   journalctl --user -u backup-workspace-rocky -n 20      # logs
   systemctl --user disable --now backup-workspace-rocky.timer  # desligar se precisar
 
-- Pendencia BrIA heartbeat (sem chatId) continua em aberto — mesmo padrao do problema do rocky-backup-diario.
-  Provavelmente vale aplicar a mesma solucao (substituir por systemd) na proxima rodada.
+- Pendencia BrIA heartbeat (sem chatId) substituida por diagnostico mais amplo na sessao 10:
+  rocky-heartbeat e bria-heartbeat estavam "ok" no scheduler, mas funcionalmente blocked.
+
+Historico da sessao - 2026-05-27 (sessao 10 — Codex, heartbeat-runner systemd + LLM por estado)
+
+- Diagnostico real dos heartbeats:
+  rocky-heartbeat (6d910b5b-ad84-4ad3-8411-b0b428e40116) e bria-heartbeat
+  (8af5c4af-a776-45bd-9aa4-7c90911b5428) apareciam com lastRunStatus="ok" e delivery=true,
+  mas os summaries dos ultimos runs eram "[blocked] Nao consegui ler HEARTBEAT.md/memory/hot.md".
+  O problema nao era so chatId da BrIA: o runner agentTurn do OpenClaw 2026.5.18 nao expoe
+  filesystem tools em cron, mesmo com lightContext=true e toolsAllow read/write/exec.
+
+- Testes executados:
+  1. bria-heartbeat com sessionTarget=session:agent:bria:telegram:direct:1950767646 -> ainda HEARTBEAT_BLOCKED.
+  2. bria-heartbeat isolated com toolsAllow=["exec"] -> EXEC_BLOCKED.
+  3. openclaw agent --agent bria --json -> funciona, injeta arquivos canonicos, mas custo/contexto alto.
+  4. openclaw infer model run --model openai-codex/gpt-5.4 --thinking low -> funciona para decisao LLM one-shot.
+
+- Solucao instalada: skill operacional heartbeat-runner.
+  Caminho: ~/.openclaw/workspace/skills/operacional/heartbeat-runner/
+  Ideia: systemd acorda e coleta contexto local; LLM decide por estado; HEARTBEAT_OK fica silencioso;
+  apenas HEARTBEAT_ALERT vai para Bruno via Telegram.
+  Isso preserva o principio Pixel: timer/cron = tempo; heartbeat = estado.
+
+- Arquivos instalados:
+  ~/.config/systemd/user/heartbeat-runner-rocky.service
+  ~/.config/systemd/user/heartbeat-runner-rocky.timer
+  ~/.config/systemd/user/heartbeat-runner-bria.service
+  ~/.config/systemd/user/heartbeat-runner-bria.timer
+
+- Agenda ativa:
+  Rocky: 08:00, 12:00, 16:00, 20:00 America/Sao_Paulo
+  BrIA: 08:02, 12:02, 16:02, 20:02 America/Sao_Paulo
+
+- Crons nativos quebrados desativados:
+  rocky-heartbeat -> enabled=false
+  bria-heartbeat -> enabled=false
+
+- Validacao:
+  systemctl --user start heartbeat-runner-bria.service -> Silencioso: HEARTBEAT_OK
+  systemctl --user start heartbeat-runner-rocky.service -> Silencioso: HEARTBEAT_OK
+  Estado temporario do runner fica em /tmp/openclaw-heartbeat-runner/{agent}.json para nao sujar git.
+
+- Versionamento:
+  Commit Rocky: 3a8f693 feat(operacional): adiciona heartbeat-runner systemd
+  Commit infra: 35409d8 feat(systemd): heartbeat-runner para Rocky e BrIA
+
+- Comandos uteis:
+  systemctl --user list-timers heartbeat-runner-\*
+  systemctl --user start heartbeat-runner-bria.service
+  systemctl --user start heartbeat-runner-rocky.service
+  journalctl --user -u heartbeat-runner-bria.service -n 40 --no-pager
+  journalctl --user -u heartbeat-runner-rocky.service -n 40 --no-pager
