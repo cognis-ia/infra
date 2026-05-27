@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer heartbeat por estado BrIA
+
+[Timer]
+OnCalendar=*-*-* 08,12,16,20:02:00 America/Sao_Paulo
+Persistent=true
+Unit=heartbeat-runner-bria.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,18 @@
+[Unit]
+Description=Heartbeat por estado Rocky (LLM + contexto local)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=WORKSPACE=/home/openclaw/.openclaw/workspace
+Environment=AGENT_ID=main
+Environment=AGENT_NAME=Rocky
+Environment=TELEGRAM_ACCOUNT=default
+Environment=TELEGRAM_TO=1950767646
+Environment=MODEL=openai-codex/gpt-5.4
+Environment=THINKING=low
+ExecStart=/home/openclaw/.openclaw/workspace/skills/operacional/heartbeat-runner/scripts/run_heartbeat.sh
+WorkingDirectory=/home/openclaw/.openclaw/workspace
+StandardOutput=journal
+StandardError=journal

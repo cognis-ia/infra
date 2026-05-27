@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer heartbeat por estado Rocky
+
+[Timer]
+OnCalendar=*-*-* 08,12,16,20:00:00 America/Sao_Paulo
+Persistent=true
+Unit=heartbeat-runner-rocky.service
+
+[Install]
+WantedBy=timers.target

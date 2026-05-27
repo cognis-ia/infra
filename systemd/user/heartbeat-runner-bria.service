@@ -1,0 +1,18 @@
+[Unit]
+Description=Heartbeat por estado BrIA (LLM + contexto local)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=WORKSPACE=/home/openclaw/.openclaw/workspace-bria
+Environment=AGENT_ID=bria
+Environment=AGENT_NAME=BrIA
+Environment=TELEGRAM_ACCOUNT=bria
+Environment=TELEGRAM_TO=1950767646
+Environment=MODEL=openai-codex/gpt-5.4
+Environment=THINKING=low
+ExecStart=/home/openclaw/.openclaw/workspace/skills/operacional/heartbeat-runner/scripts/run_heartbeat.sh
+WorkingDirectory=/home/openclaw/.openclaw/workspace-bria
+StandardOutput=journal
+StandardError=journal
