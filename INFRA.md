@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-28 (sessão 19 — cérebro Bernardelli Areas)
+Última atualização: 2026-05-28 (sessão 21 — Sofia/Astron e auditoria 6 agentes)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -124,7 +124,7 @@ Serviço: systemctl --user restart openclaw-gateway
 
 ---
 
-Agentes ativos (5)
+Agentes ativos (6)
 
 | Agente | ID | Emoji | Papel | Canal Telegram | Workspace | GitHub backup |
 |--------|-----|-------|-------|---------------|-----------|---------------|
@@ -133,6 +133,7 @@ Agentes ativos (5)
 | BrIA | bria | Suporte de alunas — Bernardelli Ensino | telegram:bria (@BE_BrIA_bot) | ~/.openclaw/workspace-bria | cognis-ia/bria-workspace-backup |
 | Gabi | gabi | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | cognis-ia/gabi-workspace-backup |
 | Max | max | Operacional da Marilia — Bernardelli Ensino | telegram:max (@BE_Max_bot) | ~/.openclaw/workspace-max | cognis-ia/max-workspace-backup |
+| Sofia | sofia | Especialista em cursos/Astron — Bernardelli Ensino | sem canal publico | ~/.openclaw/workspace-sofia | cognis-ia/sofia-workspace-backup |
 
 GitHub org: cognis-ia — token no VPS em ~/.openclaw/workspace/.env
 
@@ -140,6 +141,7 @@ Perfis Bernardelli:
 - BrIA: suporte de alunas, Hotmart, Astron Members — persona Maria, 62 anos
 - Gabi: criativa, conteúdo, voz da marca Jane — mentora de arte
 - Max: operacional, analítica, parceira da Marilia
+- Sofia: curadora especialista dos cursos Astron/Bernardelli; mapeia catalogo, transcricoes, fichas e base de suporte
 
 ---
 
@@ -149,10 +151,11 @@ Segundos Cérebros
 |-----------|----------|--------|
 | ~/.openclaw/workspace-shared/ | Rocky + Leo | cognis-ia/shared-workspace-backup |
 | ~/.openclaw/workspace-bria-shared/ | BrIA (isolado) | cognis-ia/bria-shared-backup |
-| ~/.openclaw/cerebro-governanca/ | Constituição/padrões dos 5 agentes | cognis-ia/cerebro-governanca |
+| ~/.openclaw/cerebro-governanca/ | Constituição/padrões dos 6 agentes | cognis-ia/cerebro-governanca |
 | ~/.openclaw/cerebro-diretoria/ | Sensível/diretoria (Bruno + Jane) | cognis-ia/cerebro-diretoria |
+| ~/.openclaw/cerebro-bernardelli-areas/ | Operacional compartilhado Bernardelli (BrIA/Gabi/Max/Sofia) | cognis-ia/cerebro-bernardelli-areas |
 
-Gabi e Max ainda sem cérebro operacional compartilhado próprio; por enquanto operam em workspaces independentes.
+BrIA, Gabi, Max e Sofia usam `cerebro-bernardelli-areas` para conhecimento operacional compartilhado. Rocky e Leo não usam este cérebro no dia a dia.
 
 ---
 
@@ -175,6 +178,7 @@ Systemd user timers ativos:
 | backup-workspace-bria.timer | backup Git BrIA | 23h10 |
 | backup-workspace-gabi.timer | backup Git Gabi | 23h15 |
 | backup-workspace-max.timer | backup Git Max | 23h20 |
+| backup-workspace-sofia.timer | backup Git Sofia | 23h25 |
 | vigiar-markdowns-gabi.timer | watcher Markdown Gabi | 20h00 |
 | vigiar-markdowns-max.timer | watcher Markdown Max | 20h00 |
 
@@ -214,12 +218,13 @@ HOTMART (vendas)
   Skill: workspace-bria/skills/hotmart-api/SKILL.md
 
 ASTRON MEMBERS (entrega de cursos)
-  Agentes: BrIA, Gabi, Max
+  Agentes: BrIA, Gabi, Max, Sofia
   Club ID: 8194 (Pintando Telas) — 908 alunas
   Credenciais: ASTRON_AM_KEY, ASTRON_AM_SECRET, ASTRON_CLUB_ID=8194
   Base: https://api.astronmembers.com.br/v1.0/
   Auth: Basic HTTP (user=AM_KEY senha=AM_SECRET)
   Skill: workspace-max/skills/astron-members-api/SKILL.md
+  Sofia: workspace-sofia/skills/astron-course-mapper/SKILL.md + scripts/astron_discover.py
   CRITICO: usar urllib Python, nunca curl. Parâmetros em query string, nunca no path.
 
   Formato de resposta padrão Astron:
@@ -262,6 +267,7 @@ Gabi: copywriting, social-content, content-strategy, marketing-ideas,
       hotmart-api, astron-members-api, meta-ads-api, notion-api, pdf-reports
 Max: analytics-tracking, ab-test-setup, openclaw-guardian, remembering-conversations,
      dispatching-parallel-agents, astron-members-api, meta-ads-api, notion-api, pdf-reports
+Sofia: astron-course-mapper, course-knowledge-builder
 
 ---
 
@@ -284,8 +290,9 @@ B. Heartbeat por estado (A9) — PARCIAL.
 C. USER.md com 8 blocos — Rocky (A5)
    Verificar e completar: perfil, negócios, família, equipe, tom,
    restrições, valores, contexto operacional.
-D. AGENTS.md atualizado em todos os workspaces (A5/A13) — CONCLUIDO em 2026-05-22.
-   Adendo de governança aplicado aos 5 agentes com marcador BEGIN_COGNIS_GOVERNANCA_ADENDO_v0.1.0.
+D. AGENTS.md atualizado em todos os workspaces (A5/A13) — CONCLUIDO.
+   Adendo de governança aplicado aos 5 agentes originais em 2026-05-22.
+   Sofia já nasceu em 2026-05-28 com marcador BEGIN_COGNIS_GOVERNANCA_ADENDO_v0.1.0 e Auto-Resolver.
 E. Crons: Revisão do Dia (18h) e meta-cron de auditoria (7h) — CONCLUIDO.
    Meta-cron de auditoria criado em 2026-05-22:
    rocky-auditoria-agentes-semanal, segunda 07:00 America/Sao_Paulo, agente main, Telegram Bruno.
@@ -307,7 +314,7 @@ H. MAPA.md inexistente nos workspaces atuais.
    - Garantir MAPA.md em raiz e em cada subárea quando houver áreas separadas.
    - Sobrepõe parcialmente com pendência A (TOOLS.md → MAPAs do mini-curso).
 I. _index.md em skills.
-   - Validar que cada pasta skills/ dos 5 agentes tem _index.md atualizado.
+   - Validar que cada pasta skills/ dos 6 agentes tem _index.md atualizado.
 J. Heartbeat baseado em estado (não só cron) — PARCIAL.
    - Rocky e BrIA: concluído via heartbeat-runner systemd + LLM one-shot.
    - Gabi e Max: HEARTBEAT.md existem, mas ainda sem runner dedicado.
@@ -316,9 +323,11 @@ J. Heartbeat baseado em estado (não só cron) — PARCIAL.
 K. Audit crons (camada 3 de segurança) — PARCIAL.
    - Rocky Auditor semanal ativo via OpenClaw cron `rocky-auditoria-agentes-semanal`.
    - Skill auditoria-agentes criada no Rocky em 2026-05-22 e atualizada para v0.2.0 em 2026-05-25.
+   - Atualizada em 2026-05-28 para incluir Sofia.
    - Roda semanalmente: arquivos canônicos, adendo de governança, memory recente,
      git limpo, commits recentes, upstream, possíveis segredos, scratch/backups e crons com erro.
    - Primeiro relatório salvo em ~/.openclaw/cerebro-governanca/auditorias/reports/auditoria-agentes-2026-05-22.md.
+   - Relatório mais recente: auditoria-agentes-2026-05-28.md com 6 agentes, 210/210 checks (100%).
    - Evoluir depois para auditoria mensal mais profunda.
 L. Gestor de agentes (master coordenador — estágio 4) — PARCIAL.
    - Rocky Auditor implementado como gestor read-only: lê, sinaliza, não corrige.
@@ -337,7 +346,7 @@ N. Estrutura áreas/ canônica nos workspaces compartilhados — CONCLUIDO/PARCI
    - Clone no VPS: `~/.openclaw/cerebro-bernardelli-areas/`.
    - Estrutura criada no padrão Pixel:
      `areas/{atendimento,conteudo,marketing,operacoes,produtos,tecnologia}/{contexto,skills,rotinas,projetos}`.
-   - BrIA, Gabi e Max foram conectados ao novo cérebro via `AGENTS.md`.
+   - BrIA, Gabi, Max e Sofia foram conectados ao novo cérebro via `AGENTS.md`/MAPA operacional.
    - `workspace-bria-shared` permanece como legado da BrIA e deve ser migrado com calma quando houver demanda real.
    - `workspace-shared` (Rocky+Leo) ainda não foi reorganizado; fazer apenas quando houver dor operacional.
 O. Cérebro modelo do GitHub do curso.
@@ -365,6 +374,62 @@ Atualização deste arquivo
 Ao final de cada sessão: "Atualize o INFRA.md com o que fizemos hoje."
 Claude atualiza E faz push para cognis-ia/infra no GitHub.
 Nunca criar um novo arquivo — sempre editar este.
+
+---
+
+Historico da sessao - 2026-05-28 (sessao 21 — Sofia/Astron e auditoria 6 agentes)
+
+- Criada Sofia, novo agente especialista em cursos da Bernardelli Ensino.
+  - ID OpenClaw: `sofia`.
+  - Workspace: `~/.openclaw/workspace-sofia`.
+  - Agent dir: `~/.openclaw/agents/sofia/agent`.
+  - Modelo: `openai/gpt-5.4`.
+  - Canal publico: nenhum nesta fase.
+- Repo privado criado e sincronizado:
+  - `cognis-ia/sofia-workspace-backup`.
+  - Commits principais:
+    - `feat: bootstrap sofia curso specialist`
+    - `feat: mapeia catalogo astron inicial`
+    - `chore: alinha sofia a governanca`
+- Estrutura Sofia criada seguindo o padrao Pixel:
+  - `IDENTITY.md`, `SOUL.md`, `USER.md`, `AGENTS.md`, `MAPA.md`, `MEMORY.md`, `HEARTBEAT.md`, `TOOLS.md`.
+  - `catalogo/`, `transcricoes/`, `knowledge/`, `pendencias/`, `skills/`, `memory/`.
+  - Skills iniciais: `astron-course-mapper` e `course-knowledge-builder`.
+- Sofia conectou na AstronMembers em modo read-only e gerou catalogo inicial.
+  - Club ID: 8194.
+  - Clubes encontrados: 1.
+  - Planos encontrados: 92.
+  - Aulas ativas encontradas: 491.
+  - Cursos inferidos por `course_id`: 37.
+  - Arquivos gerados: `catalogo/astron-discovery.*`, `catalogo/cursos.*`, `catalogo/curso-*.md`, `pendencias/astron-api.md`.
+  - Limitacao: a API inicial trouxe IDs/metadados de aulas, mas ainda nao nomes humanos completos de cursos/modulos em todos os niveis.
+- `cerebro-bernardelli-areas` atualizado para registrar Sofia:
+  - `MAPA.md`.
+  - `areas/operacoes/contexto/topologia-agentes.md`.
+  - `areas/produtos/contexto/produtos-conhecidos.md`.
+  - `areas/tecnologia/contexto/plataformas.md`.
+  - Commit: `e1511a0 docs: registra sofia e catalogo astron inicial`.
+- Sofia alinhada a governanca v0.2:
+  - AGENTS com `BEGIN_COGNIS_GOVERNANCA_ADENDO_v0.1.0`.
+  - Auto-Resolver.
+  - SOUL com Tom especifico e Continuidade v0.2.
+  - IDENTITY com Territories e Historico de versoes.
+  - HEARTBEAT por estado.
+  - `skills/_index.md` e `memory/2026-05-28.md`.
+- Backup systemd da Sofia criado e testado:
+  - `backup-workspace-sofia.service`.
+  - `backup-workspace-sofia.timer`.
+  - Schedule: diariamente 23:25 America/Sao_Paulo.
+  - Teste manual: sucesso; tree clean e sincronizado com origin.
+- Auditoria oficial atualizada para 6 agentes:
+  - Rocky Auditor (`auditoria-agentes`) agora inclui Sofia.
+  - Commit Rocky: `c4dbdf9 feat(auditoria): inclui sofia no relatorio`.
+  - Alto pendente do BrIA resolvido com commit dos relatorios Arte Derramada:
+    `e2d0e49 docs(reports): adiciona relatorio arte derramada 2026-05-28`.
+  - Auditoria final: 210/210 checks (100.0%), 0 criticos, 0 altos, 0 medios, 0 baixos.
+  - Commit governanca: `cb62d7e docs(auditoria): inclui sofia no relatorio 2026-05-28`.
+- Tokens/credenciais Astron nao foram rotacionados nesta fase por decisao anterior:
+  deixar tokens por ultimo. Credenciais continuam fora dos arquivos versionados e devem entrar na etapa de rotacao/migracao.
 
 ---
 

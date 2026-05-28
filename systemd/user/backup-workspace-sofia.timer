@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer diario backup workspace Sofia
+
+[Timer]
+OnCalendar=*-*-* 23:25:00 America/Sao_Paulo
+Persistent=true
+Unit=backup-workspace-sofia.service
+
+[Install]
+WantedBy=timers.target

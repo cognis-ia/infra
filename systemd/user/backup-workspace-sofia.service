@@ -1,0 +1,13 @@
+[Unit]
+Description=Backup diario workspace Sofia (git commit + push)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=WORKSPACE=/home/openclaw/.openclaw/workspace-sofia
+Environment=AGENT_NAME=Sofia
+ExecStart=/home/openclaw/.openclaw/workspace/skills/operacional/backup-workspace/scripts/run_backup.sh
+WorkingDirectory=/home/openclaw/.openclaw/workspace-sofia
+StandardOutput=journal
+StandardError=journal
