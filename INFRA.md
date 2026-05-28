@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-27 (sessão 10 — heartbeat-runner + focus-guard Rocky)
+Última atualização: 2026-05-28 (sessão 11 — limpeza de pendências no INFRA)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -28,7 +28,7 @@ Objetivo do stack: tudo no nível 3.
 - Empresa — compartilhado pelo time, auto-commit p/ dados não-sensíveis, gatilhos roteiam sensíveis pra diretoria.
   Hoje no stack: parcial — shared/bria-shared, sem segregação formal por área.
 - Diretoria — sem auto-commit. Tudo passa por staging → revisão humana → main.
-  Hoje no stack: NÃO existe (gap aberto — ver Pendências).
+  Hoje no stack: existe em `~/.openclaw/cerebro-diretoria/` (repo privado cognis-ia/cerebro-diretoria).
 
 Áreas vs Agentes (não misturar):
 - areas/ = conhecimento que existe independente de quem opera (vendas, marketing, atendimento, operações).
@@ -100,10 +100,10 @@ Camada 2 — Agente (comportamento)
 
 Camada 3 — Processo (disciplina operacional)
   - Dupla autorização — 2 confirmações antes de prod.                     [não implementado]
-  - Audit crons — auditoria diária automática.                            [não implementado — ver Pendências]
+  - Audit crons — auditoria automática dos agentes.                       [parcial: Rocky Auditor semanal ativo]
   - Logs completos — toda ação com timestamp.                             [validar]
   - Rotação de tokens — trocar chaves a cada 90 dias.                     [pendência aberta — OpenAI exposta]
-  - Memória no GitHub — backup de decisões críticas.                      [parcial: backups por agente ok, diretoria não existe]
+  - Memória no GitHub — backup de decisões críticas.                      [parcial: backups por agente + governança + diretoria ok]
 
 OWASP TOP 5 que as 3 camadas cobrem:
 Prompt Injection · Tool Misuse · Goal Hijack · Memory Poisoning · Privilege Abuse.
@@ -156,15 +156,29 @@ Gabi e Max ainda sem cérebro operacional compartilhado próprio; por enquanto o
 
 ---
 
-Crons ativos
+Automações ativas (resumo atual)
+
+OpenClaw cron nativo mantido:
 
 | ID | Nome | Agente | Horário | Status |
 |----|------|--------|---------|--------|
-| 1a645071 | rocky-backup-diario | main | 23h todo dia | error sem route |
-| 9cdbe3fa | leo-backup-diario | leo | 23h todo dia | ok |
-| b5bc28b7 | bria-backup-diario | bria | 23h todo dia | error sem chatId |
-| 8af5c4af | bria-heartbeat | bria | 8h 12h 16h 20h | error sem chatId |
-| edf0d77c | Monitorar emails | main | 9h 14h 20h | idle |
+| 2afeecdc | rocky-auditoria-agentes-semanal | main | segunda 07h | ok |
+
+Systemd user timers ativos:
+
+| Timer | Agente/uso | Horário |
+|-------|------------|---------|
+| heartbeat-runner-rocky.timer | Rocky heartbeat por estado | 08h, 12h, 16h, 20h |
+| heartbeat-runner-bria.timer | BrIA heartbeat por estado | 08h02, 12h02, 16h02, 20h02 |
+| backup-workspace-rocky.timer | backup Git Rocky | 23h00 |
+| backup-workspace-leo.timer | backup Git Leo | 23h05 |
+| backup-workspace-bria.timer | backup Git BrIA | 23h10 |
+| backup-workspace-gabi.timer | backup Git Gabi | 23h15 |
+| backup-workspace-max.timer | backup Git Max | 23h20 |
+| vigiar-markdowns-gabi.timer | watcher Markdown Gabi | 20h00 |
+| vigiar-markdowns-max.timer | watcher Markdown Max | 20h00 |
+
+Crons nativos antigos/desativados por arquitetura quebrada em sessão isolated: rocky-heartbeat, bria-heartbeat, vigiar-markdowns-gabi/max, rocky-backup-diario.
 
 ---
 
@@ -263,9 +277,10 @@ Curso Openclaw (mini) — implementação pendente (ordem de prioridade)
 A. TOOLS.md → MAPAs distribuídos — Rocky e Leo (A6)
    Migrar TOOLS.md monolítico para MAPA.md em cada pasta do workspace
    (memory/, content/, skills/, archive/). Gabi/Max/BrIA: verificar estado.
-B. Heartbeat Rocky e Leo (A9)
-   Criar HEARTBEAT.md e configurar proatividade passiva.
-   BrIA tem heartbeat mas está com erro (sem chatId).
+B. Heartbeat por estado (A9) — PARCIAL.
+   Rocky e BrIA concluídos via heartbeat-runner systemd em 2026-05-27.
+   Crons nativos antigos foram desativados porque ficavam funcionalmente blocked em sessão isolated.
+   Leo ainda não tem heartbeat-runner dedicado; avaliar necessidade antes de criar.
 C. USER.md com 8 blocos — Rocky (A5)
    Verificar e completar: perfil, negócios, família, equipe, tom,
    restrições, valores, contexto operacional.
@@ -288,12 +303,14 @@ H. MAPA.md inexistente nos workspaces atuais.
    - Sobrepõe parcialmente com pendência A (TOOLS.md → MAPAs do mini-curso).
 I. _index.md em skills.
    - Validar que cada pasta skills/ dos 5 agentes tem _index.md atualizado.
-J. Heartbeat baseado em estado (não só cron).
-   - Adotar conceito Pixel: heartbeat = decisão por estado (priorizar leads, pausar campanha,
-     recuperar cron falho). Reescrever bria-heartbeat após corrigir chatId.
+J. Heartbeat baseado em estado (não só cron) — PARCIAL.
+   - Rocky e BrIA: concluído via heartbeat-runner systemd + LLM one-shot.
+   - Gabi e Max: HEARTBEAT.md existem, mas ainda sem runner dedicado.
+   - Leo: avaliar necessidade de heartbeat-runner antes de criar.
    - Sobrepõe com pendência B.
 K. Audit crons (camada 3 de segurança) — PARCIAL.
-   - Skill auditoria-agentes v0.1.0 criada no Rocky em 2026-05-22.
+   - Rocky Auditor semanal ativo via OpenClaw cron `rocky-auditoria-agentes-semanal`.
+   - Skill auditoria-agentes criada no Rocky em 2026-05-22 e atualizada para v0.2.0 em 2026-05-25.
    - Roda semanalmente: arquivos canônicos, adendo de governança, memory recente,
      git limpo, commits recentes, upstream, possíveis segredos, scratch/backups e crons com erro.
    - Primeiro relatório salvo em ~/.openclaw/cerebro-governanca/auditorias/reports/auditoria-agentes-2026-05-22.md.
@@ -315,7 +332,7 @@ O. Cérebro modelo do GitHub do curso.
 
 Infraestrutura
 1. GitHub backup Gabi e Max — CONCLUIDO em 2026-05-22 (snapshots sanitizados, sem historico com tokens Notion)
-2. Cron bria heartbeat sem chatId — pendente. rocky-backup-diario migrado para systemd em 2026-05-26 (sessao 9).
+2. Cron bria heartbeat sem chatId — CONCLUIDO/substituido em 2026-05-27. Diagnostico real: crons agentTurn em sessão isolated ficavam blocked; solução atual é heartbeat-runner systemd para Rocky e BrIA. rocky-backup-diario também foi migrado para systemd em 2026-05-26 (sessao 9).
 4. Segundo cérebro Gabi e Max
 8. Deletar @Clawdio_Bruno_bot no BotFather — acao manual Bruno
 9. Verificar se allowFrom da Gabi devia ter ID da Jane (938877898) — se sim, adicionar de volta
@@ -847,3 +864,14 @@ Historico da sessao - 2026-05-27 (sessao 10 — Codex, heartbeat-runner systemd 
   - Windows: Start-ScheduledTask -TaskName 'OpenClaw Chrome Focus Monitor'
   - VPS: systemctl --user list-timers rocky-focus-checkin\*
   - VPS: journalctl --user -u rocky-focus-checkin.service -n 40 --no-pager
+
+Historico da sessao - 2026-05-28 (sessao 11 — limpeza de pendencias no INFRA)
+
+- INFRA.md auditado contra o estado real do VPS/GitHub.
+- Confirmado: copia local D:\COGNIS\Curso Openclaw\INFRA.md e repo cognis-ia/infra estavam sincronizados antes da edicao.
+- Limpas inconsistencias antigas no resumo operacional:
+  - secao de crons antigos substituida por resumo atual de OpenClaw cron + systemd timers;
+  - BrIA heartbeat deixou de constar como erro sem chatId e passou a constar como substituido pelo heartbeat-runner;
+  - pendencias B/J atualizadas para refletir que Rocky e BrIA ja rodam heartbeat por estado via systemd;
+  - diretoria e audit crons ajustados para refletir repos/rotinas ja criados.
+- Pendencias reais remanescentes seguem: rotacao de tokens, USER blocos 9-11, Frentes B/C/D do benchmark Pixel, Mission Control e segundo cerebro operacional Gabi/Max.
