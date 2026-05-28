@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-28 (sessão 14 — Frente D Mission Control)
+Última atualização: 2026-05-28 (sessão 16 — Starter Kit v2.5.7)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -669,7 +669,9 @@ Historico da sessao - 2026-05-25 (sessao 7 — Cowork + codex em paralelo)
   Frente D — CONCLUIDA/MVP em 2026-05-28.
     Mission Control read-only criado em ~/.openclaw/mission-control/ e copia local em
     D:\COGNIS\Curso Openclaw\mission-control\. Timer systemd atualiza a cada 30min.
-  Frente bonus — atualizar Starter Kit v2.5.6 -> v2.5.7
+  Frente bonus — CONCLUIDA em 2026-05-28.
+    Rocky atualizado com `wizard-conectar` v2.1 do Starter Kit v2.5.7.
+    Commit Rocky: 09289b9 fix(starter): atualiza wizard-conectar para v2.5.7
 
 - Documentos gerados nesta sessao salvos no D:\COGNIS\Curso Openclaw\:
   BENCHMARK-AMORA-2026-05-25.md (analise qualitativa Amora vs 5 agentes)
@@ -964,3 +966,25 @@ Historico da sessao - 2026-05-28 (sessao 15 — auditoria 100/100)
 - Relatorio final salvo e commitado no `cerebro-governanca`:
   - 68003bd docs: atualiza auditoria 100 porcento 2026-05-28
 - Mission Control regenerado apos auditoria 100%.
+
+Historico da sessao - 2026-05-28 (sessao 16 — Starter Kit v2.5.7)
+
+- Frente bonus do benchmark Pixel/Amora concluida.
+- Comparados os zips:
+  - `starter-kit-openclaw-v2.5.6.zip`
+  - `starter-kit-openclaw-v2.5.7.zip`
+- Mudanca operacional relevante do v2.5.7:
+  - `skills/starter/wizard-conectar/SKILL.md` v2.0 -> v2.1.
+  - Corrige fluxo Tavily removendo comando inexistente `openclaw secrets set`.
+  - Remove workaround incorreto via SDK Python.
+  - Documenta fluxo oficial: `.env` + `openclaw configure --section web` + `secrets apply` + `secrets reload` + `secrets audit`.
+  - Documenta workaround correto para `pairing required`: aluno executar manualmente no terminal Managed.
+- Aplicado no Rocky:
+  - `skills/starter/wizard-conectar/SKILL.md`
+  - `skills/_registry.md` atualizado para marcar `wizard-conectar` v2.1.
+- Validado:
+  - Nenhuma linha executavel `openclaw secrets set` permaneceu.
+  - Nenhuma linha executavel `pip install tavily-python` permaneceu.
+  - Linhas `openclaw secrets apply --dry-run` e `openclaw secrets apply` presentes.
+- Commit Rocky:
+  - 09289b9 fix(starter): atualiza wizard-conectar para v2.5.7
