@@ -286,10 +286,11 @@ C. USER.md com 8 blocos — Rocky (A5)
    restrições, valores, contexto operacional.
 D. AGENTS.md atualizado em todos os workspaces (A5/A13) — CONCLUIDO em 2026-05-22.
    Adendo de governança aplicado aos 5 agentes com marcador BEGIN_COGNIS_GOVERNANCA_ADENDO_v0.1.0.
-E. Crons: Revisão do Dia (18h) e meta-cron de auditoria (7h) — PARCIAL.
+E. Crons: Revisão do Dia (18h) e meta-cron de auditoria (7h) — CONCLUIDO.
    Meta-cron de auditoria criado em 2026-05-22:
    rocky-auditoria-agentes-semanal, segunda 07:00 America/Sao_Paulo, agente main, Telegram Bruno.
-   Revisão do Dia 18h ainda pendente.
+   Revisão do Dia criada em 2026-05-28 via systemd:
+   rocky-revisao-dia.timer, diariamente 18:00 America/Sao_Paulo, envia resumo deterministico via Telegram.
 F. Mission Control (A14) — CONCLUIDO/MVP em 2026-05-28.
    - VPS: ~/.openclaw/mission-control/
    - Local: D:\COGNIS\Curso Openclaw\mission-control\
@@ -993,3 +994,22 @@ Historico da sessao - 2026-05-28 (sessao 16 — Starter Kit v2.5.7)
   - Relatorio `auditoria-agentes-2026-05-28.md` atualizado com ultimo commit do Rocky `09289b9`.
   - Commit cerebro-governanca: e99d2e1 docs: atualiza auditoria apos starter v2.5.7
 - Mission Control regenerado apos a auditoria.
+
+Historico da sessao - 2026-05-28 (sessao 17 — Revisao do Dia 18h)
+
+- Pendencia E do mini-curso concluida.
+- Tentativa inicial via OpenClaw cron criada:
+  - `rocky-revisao-do-dia-18h`
+  - ID: 60a642d4-ece9-4d24-a4a1-2de8e4a04519
+  - Resultado do teste: entregou mensagem no Telegram, mas sem acesso real aos arquivos por `sessionTarget=isolated`.
+  - Acao: cron OpenClaw desativado.
+- Solucao final via systemd deterministico:
+  - Script: `~/.openclaw/mission-control/scripts/send_daily_review.py`
+  - Service: `rocky-revisao-dia.service`
+  - Timer: `rocky-revisao-dia.timer`
+  - Schedule: diariamente as 18:00 America/Sao_Paulo
+  - Fonte dos dados: `mission-control/data/status.json` + `infra/INFRA.md`
+  - Envio: `openclaw message send --channel telegram --target 1950767646`
+- Teste manual executado com sucesso:
+  - Telegram Message ID: 645
+- Copia local sincronizada em `D:\COGNIS\Curso Openclaw\mission-control\`.
