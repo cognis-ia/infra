@@ -1,0 +1,7 @@
+[Unit]
+Description=Revisao do Dia Rocky para Bruno
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /home/openclaw/.openclaw/mission-control/scripts/send_daily_review.py
+WorkingDirectory=/home/openclaw/.openclaw/mission-control

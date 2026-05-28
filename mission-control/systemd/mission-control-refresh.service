@@ -1,0 +1,7 @@
+[Unit]
+Description=Atualiza Mission Control Cognis IA
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /home/openclaw/.openclaw/mission-control/scripts/generate_status.py
+WorkingDirectory=/home/openclaw/.openclaw/mission-control
