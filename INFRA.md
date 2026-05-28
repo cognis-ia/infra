@@ -988,3 +988,8 @@ Historico da sessao - 2026-05-28 (sessao 16 — Starter Kit v2.5.7)
   - Linhas `openclaw secrets apply --dry-run` e `openclaw secrets apply` presentes.
 - Commit Rocky:
   - 09289b9 fix(starter): atualiza wizard-conectar para v2.5.7
+- Auditoria rerodada apos o upgrade:
+  - Resultado mantido: 175/175 checks (100.0%), 0 criticos, 0 altos, 0 medios.
+  - Relatorio `auditoria-agentes-2026-05-28.md` atualizado com ultimo commit do Rocky `09289b9`.
+  - Commit cerebro-governanca: e99d2e1 docs: atualiza auditoria apos starter v2.5.7
+- Mission Control regenerado apos a auditoria.
