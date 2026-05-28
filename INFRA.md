@@ -987,6 +987,30 @@ Historico da sessao - 2026-05-28 (sessao 19 — cerebro Bernardelli Areas)
   - Resultado mantido: 175/175 checks (100.0%), 0 criticos, 0 altos, 0 medios.
   - Commit cerebro-governanca: bb55379 docs: atualiza auditoria apos cerebro bernardelli areas
 
+Historico da sessao - 2026-05-28 (sessao 20 — populacao inicial Bernardelli Areas)
+
+- Primeira populacao do `cerebro-bernardelli-areas` concluida.
+- Fonte usada:
+  - `workspace-bria-shared/MAPA.md` (confirmado como praticamente vazio, apenas mapa legado);
+  - `TOOLS.md`, `MAPA.md` e `skills/_index.md` de BrIA, Gabi e Max.
+- Nao foram migradas memorias pessoais, casos de alunas, dados financeiros, contratos ou informacoes sensiveis.
+- Documentos criados:
+  - `areas/operacoes/contexto/topologia-agentes.md`
+  - `areas/operacoes/rotinas/uso-do-cerebro-areas.md`
+  - `areas/atendimento/contexto/politica-canais.md`
+  - `areas/tecnologia/contexto/plataformas.md`
+  - `areas/tecnologia/skills/apis-e-integracoes.md`
+  - `areas/marketing/contexto/capacidades-marketing.md`
+  - `areas/conteudo/contexto/capacidades-conteudo.md`
+  - `areas/produtos/contexto/produtos-conhecidos.md`
+- `_index.md` das subpastas correspondentes atualizado.
+- Varredura simples por segredos executada antes do commit; achados foram apenas textos preventivos como "nao salvar tokens".
+- Commit `cerebro-bernardelli-areas`:
+  - ed4b2f1 docs: popula base operacional inicial
+- Auditoria `auditoria-agentes` rerodada:
+  - Resultado mantido: 175/175 checks (100.0%), 0 criticos, 0 altos, 0 medios.
+  - Relatorio nao mudou em relacao ao commit anterior da governanca; sem novo commit em `cerebro-governanca`.
+
 Historico da sessao - 2026-05-28 (sessao 18 — permissionamento Telegram)
 
 - Pendencia M da Imersao Pixel concluida.
