@@ -946,6 +946,13 @@ Historico da sessao - 2026-05-28 (sessao 14 — Frente D Mission Control)
   - frequencia: a cada 30 minutos via `OnUnitActiveSec=30min`;
   - ultimo teste: service executou com `status=0/SUCCESS`.
 - Copia local sincronizada em `D:\COGNIS\Curso Openclaw\mission-control\`.
+- Codigo do Mission Control versionado no repo `cognis-ia/infra`:
+  - `mission-control/README.md`
+  - `mission-control/scripts/generate_status.py`
+  - `mission-control/scripts/send_daily_review.py`
+  - `mission-control/systemd/*.service`
+  - `mission-control/systemd/*.timer`
+  - Commit infra: ee384b5 feat: versiona mission control
 - O painel nao abre porta publica e nao acessa `cerebro-diretoria`; ele apenas mostra status e caminhos.
 
 Historico da sessao - 2026-05-28 (sessao 15 — auditoria 100/100)
