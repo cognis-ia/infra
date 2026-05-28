@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-28 (sessão 11 — limpeza de pendências no INFRA)
+Última atualização: 2026-05-28 (sessão 12 — Frente B referencias mini-curso v2)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -654,9 +654,10 @@ Historico da sessao - 2026-05-25 (sessao 7 — Cowork + codex em paralelo)
   - Checar presenca de "Territories" e "Historico" no IDENTITY
   - Caso contrario, auditoria continua passando 150/150 mas nao reflete profundidade nova
 
-- Demais Frentes do benchmark (B/C/D) NAO atacadas — ficam pra proximas sessoes:
-  Frente B — 10 adendos tematicos do Mini-curso v2 (refs como crons-do-seu-agente, mission-control, etc)
-    -> viriam pra cerebro-governanca/referencias/
+- Demais Frentes do benchmark (B/C/D) — estado atualizado:
+  Frente B — CONCLUIDA em 2026-05-28.
+    10 adendos tematicos do Mini-curso v2 criados em cerebro-governanca/referencias/mini-curso-v2/
+    Commit cerebro-governanca: de38206 docs: adiciona referencias mini-curso v2
   Frente C — Skill prompts-library com os 38 prompts da Pixel (6 categorias)
   Frente D — Mission Control (pendencia F do INFRA.md ainda em aberto)
   Frente bonus — atualizar Starter Kit v2.5.6 -> v2.5.7
@@ -874,4 +875,21 @@ Historico da sessao - 2026-05-28 (sessao 11 — limpeza de pendencias no INFRA)
   - BrIA heartbeat deixou de constar como erro sem chatId e passou a constar como substituido pelo heartbeat-runner;
   - pendencias B/J atualizadas para refletir que Rocky e BrIA ja rodam heartbeat por estado via systemd;
   - diretoria e audit crons ajustados para refletir repos/rotinas ja criados.
-- Pendencias reais remanescentes seguem: rotacao de tokens, USER blocos 9-11, Frentes B/C/D do benchmark Pixel, Mission Control e segundo cerebro operacional Gabi/Max.
+- Pendencias reais remanescentes naquele momento: rotacao de tokens, USER blocos 9-11, Frentes B/C/D do benchmark Pixel, Mission Control e segundo cerebro operacional Gabi/Max.
+
+Historico da sessao - 2026-05-28 (sessao 12 — Frente B referencias mini-curso v2)
+
+- Diretriz da sessao: continuar a preparacao dos agentes seguindo o conteudo Pixel, deixando rotacao de tokens por ultimo.
+- Auditoria atual dos 5 agentes regenerada com `auditoria-agentes` v0.2.0:
+  - Relatorio: ~/.openclaw/cerebro-governanca/auditorias/reports/auditoria-agentes-2026-05-28.md
+  - Resultado: 172/175 checks (98.3%), 0 criticos, 0 altos, 3 medios.
+  - Medios restantes: Rocky, Gabi e Max sem nota `memory/YYYY-MM-DD.md` recente.
+  - Commit cerebro-governanca: 2c937f9 docs: registra auditoria agentes 2026-05-28
+- Frente B do benchmark Pixel/Amora concluida no `cerebro-governanca`:
+  - Criada pasta `referencias/mini-curso-v2/`.
+  - Criados 10 adendos operacionais adaptados ao ecossistema Cognis IA:
+    onboarding, identidade, workspace, memoria, skills, crons/heartbeats,
+    outros canais, integracoes, multi-agente e mission-control.
+  - `README.md` e `CHANGELOG.md` atualizados para v0.3.0.
+  - Commit cerebro-governanca: de38206 docs: adiciona referencias mini-curso v2
+- Tokens NAO foram rotacionados nesta sessao por decisao operacional do Bruno; permanecem para a ultima etapa de seguranca.
