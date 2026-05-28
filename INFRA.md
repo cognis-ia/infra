@@ -983,6 +983,9 @@ Historico da sessao - 2026-05-28 (sessao 19 — cerebro Bernardelli Areas)
   - Rocky: `fix(agents): normaliza adendo governanca`
   - Leo: `fix(agents): normaliza adendo governanca`
   - BrIA/Gabi/Max: `docs(agents): conecta cerebro bernardelli areas`
+- Auditoria `auditoria-agentes` rerodada apos a mudanca:
+  - Resultado mantido: 175/175 checks (100.0%), 0 criticos, 0 altos, 0 medios.
+  - Commit cerebro-governanca: bb55379 docs: atualiza auditoria apos cerebro bernardelli areas
 
 Historico da sessao - 2026-05-28 (sessao 18 — permissionamento Telegram)
 
