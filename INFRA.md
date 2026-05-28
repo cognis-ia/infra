@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-28 (sessão 13 — Frente C prompts-library)
+Última atualização: 2026-05-28 (sessão 14 — Frente D Mission Control)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -290,7 +290,11 @@ E. Crons: Revisão do Dia (18h) e meta-cron de auditoria (7h) — PARCIAL.
    Meta-cron de auditoria criado em 2026-05-22:
    rocky-auditoria-agentes-semanal, segunda 07:00 America/Sao_Paulo, agente main, Telegram Bruno.
    Revisão do Dia 18h ainda pendente.
-F. Mission Control (A14) — dashboard visual, projeto maior, sessão dedicada
+F. Mission Control (A14) — CONCLUIDO/MVP em 2026-05-28.
+   - VPS: ~/.openclaw/mission-control/
+   - Local: D:\COGNIS\Curso Openclaw\mission-control\
+   - Gera index.html + data/status.json read-only.
+   - Timer systemd: mission-control-refresh.timer (a cada 30min).
 
 Imersão Pixel AI Hub — gaps de arquitetura (ver seções conceituais no topo)
 G. Cérebro de diretoria — CONCLUIDO em 2026-05-22.
@@ -662,7 +666,9 @@ Historico da sessao - 2026-05-25 (sessao 7 — Cowork + codex em paralelo)
     Skill `prompts-library` criada no Rocky em `skills/operacional/prompts-library/`.
     Material encontrado no curso: 12 arquivos `.md` em 6 categorias (business, community, content,
     productivity, research, support). Commit Rocky: f9e5570 feat(skills): adiciona prompts-library pixel
-  Frente D — Mission Control (pendencia F do INFRA.md ainda em aberto)
+  Frente D — CONCLUIDA/MVP em 2026-05-28.
+    Mission Control read-only criado em ~/.openclaw/mission-control/ e copia local em
+    D:\COGNIS\Curso Openclaw\mission-control\. Timer systemd atualiza a cada 30min.
   Frente bonus — atualizar Starter Kit v2.5.6 -> v2.5.7
 
 - Documentos gerados nesta sessao salvos no D:\COGNIS\Curso Openclaw\:
@@ -914,3 +920,27 @@ Historico da sessao - 2026-05-28 (sessao 13 — Frente C prompts-library)
   - Commit Rocky: f9e5570 feat(skills): adiciona prompts-library pixel
 - Observacao: INFRA antigo citava "38 prompts"; na pasta recebida do curso havia 12 arquivos `.md`.
   Se aparecer outro pacote de prompts, adicionar como nova fonte na mesma skill.
+
+Historico da sessao - 2026-05-28 (sessao 14 — Frente D Mission Control)
+
+- Frente D do benchmark Pixel/Amora concluida como MVP read-only.
+- Criado `~/.openclaw/mission-control/` no VPS com:
+  - `README.md`
+  - `scripts/generate_status.py`
+  - `systemd/mission-control-refresh.service`
+  - `systemd/mission-control-refresh.timer`
+  - `index.html`
+  - `data/status.json`
+- O gerador coleta sem usar tokens novos:
+  - estado Git dos 5 agentes;
+  - estado Git dos repos centrais governanca, diretoria e infra;
+  - auditoria mais recente;
+  - timers systemd relevantes;
+  - crons OpenClaw;
+  - pendencias do INFRA.md.
+- Instalado timer systemd user:
+  - `mission-control-refresh.timer`
+  - frequencia: a cada 30 minutos via `OnUnitActiveSec=30min`;
+  - ultimo teste: service executou com `status=0/SUCCESS`.
+- Copia local sincronizada em `D:\COGNIS\Curso Openclaw\mission-control\`.
+- O painel nao abre porta publica e nao acessa `cerebro-diretoria`; ele apenas mostra status e caminhos.
