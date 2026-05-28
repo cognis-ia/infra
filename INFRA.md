@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-28 (sessão 16 — Starter Kit v2.5.7)
+Última atualização: 2026-05-28 (sessão 18 — permissionamento Telegram)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -323,8 +323,14 @@ K. Audit crons (camada 3 de segurança) — PARCIAL.
 L. Gestor de agentes (master coordenador — estágio 4) — PARCIAL.
    - Rocky Auditor implementado como gestor read-only: lê, sinaliza, não corrige.
    - Relatório semanal ativo; coordenação operacional mais ampla ainda pendente.
-M. Permissionamento Telegram — auditar whitelist de IDs.
-   - Confirmar que cada @bot tem dmPolicy: allowlist com IDs explícitos.
+M. Permissionamento Telegram — CONCLUIDO em 2026-05-28.
+   - Todos os 5 bots Telegram têm dmPolicy=allowlist, allowFrom explícito,
+     groupAllowFrom explícito e groups.*.requireMention=true.
+   - Rocky/default: Bruno (1950767646).
+   - Leo: Bruno (1950767646).
+   - BrIA: Bruno (1950767646).
+   - Gabi: Bruno (1950767646) + Jane (938877898).
+   - Max: Bruno (1950767646); adicionar Marilia quando o ID Telegram for confirmado.
    - WhatsApp já está read-only desde 2026-05-20.
 N. Estrutura áreas/ canônica nos workspaces compartilhados.
    - workspace-shared (Rocky+Leo) e workspace-bria-shared não seguem padrão
@@ -340,7 +346,7 @@ Infraestrutura
 2. Cron bria heartbeat sem chatId — CONCLUIDO/substituido em 2026-05-27. Diagnostico real: crons agentTurn em sessão isolated ficavam blocked; solução atual é heartbeat-runner systemd para Rocky e BrIA. rocky-backup-diario também foi migrado para systemd em 2026-05-26 (sessao 9).
 4. Segundo cérebro Gabi e Max
 8. Deletar @Clawdio_Bruno_bot no BotFather — acao manual Bruno
-9. Verificar se allowFrom da Gabi devia ter ID da Jane (938877898) — se sim, adicionar de volta
+9. Verificar se allowFrom da Gabi devia ter ID da Jane (938877898) — CONCLUIDO em 2026-05-28.
 
 ---
 
@@ -946,6 +952,26 @@ Historico da sessao - 2026-05-28 (sessao 14 — Frente D Mission Control)
   - frequencia: a cada 30 minutos via `OnUnitActiveSec=30min`;
   - ultimo teste: service executou com `status=0/SUCCESS`.
 - Copia local sincronizada em `D:\COGNIS\Curso Openclaw\mission-control\`.
+
+Historico da sessao - 2026-05-28 (sessao 18 — permissionamento Telegram)
+
+- Pendencia M da Imersao Pixel concluida.
+- Backup da config criado antes da mudanca:
+  - `/home/openclaw/.openclaw/openclaw.json.bak-before-telegram-allowlist-20260528`
+- `openclaw.json` atualizado para todos os bots Telegram:
+  - `dmPolicy=allowlist`
+  - `allowFrom` explicito
+  - `groupAllowFrom` explicito
+  - `groups.*.requireMention=true`
+- Politica final:
+  - default/Rocky: Bruno (`1950767646`)
+  - Leo: Bruno (`1950767646`)
+  - BrIA: Bruno (`1950767646`)
+  - Gabi: Bruno (`1950767646`) + Jane (`938877898`)
+  - Max: Bruno (`1950767646`) ate confirmacao do ID Telegram da Marilia
+- `openclaw config validate` executado com sucesso.
+- `openclaw-gateway` reiniciado e confirmado ativo.
+- Tokens nao foram rotacionados nesta etapa.
 - Codigo do Mission Control versionado no repo `cognis-ia/infra`:
   - `mission-control/README.md`
   - `mission-control/scripts/generate_status.py`
