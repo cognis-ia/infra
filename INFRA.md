@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-28 (sessão 21 — Sofia/Astron e auditoria 6 agentes)
+Última atualização: 2026-05-28 (sessão 22 — Catálogo completo Astron)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -1169,3 +1169,25 @@ Historico da sessao - 2026-05-28 (sessao 17 — Revisao do Dia 18h)
 - Teste manual executado com sucesso:
   - Telegram Message ID: 645
 - Copia local sincronizada em `D:\COGNIS\Curso Openclaw\mission-control\`.
+
+---
+
+Historico da sessao - 2026-05-28 (sessao 22 — Catalogo completo Astron)
+
+- Identificados dois endpoints novos da API AstronMembers:
+  - `listClubCourses?club_id=8194` — retorna 40 cursos com nomes reais (4 paginas).
+  - `listCourseModules?club_id=8194&course_id=X` — retorna modulos com nomes (instavel em bulk, ok em probe individual).
+- Script `astron_full_catalog.py` criado em `workspace-sofia/scripts/`:
+  - Coleta cursos via `listClubCourses` (paginado).
+  - Tenta modulos via `listCourseModules` (best-effort; 404 em bulk por rate-limit).
+  - Coleta aulas por curso via `listClubClasses?course_id=X` (paginado).
+  - Gera `catalogo_completo.json`, `cursos.md` e 40 fichas `curso-<nome>.md`.
+- Resultado da coleta:
+  - 40 cursos com nomes reais (ex: "Modulo 2 - Paisagem", "Bonus Lives de Mentoria").
+  - 491 aulas ativas mapeadas com nome, ID, URL de video e modulo.
+  - 0 modulos via API em bulk (endpoint instavel; modulos inferidos por course_module_id).
+- Commit Sofia: `59cd5b9 feat(catalogo): catalogo completo com nomes reais — 40 cursos, 491 aulas`
+- Copia local: `D:\COGNIS\Curso Openclaw\sofia-workspace\catalogo\`
+- Pendencia de modulos: `listCourseModules` funciona individualmente (confirmado em probe);
+  solucao futura: chamar um curso por vez com delay maior, ou usar module_id das aulas como referencia.
+- Tokens/credenciais Astron continuam intocados (decisao: deixar rotacao por ultimo).
