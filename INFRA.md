@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-28 (sessão 18 — permissionamento Telegram)
+Última atualização: 2026-05-28 (sessão 19 — cérebro Bernardelli Areas)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -332,10 +332,14 @@ M. Permissionamento Telegram — CONCLUIDO em 2026-05-28.
    - Gabi: Bruno (1950767646) + Jane (938877898).
    - Max: Bruno (1950767646); adicionar Marilia quando o ID Telegram for confirmado.
    - WhatsApp já está read-only desde 2026-05-20.
-N. Estrutura áreas/ canônica nos workspaces compartilhados.
-   - workspace-shared (Rocky+Leo) e workspace-bria-shared não seguem padrão
-     areas/{nome}/{contexto,skills,rotinas,projetos}.
-   - Reorganizar conforme casos forem aparecendo (não refazer do zero).
+N. Estrutura áreas/ canônica nos workspaces compartilhados — CONCLUIDO/PARCIAL em 2026-05-28.
+   - Criado repo privado `cognis-ia/cerebro-bernardelli-areas`.
+   - Clone no VPS: `~/.openclaw/cerebro-bernardelli-areas/`.
+   - Estrutura criada no padrão Pixel:
+     `areas/{atendimento,conteudo,marketing,operacoes,produtos,tecnologia}/{contexto,skills,rotinas,projetos}`.
+   - BrIA, Gabi e Max foram conectados ao novo cérebro via `AGENTS.md`.
+   - `workspace-bria-shared` permanece como legado da BrIA e deve ser migrado com calma quando houver demanda real.
+   - `workspace-shared` (Rocky+Leo) ainda não foi reorganizado; fazer apenas quando houver dor operacional.
 O. Cérebro modelo do GitHub do curso.
    - imersao-openclaw-negocios-main.zip tem cérebro de exemplo populado com 4 agentes
      (assistente, marketing, bot-suporte) com SOUL+AGENTS+HEARTBEAT completos.
@@ -344,7 +348,7 @@ O. Cérebro modelo do GitHub do curso.
 Infraestrutura
 1. GitHub backup Gabi e Max — CONCLUIDO em 2026-05-22 (snapshots sanitizados, sem historico com tokens Notion)
 2. Cron bria heartbeat sem chatId — CONCLUIDO/substituido em 2026-05-27. Diagnostico real: crons agentTurn em sessão isolated ficavam blocked; solução atual é heartbeat-runner systemd para Rocky e BrIA. rocky-backup-diario também foi migrado para systemd em 2026-05-26 (sessao 9).
-4. Segundo cérebro Gabi e Max
+4. Segundo cérebro Gabi e Max — CONCLUIDO em 2026-05-28 via `cerebro-bernardelli-areas`.
 8. Deletar @Clawdio_Bruno_bot no BotFather — acao manual Bruno
 9. Verificar se allowFrom da Gabi devia ter ID da Jane (938877898) — CONCLUIDO em 2026-05-28.
 
@@ -952,6 +956,33 @@ Historico da sessao - 2026-05-28 (sessao 14 — Frente D Mission Control)
   - frequencia: a cada 30 minutos via `OnUnitActiveSec=30min`;
   - ultimo teste: service executou com `status=0/SUCCESS`.
 - Copia local sincronizada em `D:\COGNIS\Curso Openclaw\mission-control\`.
+
+Historico da sessao - 2026-05-28 (sessao 19 — cerebro Bernardelli Areas)
+
+- Criado o cerebro operacional compartilhado da Bernardelli Ensino:
+  - Repo privado: `cognis-ia/cerebro-bernardelli-areas`
+  - Clone VPS: `~/.openclaw/cerebro-bernardelli-areas/`
+  - Copia local: `D:\COGNIS\Curso Openclaw\cerebro-bernardelli-areas\`
+- Estrutura criada seguindo o padrao Pixel de areas vs agentes:
+  - `areas/atendimento/`
+  - `areas/produtos/`
+  - `areas/operacoes/`
+  - `areas/conteudo/`
+  - `areas/marketing/`
+  - `areas/tecnologia/`
+  - cada area com `contexto/`, `skills/`, `rotinas/`, `projetos/` e indices.
+- Regra de fronteira registrada:
+  - este cerebro e operacional;
+  - informacao com dinheiro nominal, pessoa especifica, contrato, juridico ou sociedade vai para `cerebro-diretoria`;
+  - Rocky e Leo nao usam este cerebro no dia a dia.
+- BrIA, Gabi e Max conectados via `AGENTS.md` com escopos:
+  - BrIA: atendimento, produtos, operacoes e `inbox/bria`;
+  - Gabi: conteudo, marketing e `inbox/gabi`;
+  - Max: operacoes, tecnologia e `inbox/max`.
+- Tambem foi normalizado o marcador quebrado do adendo de governanca nos 5 agentes:
+  - Rocky: `fix(agents): normaliza adendo governanca`
+  - Leo: `fix(agents): normaliza adendo governanca`
+  - BrIA/Gabi/Max: `docs(agents): conecta cerebro bernardelli areas`
 
 Historico da sessao - 2026-05-28 (sessao 18 — permissionamento Telegram)
 
