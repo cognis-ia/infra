@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-28 (sessão 12 — Frente B referencias mini-curso v2)
+Última atualização: 2026-05-28 (sessão 13 — Frente C prompts-library)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -658,7 +658,10 @@ Historico da sessao - 2026-05-25 (sessao 7 — Cowork + codex em paralelo)
   Frente B — CONCLUIDA em 2026-05-28.
     10 adendos tematicos do Mini-curso v2 criados em cerebro-governanca/referencias/mini-curso-v2/
     Commit cerebro-governanca: de38206 docs: adiciona referencias mini-curso v2
-  Frente C — Skill prompts-library com os 38 prompts da Pixel (6 categorias)
+  Frente C — CONCLUIDA em 2026-05-28.
+    Skill `prompts-library` criada no Rocky em `skills/operacional/prompts-library/`.
+    Material encontrado no curso: 12 arquivos `.md` em 6 categorias (business, community, content,
+    productivity, research, support). Commit Rocky: f9e5570 feat(skills): adiciona prompts-library pixel
   Frente D — Mission Control (pendencia F do INFRA.md ainda em aberto)
   Frente bonus — atualizar Starter Kit v2.5.6 -> v2.5.7
 
@@ -893,3 +896,21 @@ Historico da sessao - 2026-05-28 (sessao 12 — Frente B referencias mini-curso 
   - `README.md` e `CHANGELOG.md` atualizados para v0.3.0.
   - Commit cerebro-governanca: de38206 docs: adiciona referencias mini-curso v2
 - Tokens NAO foram rotacionados nesta sessao por decisao operacional do Bruno; permanecem para a ultima etapa de seguranca.
+
+Historico da sessao - 2026-05-28 (sessao 13 — Frente C prompts-library)
+
+- Frente C do benchmark Pixel/Amora concluida no workspace do Rocky:
+  - Criada skill `skills/operacional/prompts-library/`.
+  - Skill segue o principio de disclosure progressivo: `SKILL.md` pequeno, prompts em `references/prompts/`,
+    script de listagem em `scripts/list_prompts.py`.
+  - Fonte: `/tmp/pixel_unzipped/.../Templates de prompts/`.
+  - Material efetivamente encontrado: 12 arquivos `.md` em 6 categorias:
+    business, community, content, productivity, research e support.
+  - Validado:
+    `python3 skills/operacional/prompts-library/scripts/list_prompts.py`
+    `python3 skills/operacional/prompts-library/scripts/list_prompts.py --category content`
+    `python3 skills/operacional/prompts-library/scripts/list_prompts.py --search suporte`
+  - Atualizados `skills/MAPA.md` e `skills/operacional/_registry.md`.
+  - Commit Rocky: f9e5570 feat(skills): adiciona prompts-library pixel
+- Observacao: INFRA antigo citava "38 prompts"; na pasta recebida do curso havia 12 arquivos `.md`.
+  Se aparecer outro pacote de prompts, adicionar como nova fonte na mesma skill.
