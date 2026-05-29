@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-28 (sessão 22 — Catálogo completo Astron)
+Última atualização: 2026-05-29 (sessão 23 — Transcrição + Knowledge Base Arte Abstrata)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -1191,3 +1191,24 @@ Historico da sessao - 2026-05-28 (sessao 22 — Catalogo completo Astron)
 - Pendencia de modulos: `listCourseModules` funciona individualmente (confirmado em probe);
   solucao futura: chamar um curso por vez com delay maior, ou usar module_id das aulas como referencia.
 - Tokens/credenciais Astron continuam intocados (decisao: deixar rotacao por ultimo).
+
+---
+
+## Sessão 23 — 2026-05-29
+
+### Sofia: pipeline de transcrição completo
+
+**Problema resolvido:** ffmpeg estático segfaulta neste kernel. Solução definitiva: PyAV v17 (embute ffmpeg próprio) + download HLS puro Python.
+
+**Fix crítico PyAV v17:** `resampler.resample()` retorna lista — necessário iterar antes de `.to_ndarray()`.
+
+**Resultados:**
+- 42 aulas do curso "Explorando a Arte Abstrata" transcritas (0 erros)
+- Scripts: `transcribe_pipeline.py`, `build_knowledge.py`
+- Knowledge base gerado em `knowledge/explorando-arte-abstrata/` (5 arquivos, ~470 KB)
+- Commit: `d7ec7ff` em `cognis-ia/sofia-workspace-backup`
+
+**Pendente:**
+- Lives Bônus Arte Abstrata (99109, 60 aulas) — aguardando aprovação
+- Demais cursos Astron — próximas sessões
+- Token rotation (pendência de segurança em aberto)
