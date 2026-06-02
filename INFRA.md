@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-05-29 (sessão 23 — Transcrição + Knowledge Base Arte Abstrata)
+Última atualização: 2026-06-02 (sessão 24 — Hermes Agent + Lia + Rocky infra-manager)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -1212,3 +1212,52 @@ Historico da sessao - 2026-05-28 (sessao 22 — Catalogo completo Astron)
 - Lives Bônus Arte Abstrata (99109, 60 aulas) — aguardando aprovação
 - Demais cursos Astron — próximas sessões
 - Token rotation (pendência de segurança em aberto)
+
+---
+
+## Sessão 24 — 2026-06-02
+
+### Hermes Agent instalado no VPS
+
+- Versão: v0.15.1 (successor do OpenClaw)
+- Instalado em: `~/.hermes/hermes-agent/`
+- CLI: `~/.hermes/hermes-agent/venv/bin/hermes`
+- Auth: OAuth openai-codex (conta contato@pintandotelas.com.br) ✅
+- Modelo padrão: `gpt-5.4` via `openai-codex`
+- Serviço: `hermes-lia.service` (systemd user)
+
+### Agente Lia criada (Hermes)
+
+- Bot Telegram: `@BE_Lia_Suporte_bot` (token em `~/.hermes/.env`)
+- SOUL.md: `~/.hermes/SOUL.md` — tutora empática, escalada automática para humano
+- Knowledge base: `~/.hermes/skills/cursos-bernardelli/SKILL.md` (226 aulas, 4.1 MB)
+- Config: `~/.hermes/config.yaml` (provider: openai-codex, model: gpt-5.4)
+- Gateway: `hermes-lia.service` — sobe automaticamente no boot
+- Status: online ✅
+
+### Sofia — transcricoes e knowledge base completos
+
+Cursos transcritos (Whisper base + PyAV, sem ffmpeg):
+- Arte Abstrata: 49 aulas (módulo extra incluído)
+- Arte Derramada: 15 aulas
+- Pintando Telas (core): 88 aulas
+- Rosas Perfeitas: 73 aulas
+- Bônus Precificação: 1 aula
+- **Total: 226 aulas**
+
+Knowledge base em: `~/.openclaw/workspace-sofia/knowledge/`
+Arquivo consolidado: `~/.openclaw/workspace-sofia/cursos_BE.md` (4.1 MB)
+Pendente: Bônus Aulas Gratuitas (38784), Lives (38785, 99109), Mini Curso, cursos menores
+
+### Rocky — skill infra-manager
+
+Rocky (`@Rocky_Bruno_bot`) agora é o super agente de infraestrutura.
+Skill: `~/.openclaw/workspace/skills/infra-manager/SKILL.md`
+Capacidades: gerenciar todos os agentes, reiniciar serviços, aprovar pareamentos, atualizar Lia, ler/editar workspaces. Sob demanda apenas.
+
+### Pendências abertas
+
+- Lia: testar resposta completa com aluno (pairing desabilitado — validar)
+- Max: aprovar pareamento da Marilia (novo código necessário)
+- Lia: definir HUMAN_CONTACT em `~/.hermes/.env`
+- Token rotation (segurança — em aberto desde sessão anterior)
