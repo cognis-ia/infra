@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-06-03 (sessão 27 — Telegram Atlas)
+Última atualização: 2026-06-03 (sessão 28 — Atlas base Pixel + Codex CLI)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -1439,3 +1439,48 @@ Capacidades: gerenciar todos os agentes, reiniciar serviços, aprovar pareamento
 - Status do canal: `Telegram atlas: enabled, configured, running, disconnected, mode:polling, token:config`.
 - Permissionamento inicial: DM allowlist para Bruno (`1950767646`), mantendo a regra de duas camadas.
 - Observação operacional: em polling, o bot pode aparecer `disconnected` até haver conversa ativa; Bruno precisa abrir o chat do bot no Telegram e enviar `/start` ou primeira mensagem.
+
+## Sessão 28 — 2026-06-03
+
+### Atlas preparado como gestor institucional completo
+
+- Atlas recebeu a base de conhecimento Pixel AI Hub:
+  - `~/.openclaw/workspace-atlas/knowledge/pixel-ai-hub/curso-pixel-ai-hub-compilado.md`
+  - `~/.openclaw/workspace-atlas/knowledge/pixel-ai-hub/inventario-arquivos.md`
+  - `~/.openclaw/workspace-atlas/knowledge/pixel-ai-hub/README.md`
+- Atlas recebeu acesso documentado ao estado Cognis/OpenClaw:
+  - copia de referencia: `knowledge/infra/INFRA.md`
+  - fonte viva obrigatoria: `~/.openclaw/infra/INFRA.md`
+  - mapa operacional: `knowledge/estrutura/MAPA-COGNIS-OPENCLAW.md`
+- Atlas recebeu pesquisa curada de repos/skills externos em `knowledge/research/github-skills-2026-06-03.md`.
+  - Decisao: nao instalar third-party skills automaticamente; ler/auditar antes.
+- Codex CLI instalado no VPS para o usuario `openclaw`:
+  - versao validada: `codex-cli 0.136.0`
+  - uso documentado na skill `skills/operacional/codex-cli/`.
+- Skills internas novas:
+  - `skills/operacional/codex-cli/`
+  - `skills/operacional/ssh-workspace-operator/`
+  - `skills/operacional/estrutura-cognis/`
+- Skills Pixel curadas copiadas para `skills/pixel-ai-hub/`:
+  - auditoria-integridade
+  - relatorio-evolucao-agentes
+  - consolidacao-memoria
+  - criar-skill
+  - relatorio-rotinas
+  - backup-workspace-github
+  - commit-diario-workspace
+  - cron-resume-wizards
+  - seguranca-checklist
+  - writing-plans
+  - executing-plans
+  - verification-before-completion
+  - setup-agente-openclaw
+  - sync-empresa
+  - sync-diretoria
+- `openclaw skills check --agent atlas` validado:
+  - Total: 74
+  - Eligible: 31
+  - Visible to model: 31
+  - Missing requirements: 0
+- Commit Atlas:
+  - `3529d1a feat: prepara atlas com base pixel e codex cli`
