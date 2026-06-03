@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-06-03 (sessão 30 — Auditoria mensal de skills Atlas)
+Última atualização: 2026-06-03 (sessão 31 — Skills voice e youtube-watcher distribuídas)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -1556,3 +1556,66 @@ Capacidades: gerenciar todos os agentes, reiniciar serviços, aprovar pareamento
 - Commits:
   - Atlas: `1712dd7 feat: adiciona auditoria mensal de skills`
   - Governanca: `87294e6 docs: adiciona auditoria mensal de skills`
+
+## Sessão 31 — 2026-06-03
+
+### Skills compartilhadas Pixel instaladas nos agentes
+
+- Fonte local recebida:
+  - `C:\Users\brned\Downloads\voice.zip`
+  - `C:\Users\brned\Downloads\youtube-watcher.zip`
+- Distribuição aplicada:
+  - `voice`: instalada em todos os agentes OpenClaw formais:
+    - Rocky/main (`~/.openclaw/workspace/skills/voice`)
+    - Leo (`~/.openclaw/workspace-leo/skills/voice`)
+    - BrIA (`~/.openclaw/workspace-bria/skills/voice`)
+    - Gabi (`~/.openclaw/workspace-gabi/skills/voice`)
+    - Max (`~/.openclaw/workspace-max/skills/voice`)
+    - Sofia (`~/.openclaw/workspace-sofia/skills/voice`)
+    - Atlas (`~/.openclaw/workspace-atlas/skills/voice`)
+  - `youtube-watcher`: instalada somente em Rocky/main, Leo, Gabi e Max:
+    - `~/.openclaw/workspace/skills/youtube-watcher`
+    - `~/.openclaw/workspace-leo/skills/youtube-watcher`
+    - `~/.openclaw/workspace-gabi/skills/youtube-watcher`
+    - `~/.openclaw/workspace-max/skills/youtube-watcher`
+- Índices atualizados:
+  - `skills/_index.md` de cada workspace recebeu a entrada da skill correspondente.
+- Dependências instaladas no VPS para o usuário `openclaw`:
+  - `edge-tts 7.2.8`
+  - `yt-dlp 2026.03.17`
+  - Fallback operacional para `~/.local/bin`, porque serviços systemd/OpenClaw podem não carregar PATH interativo.
+- Hardening antes da distribuição:
+  - `voice/index.js` reescrito para usar chamada por argumentos, não comando em string.
+  - saída da voice limitada a arquivo `.mp3` simples dentro do diretório temporário.
+  - bloqueio básico de padrões de segredo em texto falado (`sk-`, `ghp_`, `github_pat_`, chave privada).
+  - texto limitado a 5000 caracteres.
+  - `youtube-watcher/scripts/get_transcript.py` ajustado para localizar `yt-dlp` em PATH ou `~/.local/bin`.
+- Validação:
+  - `openclaw skills check --agent` passou com `Missing requirements: 0` em Rocky/main, Leo, BrIA, Gabi, Max, Sofia e Atlas.
+  - `youtube-watcher` confirmado como visível e pronto em Rocky/main, Leo, Gabi e Max.
+  - geração de arquivo TTS por `edge-tts` validada em `/tmp/openclaw-voice-test.mp3`.
+  - reprodução de áudio não validada no VPS headless; geração do MP3 está operacional.
+- Auditoria mensal de skills reexecutada após instalação:
+  - Agentes avaliados: 7
+  - Skills avaliadas: 201
+  - Resultado:
+    - APROVADA: 67
+    - APROVADA_COM_AJUSTES: 7
+    - SOMENTE_REFERENCIA: 88
+    - QUARENTENA: 39
+  - Relatórios atualizados:
+    - `~/.openclaw/workspace-atlas/reports/auditoria-skills-2026-06-03.md`
+    - `~/.openclaw/cerebro-governanca/auditorias/reports/auditoria-skills-2026-06-03.md`
+- Commits dos workspaces:
+  - Rocky/main: `89d7483 feat(skills): adiciona voice e youtube watcher`
+  - Leo: `15c9802 feat(skills): adiciona voice e youtube watcher`
+  - BrIA: `bd192b3 feat(skills): adiciona voice`
+  - Gabi: `ec792ef feat(skills): adiciona voice e youtube watcher`
+  - Max: `410b219 feat(skills): adiciona voice e youtube watcher`
+  - Sofia: `881bbea feat(skills): adiciona voice`
+  - Atlas: `90ba82f feat(skills): adiciona voice`
+  - Atlas auditoria atualizada: `79ca635 chore: atualiza auditoria skills apos voice youtube`
+  - Governança auditoria atualizada: `3aefe52 docs: atualiza auditoria skills apos voice youtube`
+- Observações:
+  - Atlas continua sem upstream GitHub até rotação/correção do token GitHub.
+  - Arquivos locais/untracked não relacionados em Rocky, BrIA e governança foram preservados sem alteração.
