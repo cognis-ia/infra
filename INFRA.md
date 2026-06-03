@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-06-02 (sessão 24 — Hermes Agent + Lia + Rocky infra-manager)
+Última atualização: 2026-06-02 (sessão 26 — Atlas gestor + heartbeats Leo/Gabi/Max)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -124,7 +124,7 @@ Serviço: systemctl --user restart openclaw-gateway
 
 ---
 
-Agentes ativos (6)
+Agentes ativos (7)
 
 | Agente | ID | Emoji | Papel | Canal Telegram | Workspace | GitHub backup |
 |--------|-----|-------|-------|---------------|-----------|---------------|
@@ -134,6 +134,7 @@ Agentes ativos (6)
 | Gabi | gabi | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | cognis-ia/gabi-workspace-backup |
 | Max | max | Operacional da Marilia — Bernardelli Ensino | telegram:max (@BE_Max_bot) | ~/.openclaw/workspace-max | cognis-ia/max-workspace-backup |
 | Sofia | sofia | Especialista em cursos/Astron — Bernardelli Ensino | sem canal publico | ~/.openclaw/workspace-sofia | cognis-ia/sofia-workspace-backup |
+| Atlas | atlas | Gestor institucional de agentes, auditoria e lifecycle | sem canal publico | ~/.openclaw/workspace-atlas | pendente: criar repo apos token rotation |
 
 GitHub org: cognis-ia — token no VPS em ~/.openclaw/workspace/.env
 
@@ -165,7 +166,7 @@ OpenClaw cron nativo mantido:
 
 | ID | Nome | Agente | Horário | Status |
 |----|------|--------|---------|--------|
-| 2afeecdc | rocky-auditoria-agentes-semanal | main | segunda 07h | ok |
+| 2afeecdc | atlas-auditoria-agentes-semanal | atlas | segunda 07h | ok |
 
 Systemd user timers ativos:
 
@@ -173,6 +174,9 @@ Systemd user timers ativos:
 |-------|------------|---------|
 | heartbeat-runner-rocky.timer | Rocky heartbeat por estado | 08h, 12h, 16h, 20h |
 | heartbeat-runner-bria.timer | BrIA heartbeat por estado | 08h02, 12h02, 16h02, 20h02 |
+| heartbeat-runner-leo.timer | Leo heartbeat por estado | 08h04, 12h04, 16h04, 20h04 |
+| heartbeat-runner-gabi.timer | Gabi heartbeat por estado | 08h06, 12h06, 16h06, 20h06 |
+| heartbeat-runner-max.timer | Max heartbeat por estado | 08h08, 12h08, 16h08, 20h08 |
 | backup-workspace-rocky.timer | backup Git Rocky | 23h00 |
 | backup-workspace-leo.timer | backup Git Leo | 23h05 |
 | backup-workspace-bria.timer | backup Git BrIA | 23h10 |
@@ -276,17 +280,19 @@ Pendências
 URGENTE
 5. Renovar token OpenAI Codex — ate 22 maio 2026 (SSH com TTY)
 6. Rotacionar chave OpenAI — exposta em historico Git
-7. Rotacionar PAT GitHub que estava exposto no remote antigo do Rocky (remote corrigido em 2026-05-22, token ainda deve ser revogado).
-8. Rotacionar tokens Notion de Gabi/Max (valores foram encontrados em historico local antigo; repos novos foram sanitizados antes do primeiro push).
+7. Rotacionar tokens Notion de Gabi/Max (valores foram encontrados em historico local antigo; repos novos foram sanitizados antes do primeiro push).
+8. Endurecer Control UI do gateway: remover `allowInsecureAuth=true` e tirar `controlUi.token` do `openclaw.json` para fonte menos exposta.
+9. Revisar credenciais injetadas por drop-ins do systemd (`openai.conf`, `gog-account.conf`, integrações Hermes/Lia) e consolidar fila de rotação.
 
 Curso Openclaw (mini) — implementação pendente (ordem de prioridade)
 A. TOOLS.md → MAPAs distribuídos — Rocky e Leo (A6)
    Migrar TOOLS.md monolítico para MAPA.md em cada pasta do workspace
    (memory/, content/, skills/, archive/). Gabi/Max/BrIA: verificar estado.
-B. Heartbeat por estado (A9) — PARCIAL.
+B. Heartbeat por estado (A9) — CONCLUIDO/PARCIAL.
    Rocky e BrIA concluídos via heartbeat-runner systemd em 2026-05-27.
+   Leo, Gabi e Max concluídos/testados via heartbeat-runner systemd em 2026-06-02.
    Crons nativos antigos foram desativados porque ficavam funcionalmente blocked em sessão isolated.
-   Leo ainda não tem heartbeat-runner dedicado; avaliar necessidade antes de criar.
+   Sofia e Atlas seguem sem heartbeat-runner dedicado por desenho: Sofia é knowledge-base; Atlas tem auditoria semanal.
 C. USER.md com 8 blocos — Rocky (A5)
    Verificar e completar: perfil, negócios, família, equipe, tom,
    restrições, valores, contexto operacional.
@@ -315,23 +321,26 @@ H. MAPA.md inexistente nos workspaces atuais.
    - Sobrepõe parcialmente com pendência A (TOOLS.md → MAPAs do mini-curso).
 I. _index.md em skills.
    - Validar que cada pasta skills/ dos 6 agentes tem _index.md atualizado.
-J. Heartbeat baseado em estado (não só cron) — PARCIAL.
+J. Heartbeat baseado em estado (não só cron) — CONCLUIDO/PARCIAL.
    - Rocky e BrIA: concluído via heartbeat-runner systemd + LLM one-shot.
-   - Gabi e Max: HEARTBEAT.md existem, mas ainda sem runner dedicado.
-   - Leo: avaliar necessidade de heartbeat-runner antes de criar.
+   - Leo, Gabi e Max: concluído em 2026-06-02; services testados com HEARTBEAT_OK.
+   - Sofia/Atlas: sem runner dedicado por enquanto; manter avaliação futura.
    - Sobrepõe com pendência B.
 K. Audit crons (camada 3 de segurança) — PARCIAL.
-   - Rocky Auditor semanal ativo via OpenClaw cron `rocky-auditoria-agentes-semanal`.
+   - Atlas Auditor semanal ativo via OpenClaw cron `atlas-auditoria-agentes-semanal`.
    - Skill auditoria-agentes criada no Rocky em 2026-05-22 e atualizada para v0.2.0 em 2026-05-25.
    - Atualizada em 2026-05-28 para incluir Sofia.
    - Roda semanalmente: arquivos canônicos, adendo de governança, memory recente,
      git limpo, commits recentes, upstream, possíveis segredos, scratch/backups e crons com erro.
    - Primeiro relatório salvo em ~/.openclaw/cerebro-governanca/auditorias/reports/auditoria-agentes-2026-05-22.md.
-   - Relatório mais recente: auditoria-agentes-2026-05-28.md com 6 agentes, 210/210 checks (100%).
+   - Relatório mais recente: auditoria-agentes-2026-06-02.md com 7 agentes, 244/245 checks (99.6%).
+   - Único médio atual: Atlas sem upstream GitHub, bloqueado até token rotation/criação do repo `atlas-workspace-backup`.
    - Evoluir depois para auditoria mensal mais profunda.
-L. Gestor de agentes (master coordenador — estágio 4) — PARCIAL.
-   - Rocky Auditor implementado como gestor read-only: lê, sinaliza, não corrige.
-   - Relatório semanal ativo; coordenação operacional mais ampla ainda pendente.
+L. Gestor de agentes (master coordenador — estágio 4) — PARCIAL/EVOLUINDO.
+   - Decisão 2026-06-02: não misturar Rocky pessoal com gestor institucional.
+   - Atlas criado como agente separado para criar, gerenciar e auditar agentes/estruturas.
+   - Auditoria semanal migrada de Rocky/main para Atlas/atlas.
+   - Coordenação operacional corretiva ainda depende de autorização explícita do Bruno.
 M. Permissionamento Telegram — CONCLUIDO em 2026-05-28.
    - Todos os 5 bots Telegram têm dmPolicy=allowlist, allowFrom explícito,
      groupAllowFrom explícito e groups.*.requireMention=true.
@@ -339,7 +348,7 @@ M. Permissionamento Telegram — CONCLUIDO em 2026-05-28.
    - Leo: Bruno (1950767646).
    - BrIA: Bruno (1950767646).
    - Gabi: Bruno (1950767646) + Jane (938877898).
-   - Max: Bruno (1950767646); adicionar Marilia quando o ID Telegram for confirmado.
+   - Max: Bruno (1950767646) + Marilia (8443736822).
    - WhatsApp já está read-only desde 2026-05-20.
 N. Estrutura áreas/ canônica nos workspaces compartilhados — CONCLUIDO/PARCIAL em 2026-05-28.
    - Criado repo privado `cognis-ia/cerebro-bernardelli-areas`.
@@ -360,6 +369,8 @@ Infraestrutura
 4. Segundo cérebro Gabi e Max — CONCLUIDO em 2026-05-28 via `cerebro-bernardelli-areas`.
 8. Deletar @Clawdio_Bruno_bot no BotFather — acao manual Bruno
 9. Verificar se allowFrom da Gabi devia ter ID da Jane (938877898) — CONCLUIDO em 2026-05-28.
+10. Max allowlist — CONCLUIDO em 2026-06-02. `allowFrom` e `groupAllowFrom` da Max confirmados com Bruno + Marilia no `openclaw.json`.
+11. PAT GitHub antigo do Rocky — CONCLUIDO em 2026-06-02. Token revogado manualmente por Bruno; validado localmente com `git ls-remote origin` ainda funcional no repo `cognis-ia/clawdio-workspace-backup`.
 
 ---
 
@@ -430,6 +441,44 @@ Historico da sessao - 2026-05-28 (sessao 21 — Sofia/Astron e auditoria 6 agent
   - Commit governanca: `cb62d7e docs(auditoria): inclui sofia no relatorio 2026-05-28`.
 - Tokens/credenciais Astron nao foram rotacionados nesta fase por decisao anterior:
   deixar tokens por ultimo. Credenciais continuam fora dos arquivos versionados e devem entrar na etapa de rotacao/migracao.
+
+---
+
+Historico da sessao - 2026-06-02 (sessao 25 — Rocky infra-manager)
+
+- Diagnostico da Max fechado:
+  - O bloqueio da Marilia era de permissionamento de entrada, nao de token ou bot offline.
+  - `dmPolicy: allowlist` exige combinacao correta entre `allowFrom` / `groupAllowFrom` no `openclaw.json`.
+  - Estado final confirmado da Max: Bruno (`1950767646`) + Marilia (`8443736822`) autorizados.
+- `INFRA.md` revisado para refletir o estado real da infra:
+  - Max marcada como concluida.
+  - Lista de pendencias reorganizada por risco real.
+  - `allowInsecureAuth` e credenciais em drop-ins promovidos a pendencias explicitas.
+- Incidente operacional identificado durante a sessao:
+  - Reiniciar `openclaw-gateway` no meio do turno derruba o app-server ativo da sessao Codex.
+  - Log observado: `SIGTERM` seguido de `codex app-server client closed before turn completed`.
+  - Regra pratica: evitar restart do gateway durante investigacao interativa, salvo necessidade real.
+- Timer `rocky-revisao-dia.timer` corrigido sem restart do gateway:
+  - Havia alerta de `Timezone` invalido.
+  - Arquivo ajustado e `systemd` reloaded sem derrubar o runtime principal.
+- Mapeamento de risco de credenciais concluido:
+  - Risco estrutural mais serio encontrado no `openclaw.json`: `controlUi.token` em arquivo canônico + `allowInsecureAuth=true`.
+  - OpenAI em uso cruzado entre `openclaw.json`, drop-ins do gateway e runtime Hermes/Lia.
+  - Tokens Notion concentrados em Gabi/Max.
+  - PAT GitHub antigo do Rocky parecia o item mais seguro para matar primeiro.
+- Priorizacao de rotacao definida:
+  1. PAT GitHub antigo do Rocky.
+  2. Tokens Notion de Gabi/Max.
+  3. Credenciais OpenAI com coordenacao entre OpenClaw e Hermes/Lia.
+  4. `controlUi.token` do gateway por ultimo, porque impacta o acesso do operador.
+- Acao executada e validada:
+  - Bruno revogou manualmente o PAT GitHub antigo do Rocky.
+  - Validacao local apos a revogacao:
+    - `git ls-remote origin` continuou funcionando no repo `cognis-ia/clawdio-workspace-backup`.
+    - `openclaw-gateway.service` permaneceu ativo e estavel.
+  - Conclusao: o token deletado era o antigo/exposto, nao o token ativo do backup.
+- Observacao lateral:
+  - Nesta VPS nao existe a unit `backup-workspace-github.timer`; os backups ativos sao os timers individuais `backup-workspace-*.timer` por agente.
 
 ---
 
@@ -1257,7 +1306,123 @@ Capacidades: gerenciar todos os agentes, reiniciar serviços, aprovar pareamento
 
 ### Pendências abertas
 
-- Lia: testar resposta completa com aluno (pairing desabilitado — validar)
-- Max: aprovar pareamento da Marilia (novo código necessário)
-- Lia: definir HUMAN_CONTACT em `~/.hermes/.env`
+- Lia: testar resposta completa com aluno real (serviço online; pairing desabilitado; `HUMAN_CONTACT=Bruno` já definido)
 - Token rotation (segurança — em aberto desde sessão anterior)
+- OpenClaw Control UI: revisar e endurecer `gateway.controlUi.allowInsecureAuth=true` antes de expor/usar dashboard fora do caso local compatível
+- OpenClaw gateway: migrar credenciais injetadas via systemd drop-ins para um arranjo mais limpo/rotacionável
+
+### Rocky — saneamento inicial da infra
+
+- Diagnóstico da Max revisitado em 2026-06-02: a config atual em disco já está correta.
+  `allowFrom` e `groupAllowFrom` incluem Bruno (`1950767646`) e Marilia (`8443736822`).
+- Problema operacional identificado durante o saneamento:
+  reiniciar `openclaw-gateway` no meio de uma sessão ativa mata o próprio turno em andamento
+  (`codex app-server client closed before turn completed`). Tratar restart/reload como operação controlada.
+- `rocky-revisao-dia.timer` corrigido:
+  removida chave inválida `Timezone`; timer segue ativo para 18:00 America/Sao_Paulo.
+- Inventário local confirmou superfície de credenciais em:
+  workspaces (`.env`), Hermes (`~/.hermes/.env`) e drop-ins do systemd do gateway.
+- Risco estrutural confirmado:
+  `gateway.controlUi.allowInsecureAuth=true` e `gateway.controlUi.token` seguem presentes no `openclaw.json`.
+- Ordem segura de rotação/reforço validada:
+  1. revogar o PAT GitHub antigo do Rocky (histórico; remote atual já está limpo)
+  2. rotacionar `NOTION_TOKEN_TRABALHO` e `NOTION_TOKEN` de Gabi/Max
+  3. alinhar credenciais OpenAI entre `openclaw.json`, drop-ins do gateway e Hermes/Lia
+  4. por último revisar/rotacionar `gateway.controlUi.token`
+- Mapeamento de uso crítico:
+  - Notion: concentrado em Gabi/Max via skills `notion-api` e `.env`
+  - GitHub: `GITHUB_TOKEN` atual em Rocky/Leo/BrIA; PAT antigo do Rocky citado apenas como exposição histórica
+- OpenAI: espalhado entre `openclaw.json`, drop-ins do `openclaw-gateway` e `~/.hermes/.env`
+
+---
+
+## Sessão 26 — 2026-06-02
+
+### Atlas — agente gestor institucional criado
+
+- Decisão arquitetural: Rocky permanece agente pessoal do Bruno; função de criar, gerenciar e auditar agentes/estruturas passa para Atlas.
+- Agente OpenClaw criado:
+  - ID: `atlas`
+  - Workspace: `~/.openclaw/workspace-atlas`
+  - Agent dir: `~/.openclaw/agents/atlas/agent`
+  - Modelo: `openai/gpt-5.4`
+  - Canal publico: nenhum por enquanto
+- Arquivos canônicos criados no padrão Pixel/Governança:
+  `IDENTITY.md`, `SOUL.md`, `USER.md`, `AGENTS.md`, `MAPA.md`, `MEMORY.md`, `HEARTBEAT.md`, `TOOLS.md`, `memory/2026-06-02.md`.
+- Skills do Atlas:
+  - `skills/operacional/agent-lifecycle/` — criar, gerenciar e auditar agentes.
+  - `skills/operacional/auditoria-agentes/` — migrada/copiada do Rocky e atualizada para Atlas Auditor.
+  - `skills/infra-manager/` — migrada/copiada do Rocky como função institucional.
+- Commits locais Atlas:
+  - `9357286 feat: bootstrap atlas agent`
+  - `cd5481f feat: atlas assume auditoria agentes`
+  - `d126f95 docs(identity): define emoji atlas`
+  - `7693509 docs: adiciona indice operacional`
+- GitHub backup do Atlas pendente: tentativa de criar `cognis-ia/atlas-workspace-backup` falhou com `GITHUB_TOKEN` 401. Manter para etapa de token rotation.
+
+### Auditoria migrada de Rocky para Atlas
+
+- Cron OpenClaw existente `2afeecdc-c292-4521-8a3b-1bcd8f51d0af` foi editado:
+  - Nome: `atlas-auditoria-agentes-semanal`
+  - Agente: `atlas`
+  - Agenda: segunda 07:00 America/Sao_Paulo
+  - Entrega: Telegram Bruno
+- Auditoria manual pós-migração:
+  - Relatório: `~/.openclaw/cerebro-governanca/auditorias/reports/auditoria-agentes-2026-06-02.md`
+  - Resultado: 7 agentes, 244/245 checks (99.6%), 0 críticos, 0 altos, 1 médio.
+  - Médio único: Atlas sem upstream GitHub por causa da etapa de tokens.
+- Commit governança:
+  - `5560660 docs: auditoria atlas 2026-06-02`
+- Observação: `auditoria-agentes-2026-06-01.md` apareceu untracked em `cerebro-governanca`; não foi alterado nesta sessão.
+
+### MAPA.md e _index.md
+
+- Gerados/commits de índices de categorias em `skills/{canais,operacional,planejamento,starter}/_index.md` para Rocky, Leo, BrIA, Gabi e Max.
+- Gabi e Max receberam `content/MAPA.md` e `archive/MAPA.md`.
+- Atlas recebeu `skills/operacional/_index.md`.
+- Commits:
+  - Rocky: `729b39e docs: adiciona indices de skills e mapas`
+  - Leo: `c1dba20 docs: adiciona indices de skills e mapas`
+  - BrIA: `4ea033d docs: adiciona indices de skills e mapas`
+  - Gabi: `05c0332 docs: adiciona indices de skills e mapas`
+  - Max: `cdf2d76 docs: adiciona indices de skills e mapas`
+
+### Heartbeats por estado ampliados
+
+- Criados e habilitados timers systemd:
+  - `heartbeat-runner-leo.{service,timer}` — 08:04, 12:04, 16:04, 20:04
+  - `heartbeat-runner-gabi.{service,timer}` — 08:06, 12:06, 16:06, 20:06
+  - `heartbeat-runner-max.{service,timer}` — 08:08, 12:08, 16:08, 20:08
+- Testes manuais:
+  - Leo: `status=0/SUCCESS`, resposta `HEARTBEAT_OK`
+  - Gabi: `status=0/SUCCESS`, resposta `HEARTBEAT_OK`
+  - Max: `status=0/SUCCESS`, resposta `HEARTBEAT_OK`
+- Commit infra:
+  - `68670d4 feat(systemd): heartbeat-runner para leo gabi max`
+
+### Lia, Max e hardening validado
+
+- Lia:
+  - `hermes-lia.service` ativo e rodando.
+  - `HUMAN_CONTACT=Bruno` já definido em `~/.hermes/.env`.
+  - Pairing desabilitado/allow-all ainda precisa teste com aluno real.
+- Max:
+  - Não há pending Telegram pairing requests.
+  - `allowFrom`/`groupAllowFrom` já incluem Bruno e Marilia no `openclaw.json`.
+- Hardening validado:
+  - `fail2ban`: active.
+  - `ufw`: active, somente SSH liberado.
+  - Gateway OpenClaw `18789`: escutando apenas em `127.0.0.1` e `::1`.
+  - `unattended-upgrades`: active.
+  - Logs `openclaw-gateway` e `hermes-lia`: disponíveis via journalctl.
+
+### Pendências reais após sessão 26
+
+- Token rotation segue propositalmente por último:
+  - OpenAI/OpenClaw/Hermes
+  - Notion Gabi/Max
+  - GitHub token atual 401 para criação de repo Atlas
+  - Control UI token/insecure auth
+- Criar/pushar `cognis-ia/atlas-workspace-backup` depois da rotação/credencial GitHub nova.
+- Testar Lia com aluno real.
+- Avaliar auditoria mensal profunda do Atlas.
