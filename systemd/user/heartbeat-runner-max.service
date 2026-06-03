@@ -1,0 +1,18 @@
+[Unit]
+Description=Heartbeat por estado Max (LLM + contexto local)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=WORKSPACE=/home/openclaw/.openclaw/workspace-max
+Environment=AGENT_ID=max
+Environment=AGENT_NAME=Max
+Environment=TELEGRAM_ACCOUNT=max
+Environment=TELEGRAM_TO=1950767646
+Environment=MODEL=openai-codex/gpt-5.4
+Environment=THINKING=low
+ExecStart=/home/openclaw/.openclaw/workspace/skills/operacional/heartbeat-runner/scripts/run_heartbeat.sh
+WorkingDirectory=/home/openclaw/.openclaw/workspace-max
+StandardOutput=journal
+StandardError=journal

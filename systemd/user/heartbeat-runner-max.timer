@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer heartbeat por estado Max
+
+[Timer]
+OnCalendar=*-*-* 08,12,16,20:08:00 America/Sao_Paulo
+Persistent=true
+Unit=heartbeat-runner-max.service
+
+[Install]
+WantedBy=timers.target
