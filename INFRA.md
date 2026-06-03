@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-06-02 (sessão 26 — Atlas gestor + heartbeats Leo/Gabi/Max)
+Última atualização: 2026-06-03 (sessão 27 — Telegram Atlas)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -134,7 +134,7 @@ Agentes ativos (7)
 | Gabi | gabi | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | cognis-ia/gabi-workspace-backup |
 | Max | max | Operacional da Marilia — Bernardelli Ensino | telegram:max (@BE_Max_bot) | ~/.openclaw/workspace-max | cognis-ia/max-workspace-backup |
 | Sofia | sofia | Especialista em cursos/Astron — Bernardelli Ensino | sem canal publico | ~/.openclaw/workspace-sofia | cognis-ia/sofia-workspace-backup |
-| Atlas | atlas | Gestor institucional de agentes, auditoria e lifecycle | sem canal publico | ~/.openclaw/workspace-atlas | pendente: criar repo apos token rotation |
+| Atlas | atlas | Gestor institucional de agentes, auditoria e lifecycle | telegram:atlas (@Cognis_Atlas_bot) | ~/.openclaw/workspace-atlas | pendente: criar repo apos token rotation |
 
 GitHub org: cognis-ia — token no VPS em ~/.openclaw/workspace/.env
 
@@ -1427,3 +1427,15 @@ Capacidades: gerenciar todos os agentes, reiniciar serviços, aprovar pareamento
 - Criar/pushar `cognis-ia/atlas-workspace-backup` depois da rotação/credencial GitHub nova.
 - Testar Lia com aluno real.
 - Avaliar auditoria mensal profunda do Atlas.
+
+## Sessão 27 — 2026-06-03
+
+### Telegram Atlas configurado
+
+- Bot do Atlas configurado no OpenClaw como `telegram:atlas` (`@Cognis_Atlas_bot`).
+- Binding confirmado: agente `atlas` roteia mensagens do accountId `atlas`.
+- `openclaw.json` validado com `openclaw config validate`.
+- Gateway reiniciado e confirmado `active`.
+- Status do canal: `Telegram atlas: enabled, configured, running, disconnected, mode:polling, token:config`.
+- Permissionamento inicial: DM allowlist para Bruno (`1950767646`), mantendo a regra de duas camadas.
+- Observação operacional: em polling, o bot pode aparecer `disconnected` até haver conversa ativa; Bruno precisa abrir o chat do bot no Telegram e enviar `/start` ou primeira mensagem.
