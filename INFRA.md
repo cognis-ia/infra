@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-06-03 (sessão 29 — Auditoria skills Pixel Atlas)
+Última atualização: 2026-06-03 (sessão 30 — Auditoria mensal de skills Atlas)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -167,6 +167,7 @@ OpenClaw cron nativo mantido:
 | ID | Nome | Agente | Horário | Status |
 |----|------|--------|---------|--------|
 | 2afeecdc | atlas-auditoria-agentes-semanal | atlas | segunda 07h | ok |
+| eb77d0d9 | atlas-auditoria-skills-mensal | atlas | dia 1, 08h15 | ok |
 
 Systemd user timers ativos:
 
@@ -1516,3 +1517,42 @@ Capacidades: gerenciar todos os agentes, reiniciar serviços, aprovar pareamento
   - As 7 skills Pixel aprovadas aparecem como visiveis ao modelo.
 - Commit Atlas:
   - `c9d8508 chore: audita skills pixel atlas`
+
+## Sessão 30 — 2026-06-03
+
+### Rotina mensal de auditoria de skills criada
+
+- Skill nova no Atlas:
+  - `~/.openclaw/workspace-atlas/skills/operacional/auditoria-skills/`
+- Script principal:
+  - `~/.openclaw/workspace-atlas/skills/operacional/auditoria-skills/scripts/audit_skills.py`
+- Escopo:
+  - Rocky, Leo, BrIA, Gabi, Max, Sofia e Atlas.
+  - Lia/Hermes fica fora do escopo de agente OpenClaw, exceto observacao quando houver skills proprias.
+- Comportamento:
+  - read-only nos workspaces auditados.
+  - nao le `.env`.
+  - nao corrige automaticamente.
+  - gera relatorios em Atlas e `cerebro-governanca`.
+- Cron OpenClaw criado:
+  - ID: `eb77d0d9-9939-41f3-bb67-2953be50350e`
+  - Nome: `atlas-auditoria-skills-mensal`
+  - Agente: `atlas`
+  - Agenda: `15 8 1 * *` em `America/Sao_Paulo`
+  - Entrega: Telegram Bruno
+  - Proxima execucao: em 28 dias a partir de 2026-06-03
+- Execucao manual validada:
+  - Agentes avaliados: 7/7
+  - Skills avaliadas: 190
+  - Resultado inicial:
+    - APROVADA: 67
+    - APROVADA_COM_AJUSTES: 7
+    - SOMENTE_REFERENCIA: 88
+    - QUARENTENA: 28
+    - REMOVER: 0
+- Relatorios:
+  - `~/.openclaw/workspace-atlas/reports/auditoria-skills-2026-06-03.md`
+  - `~/.openclaw/cerebro-governanca/auditorias/reports/auditoria-skills-2026-06-03.md`
+- Commits:
+  - Atlas: `1712dd7 feat: adiciona auditoria mensal de skills`
+  - Governanca: `87294e6 docs: adiciona auditoria mensal de skills`
