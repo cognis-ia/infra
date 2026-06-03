@@ -1406,6 +1406,7 @@ Capacidades: gerenciar todos os agentes, reiniciar serviços, aprovar pareamento
   - `hermes-lia.service` ativo e rodando.
   - `HUMAN_CONTACT=Bruno` já definido em `~/.hermes/.env`.
   - Pairing desabilitado/allow-all ainda precisa teste com aluno real.
+  - Validado: Lia não tem registro em openclaw agents list; operação canônica é Hermes em ~/.hermes/. Pasta legada ~/.openclaw/workspace-lia preservada, sem ligação com agente/canal/binding OpenClaw.
 - Max:
   - Não há pending Telegram pairing requests.
   - `allowFrom`/`groupAllowFrom` já incluem Bruno e Marilia no `openclaw.json`.
