@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-06-03 (sessão 28 — Atlas base Pixel + Codex CLI)
+Última atualização: 2026-06-03 (sessão 29 — Auditoria skills Pixel Atlas)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -1484,3 +1484,35 @@ Capacidades: gerenciar todos os agentes, reiniciar serviços, aprovar pareamento
   - Missing requirements: 0
 - Commit Atlas:
   - `3529d1a feat: prepara atlas com base pixel e codex cli`
+
+## Sessão 29 — 2026-06-03
+
+### Auditoria das skills Pixel do Atlas
+
+- Escopo auditado: `~/.openclaw/workspace-atlas/skills/pixel-ai-hub/`.
+- Relatório criado:
+  - `~/.openclaw/workspace-atlas/reports/auditoria-skills-pixel-2026-06-03.md`
+- Resultado:
+  - 15 skills Pixel avaliadas.
+  - 7 skills aprovadas e mantidas ativas:
+    - `auditoria-integridade`
+    - `relatorio-evolucao-agentes`
+    - `relatorio-rotinas`
+    - `seguranca-checklist`
+    - `writing-plans`
+    - `executing-plans`
+    - `verification-before-completion`
+  - 7 skills movidas para referencia:
+    - `knowledge/pixel-ai-hub/skills-reference/reference-only/`
+  - 1 skill movida para quarentena:
+    - `knowledge/pixel-ai-hub/skills-reference/quarantine/criar-skill/`
+- Motivo da quarentena/referencia:
+  - skills com `git push`, tokens, `.env`, symlinks, dados sensiveis, Telegram HTTP ou instalacao remota nao devem ficar ativas para Atlas sem adaptacao Cognis.
+- Correcoes aplicadas:
+  - frontmatter valido em `auditoria-integridade`, `relatorio-evolucao-agentes` e `relatorio-rotinas`.
+  - `_index.md` criado em `skills/pixel-ai-hub/`.
+- Validacao:
+  - `openclaw skills check --agent atlas` passou com 0 missing requirements.
+  - As 7 skills Pixel aprovadas aparecem como visiveis ao modelo.
+- Commit Atlas:
+  - `c9d8508 chore: audita skills pixel atlas`
