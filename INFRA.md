@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-06-03 (sessão 31 — Skills voice e youtube-watcher distribuídas)
+Última atualização: 2026-06-08 (sessão 32 — DeepSeek fallback ativado)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -1619,3 +1619,51 @@ Capacidades: gerenciar todos os agentes, reiniciar serviços, aprovar pareamento
 - Observações:
   - Atlas continua sem upstream GitHub até rotação/correção do token GitHub.
   - Arquivos locais/untracked não relacionados em Rocky, BrIA e governança foram preservados sem alteração.
+
+## Sessão 32 — 2026-06-08
+
+### LLM primária OAuth e fallback DeepSeek corrigido
+
+- Arquitetura-alvo confirmada:
+  - Primário: OpenAI via OAuth (`openai-codex`)
+  - Backup: DeepSeek
+- Estado OpenClaw verificado:
+  - Modelo primário dos agentes: `openai/gpt-5.4`
+  - Runtime efetivo: `openai via codex uses openai-codex`
+  - Conta OAuth: `contato@pintandotelas.com.br`
+  - Fallback configurado: `deepseek/deepseek-v4-flash`
+- Problema encontrado:
+  - `DEEPSEEK_API_KEY` existia em `~/.config/systemd/user/openclaw-gateway.service.d/deepseek.conf`.
+  - Porém `openclaw models status` mostrava `Missing auth - deepseek`, porque o auth de modelos usa `~/.openclaw/agents/main/agent/auth-profiles.json` e `Shell env: off`.
+- Correção aplicada:
+  - Backup criado antes da alteração:
+    - `~/.openclaw/agents/main/agent/auth-profiles.json.bak-20260608151158`
+  - Perfil adicionado ao auth store:
+    - `deepseek:default`
+    - `provider=deepseek`
+    - `type=api_key`
+  - `openclaw models status` deixou de reportar `Missing auth - deepseek`.
+- Validação:
+  - Chamada direta validada:
+    - `openclaw infer model run --model deepseek/deepseek-v4-flash --prompt 'Responda apenas: OK_DEEPSEEK' --thinking low`
+    - retorno: `OK_DEEPSEEK`
+- OpenAI API key ainda presente, mas não removida nesta sessão:
+  - `~/.openclaw/openclaw.json`
+  - `~/.openclaw/agents/main/agent/auth-profiles.json` (`openai:default`)
+  - `~/.openclaw/agents/main/agent/codex-home/auth.json`
+  - `~/.openclaw/agents/leo/agent/codex-home/auth.json`
+  - `~/.openclaw/agents/gabi/agent/codex-home/auth.json`
+  - `~/.config/systemd/user/openclaw-gateway.service.d/openai.conf`
+  - `~/.config/systemd/user/openclaw-lia.service.d/openai.conf`
+  - `~/.hermes/.env`
+  - `~/.hermes/auth.json`
+- Decisão operacional:
+  - Não revogar/remover OpenAI API key ainda.
+  - Motivo: ela ainda aparece em consumidores paralelos, incluindo Hermes/Lia, TTS/Whisper/imagem e codex-home legado.
+  - Próxima etapa segura: migrar/remover cada consumidor explicitamente, validando serviço por serviço, e só então revogar a key no painel OpenAI.
+- Hermes/Lia:
+  - `~/.hermes/config.yaml` já aponta `provider: "openai-codex"`.
+  - `~/.hermes/auth.json` contém OAuth `openai-codex` e também credencial `openai-api`; manter até validação completa da Lia sem `OPENAI_API_KEY`.
+- Token Telegram Atlas:
+  - Rotação continua recomendada porque o token foi colado em conversa.
+  - Ação pendente depende de novo token gerado no BotFather.
