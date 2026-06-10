@@ -134,7 +134,7 @@ Agentes ativos OpenClaw (7) + Lia/Hermes
 | Gabi | gabi | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | cognis-ia/gabi-workspace-backup |
 | Max | max | Operacional da Marilia — Bernardelli Ensino | telegram:max (@BE_Max_bot) | ~/.openclaw/workspace-max | cognis-ia/max-workspace-backup |
 | Sofia | sofia | Legado knowledge-base Astron/Bernardelli | sem canal publico | ~/.openclaw/workspace-sofia | cognis-ia/sofia-workspace-backup |
-| Atlas | atlas | Gestor institucional de agentes, auditoria e lifecycle | telegram:atlas (@Cognis_Atlas_bot) | ~/.openclaw/workspace-atlas | pendente: criar repo apos token rotation |
+| Atlas | atlas | Gestor institucional de agentes, auditoria e lifecycle | telegram:atlas (@Cognis_Atlas_bot) | ~/.openclaw/workspace-atlas | cognis-ia/atlas-workspace-backup |
 
 Runtime Hermes ativo fora do OpenClaw:
 
