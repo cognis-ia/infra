@@ -124,7 +124,7 @@ Serviço: systemctl --user restart openclaw-gateway
 
 ---
 
-Agentes ativos (7)
+Agentes ativos OpenClaw (7) + Lia/Hermes
 
 | Agente | ID | Emoji | Papel | Canal Telegram | Workspace | GitHub backup |
 |--------|-----|-------|-------|---------------|-----------|---------------|
@@ -133,8 +133,14 @@ Agentes ativos (7)
 | BrIA | bria | Suporte de alunas — Bernardelli Ensino | telegram:bria (@BE_BrIA_bot) | ~/.openclaw/workspace-bria | cognis-ia/bria-workspace-backup |
 | Gabi | gabi | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | cognis-ia/gabi-workspace-backup |
 | Max | max | Operacional da Marilia — Bernardelli Ensino | telegram:max (@BE_Max_bot) | ~/.openclaw/workspace-max | cognis-ia/max-workspace-backup |
-| Sofia | sofia | Especialista em cursos/Astron — Bernardelli Ensino | sem canal publico | ~/.openclaw/workspace-sofia | cognis-ia/sofia-workspace-backup |
+| Sofia | sofia | Legado knowledge-base Astron/Bernardelli | sem canal publico | ~/.openclaw/workspace-sofia | cognis-ia/sofia-workspace-backup |
 | Atlas | atlas | Gestor institucional de agentes, auditoria e lifecycle | telegram:atlas (@Cognis_Atlas_bot) | ~/.openclaw/workspace-atlas | pendente: criar repo apos token rotation |
+
+Runtime Hermes ativo fora do OpenClaw:
+
+| Agente | Runtime | Papel | Canal Telegram | Base |
+|--------|---------|-------|----------------|------|
+| Lia | Hermes | Suporte vivo Bernardelli | @BE_Lia_Suporte_bot | ~/.hermes |
 
 GitHub org: cognis-ia — token no VPS em ~/.openclaw/workspace/.env
 
@@ -142,7 +148,8 @@ Perfis Bernardelli:
 - BrIA: suporte de alunas, Hotmart, Astron Members — persona Maria, 62 anos
 - Gabi: criativa, conteúdo, voz da marca Jane — mentora de arte
 - Max: operacional, analítica, parceira da Marilia
-- Sofia: curadora especialista dos cursos Astron/Bernardelli; mapeia catalogo, transcricoes, fichas e base de suporte
+- Sofia: legado de catalogo/knowledge base Astron/Bernardelli
+- Lia: suporte vivo Bernardelli via Hermes/Telegram; substitui Sofia nas rotinas operacionais correntes e no fechamento diario
 
 ---
 
@@ -154,9 +161,9 @@ Segundos Cérebros
 | ~/.openclaw/workspace-bria-shared/ | BrIA (isolado) | cognis-ia/bria-shared-backup |
 | ~/.openclaw/cerebro-governanca/ | Constituição/padrões dos 6 agentes | cognis-ia/cerebro-governanca |
 | ~/.openclaw/cerebro-diretoria/ | Sensível/diretoria (Bruno + Jane) | cognis-ia/cerebro-diretoria |
-| ~/.openclaw/cerebro-bernardelli-areas/ | Operacional compartilhado Bernardelli (BrIA/Gabi/Max/Sofia) | cognis-ia/cerebro-bernardelli-areas |
+| ~/.openclaw/cerebro-bernardelli-areas/ | Operacional compartilhado Bernardelli (BrIA/Gabi/Max/Lia; Sofia legado) | cognis-ia/cerebro-bernardelli-areas |
 
-BrIA, Gabi, Max e Sofia usam `cerebro-bernardelli-areas` para conhecimento operacional compartilhado. Rocky e Leo não usam este cérebro no dia a dia.
+BrIA, Gabi, Max e Lia usam `cerebro-bernardelli-areas` para conhecimento operacional compartilhado. Sofia permanece apenas como legado/knowledge-base enquanto existir no stack. Rocky e Leo não usam este cérebro no dia a dia.
 
 ---
 
@@ -178,6 +185,15 @@ Systemd user timers ativos:
 | heartbeat-runner-leo.timer | Leo heartbeat por estado | 08h04, 12h04, 16h04, 20h04 |
 | heartbeat-runner-gabi.timer | Gabi heartbeat por estado | 08h06, 12h06, 16h06, 20h06 |
 | heartbeat-runner-max.timer | Max heartbeat por estado | 08h08, 12h08, 16h08, 20h08 |
+| daily-handoff-rocky.timer | handoff diario Rocky para Atlas | 21h30 |
+| daily-handoff-leo.timer | handoff diario Leo para Atlas | 21h32 |
+| daily-handoff-bria.timer | handoff diario BrIA para Atlas | 21h34 |
+| daily-handoff-gabi.timer | handoff diario Gabi para Atlas | 21h36 |
+| daily-handoff-max.timer | handoff diario Max para Atlas | 21h38 |
+| daily-handoff-lia.timer | handoff diario Lia para Atlas | 21h40 |
+| atlas-daily-consolidation.timer | consolidacao diaria dos handoffs | 22h10 |
+| atlas-daily-distribution.timer | distribuicao diaria do staging | 22h12 |
+| atlas-daily-promotion.timer | promocao canônica com commit/push | 22h14 |
 | backup-workspace-rocky.timer | backup Git Rocky | 23h00 |
 | backup-workspace-leo.timer | backup Git Leo | 23h05 |
 | backup-workspace-bria.timer | backup Git BrIA | 23h10 |
@@ -188,6 +204,14 @@ Systemd user timers ativos:
 | vigiar-markdowns-max.timer | watcher Markdown Max | 20h00 |
 
 Crons nativos antigos/desativados por arquitetura quebrada em sessão isolated: rocky-heartbeat, bria-heartbeat, vigiar-markdowns-gabi/max, rocky-backup-diario.
+
+Pipeline atual de fechamento diario:
+
+1. agentes geram handoff diario por `systemd`;
+2. Atlas consolida os handoffs em `reports/daily/master/`;
+3. Atlas distribui memoria duravel para staging nos destinos canonicos;
+4. Atlas promove o staging para memoria versionada com commit/push nos repos com upstream;
+5. itens sensiveis continuam retidos fora do cerebro operacional, aguardando revisao humana.
 
 ---
 
@@ -223,7 +247,7 @@ HOTMART (vendas)
   Skill: workspace-bria/skills/hotmart-api/SKILL.md
 
 ASTRON MEMBERS (entrega de cursos)
-  Agentes: BrIA, Gabi, Max, Sofia
+  Agentes: BrIA, Gabi, Max, Sofia (legado)
   Club ID: 8194 (Pintando Telas) — 908 alunas
   Credenciais: ASTRON_AM_KEY, ASTRON_AM_SECRET, ASTRON_CLUB_ID=8194
   Base: https://api.astronmembers.com.br/v1.0/
