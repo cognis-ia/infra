@@ -130,7 +130,7 @@ Agentes ativos OpenClaw (7) + Lia/Hermes
 |--------|-----|-------|-------|---------------|-----------|---------------|
 | Rocky | main (default) | Agente pessoal do Bruno | telegram:default (@Rocky_Bruno_bot) | ~/.openclaw/workspace | cognis-ia/clawdio-workspace-backup |
 | Leo | leo | Agente profissional (COGNIS IA) | telegram:leo (@CG_Leo_Bot) | ~/.openclaw/workspace-leo | cognis-ia/leo-workspace-backup |
-| BrIA | bria | Suporte de alunas — Bernardelli Ensino | telegram:bria (@BE_BrIA_bot) | ~/.openclaw/workspace-bria | cognis-ia/bria-workspace-backup |
+| BrIA | bria | Braço operacional Cognis na Bernardelli (tráfego, Hotmart, Astron, Nicochat, relatórios) | telegram:bria (@BE_BrIA_bot) | ~/.openclaw/workspace-bria | cognis-ia/bria-workspace-backup |
 | Gabi | gabi | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | cognis-ia/gabi-workspace-backup |
 | Max | max | Operacional da Marilia — Bernardelli Ensino | telegram:max (@BE_Max_bot) | ~/.openclaw/workspace-max | cognis-ia/max-workspace-backup |
 | Sofia | sofia | Legado knowledge-base Astron/Bernardelli | sem canal publico | ~/.openclaw/workspace-sofia | cognis-ia/sofia-workspace-backup |
@@ -145,7 +145,7 @@ Runtime Hermes ativo fora do OpenClaw:
 GitHub org: cognis-ia — token no VPS em ~/.openclaw/workspace/.env
 
 Perfis Bernardelli:
-- BrIA: suporte de alunas, Hotmart, Astron Members — persona Maria, 62 anos
+- BrIA: braço operacional da Cognis na Bernardelli — tráfego (Meta Ads), Hotmart, Astron Members, Nicochat, criação de relatórios. Reporta a Bruno; não atende aluna direto (essa é a Lia)
 - Gabi: criativa, conteúdo, voz da marca Jane — mentora de arte
 - Max: operacional, analítica, parceira da Marilia
 - Sofia: legado de catalogo/knowledge base Astron/Bernardelli
