@@ -1,0 +1,12 @@
+[Unit]
+Description=Consolidação noturna MVP do cerebro-cognis (Atlas)
+Documentation=https://github.com/cognis-ia/cerebro-cognis/blob/main/empresa/skills/consolidar-estacoes/SKILL.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.openclaw/cerebro-cognis/scripts/consolidar_cognis_mvp.sh
+StandardOutput=journal
+StandardError=journal
+TimeoutStartSec=600

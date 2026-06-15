@@ -1,0 +1,11 @@
+[Unit]
+Description=Trigger diário 02:00 America/Sao_Paulo para consolidação cognis MVP
+Documentation=https://github.com/cognis-ia/cerebro-cognis
+
+[Timer]
+OnCalendar=*-*-* 02:00:00 America/Sao_Paulo
+Persistent=true
+Unit=cognis-consolidar.service
+
+[Install]
+WantedBy=timers.target

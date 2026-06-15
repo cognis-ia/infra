@@ -203,6 +203,7 @@ Systemd user timers ativos:
 | backup-workspace-gabi.timer | backup Git Gabi | 23h15 |
 | backup-workspace-max.timer | backup Git Max | 23h20 |
 | backup-workspace-sofia.timer | backup Git Sofia | 23h25 |
+| cognis-consolidar.timer | **consolidação noturna MVP cerebro-cognis** (Atlas writes canônicos + sync staging→main + Telegram) | 02:00 BRT |
 | vigiar-markdowns-gabi.timer | watcher Markdown Gabi | 20h00 |
 | vigiar-markdowns-max.timer | watcher Markdown Max | 20h00 |
 
