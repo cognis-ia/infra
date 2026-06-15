@@ -160,10 +160,13 @@ Segundos Cérebros
 | ~/.openclaw/workspace-shared/ | Rocky + Leo | cognis-ia/shared-workspace-backup |
 | ~/.openclaw/workspace-bria-shared/ | BrIA (isolado) | cognis-ia/bria-shared-backup |
 | ~/.openclaw/cerebro-governanca/ | Constituição/padrões dos 6 agentes | cognis-ia/cerebro-governanca |
+| ~/.openclaw/cerebro-cognis/ | **Cérebro empresa Cognis IA** (template-empresa Pixel; gestor: Atlas; áreas: infraestrutura, contas-atendidas, produtos) | cognis-ia/cerebro-cognis |
 | ~/.openclaw/cerebro-diretoria/ | Sensível/diretoria (Bruno + Jane) | cognis-ia/cerebro-diretoria |
 | ~/.openclaw/cerebro-bernardelli-areas/ | Operacional compartilhado Bernardelli (BrIA/Gabi/Max/Lia; Sofia legado) | cognis-ia/cerebro-bernardelli-areas |
 
 BrIA, Gabi, Max e Lia usam `cerebro-bernardelli-areas` para conhecimento operacional compartilhado. Sofia permanece apenas como legado/knowledge-base enquanto existir no stack. Rocky e Leo não usam este cérebro no dia a dia.
+
+`cerebro-cognis` é o cérebro empresa Cognis IA, criado em 2026-06-15 a partir do template-empresa-0.1.0 do Pixel AI Hub. Estrutura completa: `agentes/atlas/` (gestor) + `areas/{infraestrutura,contas-atendidas,produtos}/` + `empresa/contexto/` + `empresa/skills/` + `inbox/bruno/` + `onboarding/`. Branch padrão `main`; trabalho diário em `staging`.
 
 ---
 
