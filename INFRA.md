@@ -1695,3 +1695,28 @@ Capacidades: gerenciar todos os agentes, reiniciar serviços, aprovar pareamento
 - Token Telegram Atlas:
   - Rotação continua recomendada porque o token foi colado em conversa.
   - Ação pendente depende de novo token gerado no BotFather.
+
+
+
+---
+
+Skills compartilhadas via `skills.load.extraDirs`
+
+A partir de 2026-06-15, skills transversais (usadas por 2+ agentes) vivem no `cerebro-cognis` e são descobertas por todos os agentes via configuração `skills.load.extraDirs` no `openclaw.json`:
+
+```
+"skills": {
+  "load": {
+    "extraDirs": [
+      "~/.openclaw/cerebro-cognis/empresa/skills",
+      "~/.openclaw/cerebro-cognis/areas/infraestrutura/skills",
+      "~/.openclaw/cerebro-cognis/areas/contas-atendidas/skills",
+      "~/.openclaw/cerebro-cognis/areas/produtos/skills"
+    ]
+  }
+}
+```
+
+Vantagem: zero cópias, zero symlinks, fonte de verdade única. OpenClaw já bloqueia symlinks por segurança (`reason=symlink-escape`); `extraDirs` é o caminho oficial.
+
+Piloto concluído (2026-06-15): voice (7 agentes) e youtube-watcher (4 agentes) migrados de cópias por agente para fonte única em `cerebro-cognis/empresa/skills/`. Próximas migrações: planejamento/*, impeccable, openclaw-guardian, pdf-reports, starter/*, canais/wizard-whatsapp, etc.
