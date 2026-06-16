@@ -1719,4 +1719,17 @@ A partir de 2026-06-15, skills transversais (usadas por 2+ agentes) vivem no `ce
 
 Vantagem: zero cópias, zero symlinks, fonte de verdade única. OpenClaw já bloqueia symlinks por segurança (`reason=symlink-escape`); `extraDirs` é o caminho oficial.
 
-Piloto concluído (2026-06-15): voice (7 agentes) e youtube-watcher (4 agentes) migrados de cópias por agente para fonte única em `cerebro-cognis/empresa/skills/`. Próximas migrações: planejamento/*, impeccable, openclaw-guardian, pdf-reports, starter/*, canais/wizard-whatsapp, etc.
+Migração realizada em 2026-06-15 (25 skills no total):
+
+Lote 1 (piloto): voice (7 agentes), youtube-watcher (4 agentes) → `cerebro-cognis/empresa/skills/`
+
+Lote 2 (5 blocos, 23 skills):
+- Planejamento (5 skills × 5 agentes): brainstorming, writing-plans, executing-plans, verification-before-completion, llm-council → `empresa/skills/planejamento/`
+- Qualidade (4 skills × 4-5 agentes): impeccable, openclaw-guardian, pdf-reports, remembering-conversations → `empresa/skills/`
+- Operacionais infra (4 skills × 5 agentes): cron-resume-wizards, commit-diario-workspace, backup-workspace-github, seguranca-checklist → `areas/infraestrutura/skills/operacional/`
+- Atlas institucional (6 skills): auditoria-agentes, auditoria-skills, agent-lifecycle, codex-cli, ssh-workspace-operator, estrutura-cognis → `areas/infraestrutura/skills/operacional/`
+- APIs cliente Bernardelli (4 skills): astron-members-api, hotmart-api, meta-ads-api, notion-api → `areas/contas-atendidas/skills/`
+
+Pendente: Pixel Starter Kit (10 wizards), social-content/copywriting/email-sequence (Leo), ab-test-setup/copy-editing/marketing-psychology (BrIA), canais/wizard-whatsapp, dispatching-parallel-agents.
+
+Atenção: cron OpenClaw `atlas-auditoria-agentes-semanal` (cron `2afeecdc`) continua usando `auditoria-agentes` — agora descoberta via `extraDirs` em `cerebro-cognis/areas/infraestrutura/skills/operacional/auditoria-agentes/`. Validado pós-migração.
