@@ -1730,6 +1730,21 @@ Lote 2 (5 blocos, 23 skills):
 - Atlas institucional (6 skills): auditoria-agentes, auditoria-skills, agent-lifecycle, codex-cli, ssh-workspace-operator, estrutura-cognis → `areas/infraestrutura/skills/operacional/`
 - APIs cliente Bernardelli (4 skills): astron-members-api, hotmart-api, meta-ads-api, notion-api → `areas/contas-atendidas/skills/`
 
-Pendente: Pixel Starter Kit (10 wizards), social-content/copywriting/email-sequence (Leo), ab-test-setup/copy-editing/marketing-psychology (BrIA), canais/wizard-whatsapp, dispatching-parallel-agents.
+Lote 3 (2026-06-16, 16 skills extras):
+- Pixel Starter Kit (10 wizards × 5 agentes): primeira-vitoria, wizard-aluno, wizard-agente, wizard-workspace, wizard-autonomia, wizard-conectar, wizard-whisper-quick, gera-log-jornada, continuar-jornada, onboarding-checklist → `empresa/skills/starter/`
+- Canais (1 skill × 5 agentes): canais/wizard-whatsapp → `empresa/skills/canais/`
+- Multi-agent (1 skill × 3 agentes): dispatching-parallel-agents → `empresa/skills/`
+- Atlas único (3 skills): relatorio-evolucao-agentes, relatorio-rotinas, auditoria-integridade → `areas/infraestrutura/skills/operacional/`
+- Atlas duplicado removido (4 skills): writing-plans, executing-plans, verification-before-completion, seguranca-checklist (já em outros paths)
+
+Lote 4 - flow Cowork captura (2026-06-16):
+- Skills cognis-capture + cognis-sync em `empresa/skills/`
+- inbox/bruno/ adaptado (README, CLAUDE, _template) para Windows + Cowork
+- sync_via_ssh.sh: roteia git operations via SSH no VPS (zero auth GitHub Windows)
+- .gitattributes para line endings cross-platform
+
+Total migrado: 41 skills consolidadas em cerebro-cognis (de ~190 inventariadas).
+
+Pendente: skills agente-específicas que ainda fazem sentido onde estão (Leo: copywriting/content-strategy/email-sequence/social-content/analytics-tracking/lia-manager; BrIA: ab-test-setup/copy-editing/marketing-psychology; Gabi: marketing-ideas; Rocky pessoal: expense-tracker/fitness-coach/focus-guard/corinthians-jogos/whatsapp-monitor; Sofia legado: astron-course-mapper/course-knowledge-builder).
 
 Atenção: cron OpenClaw `atlas-auditoria-agentes-semanal` (cron `2afeecdc`) continua usando `auditoria-agentes` — agora descoberta via `extraDirs` em `cerebro-cognis/areas/infraestrutura/skills/operacional/auditoria-agentes/`. Validado pós-migração.
