@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-06-08 (sessão 32 — DeepSeek fallback ativado)
+Última atualização: 2026-07-08 (cutover Rocky OpenClaw -> Hermes concluído)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -124,11 +124,11 @@ Serviço: systemctl --user restart openclaw-gateway
 
 ---
 
-Agentes ativos OpenClaw (7) + Lia/Hermes
+Agentes OpenClaw + runtimes Hermes
 
 | Agente | ID | Emoji | Papel | Canal Telegram | Workspace | GitHub backup |
 |--------|-----|-------|-------|---------------|-----------|---------------|
-| Rocky | main (default) | Agente pessoal do Bruno | telegram:default (@Rocky_Bruno_bot) | ~/.openclaw/workspace | cognis-ia/clawdio-workspace-backup |
+| Rocky | main (default) | Legado OpenClaw do Rocky; sem uso canônico após cutover para Hermes em 2026-07-08 | Telegram default desativado | ~/.openclaw/workspace | cognis-ia/clawdio-workspace-backup |
 | Leo | leo | Agente profissional (COGNIS IA) | telegram:leo (@CG_Leo_Bot) | ~/.openclaw/workspace-leo | cognis-ia/leo-workspace-backup |
 | BrIA | bria | Braço operacional Cognis na Bernardelli (tráfego, Hotmart, Astron, Nicochat, relatórios) | telegram:bria (@BE_BrIA_bot) | ~/.openclaw/workspace-bria | cognis-ia/bria-workspace-backup |
 | Gabi | gabi | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | cognis-ia/gabi-workspace-backup |
@@ -140,6 +140,7 @@ Runtime Hermes ativo fora do OpenClaw:
 
 | Agente | Runtime | Papel | Canal Telegram | Base |
 |--------|---------|-------|----------------|------|
+| Rocky | Hermes | Agente pessoal canônico do Bruno a partir de 2026-07-08 | @rocky_bruno_hermes_bot | ~/.hermes |
 | Lia | Hermes | Suporte vivo Bernardelli | @BE_Lia_Suporte_bot | ~/.hermes |
 
 GitHub org: cognis-ia — token no VPS em ~/.openclaw/workspace/.env
@@ -183,12 +184,10 @@ Systemd user timers ativos:
 
 | Timer | Agente/uso | Horário |
 |-------|------------|---------|
-| heartbeat-runner-rocky.timer | Rocky heartbeat por estado | 08h, 12h, 16h, 20h |
 | heartbeat-runner-bria.timer | BrIA heartbeat por estado | 08h02, 12h02, 16h02, 20h02 |
 | heartbeat-runner-leo.timer | Leo heartbeat por estado | 08h04, 12h04, 16h04, 20h04 |
 | heartbeat-runner-gabi.timer | Gabi heartbeat por estado | 08h06, 12h06, 16h06, 20h06 |
 | heartbeat-runner-max.timer | Max heartbeat por estado | 08h08, 12h08, 16h08, 20h08 |
-| daily-handoff-rocky.timer | handoff diario Rocky para Atlas | 21h30 |
 | daily-handoff-leo.timer | handoff diario Leo para Atlas | 21h32 |
 | daily-handoff-bria.timer | handoff diario BrIA para Atlas | 21h34 |
 | daily-handoff-gabi.timer | handoff diario Gabi para Atlas | 21h36 |
@@ -207,7 +206,27 @@ Systemd user timers ativos:
 | vigiar-markdowns-gabi.timer | watcher Markdown Gabi | 20h00 |
 | vigiar-markdowns-max.timer | watcher Markdown Max | 20h00 |
 
+Timers desativados no cutover do Rocky para Hermes em 2026-07-08:
+
+- `heartbeat-runner-rocky.timer`
+- `daily-handoff-rocky.timer`
+- `rocky-revisao-dia.timer`
+- `rocky-focus-checkin.timer`
+
+Permanece ativo por usar o mesmo workspace canônico, independentemente do runtime:
+
+- `backup-workspace-rocky.timer`
+
 Crons nativos antigos/desativados por arquitetura quebrada em sessão isolated: rocky-heartbeat, bria-heartbeat, vigiar-markdowns-gabi/max, rocky-backup-diario.
+
+Cutover Rocky 2026-07-08:
+
+- cron OpenClaw restante do `agent:main` removido (`custodia-filha-check-*`);
+- Rocky-Hermes passa a ler `SOUL.md`, `HEARTBEAT.md`, `MEMORY.md` e `USER.md` canônicos do workspace antigo;
+- workspace do Rocky ganhou pontes locais para:
+  - `segundo-cerebro -> ~/.openclaw/workspace-shared`
+  - `cerebro-cognis -> ~/.openclaw/cerebro-cognis`
+  - `cerebro-governanca -> ~/.openclaw/cerebro-governanca`
 
 Pipeline atual de fechamento diario:
 
