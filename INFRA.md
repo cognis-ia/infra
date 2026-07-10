@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-07-08 (cutover Rocky OpenClaw -> Hermes concluído)
+Última atualização: 2026-07-10 (cutover Leo OpenClaw -> Hermes concluído)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -129,7 +129,6 @@ Agentes OpenClaw + runtimes Hermes
 | Agente | ID | Emoji | Papel | Canal Telegram | Workspace | GitHub backup |
 |--------|-----|-------|-------|---------------|-----------|---------------|
 | Rocky | main (default) | Legado OpenClaw do Rocky; sem uso canônico após cutover para Hermes em 2026-07-08 | Telegram default desativado | ~/.openclaw/workspace | cognis-ia/clawdio-workspace-backup |
-| Leo | leo | Agente profissional (COGNIS IA) | telegram:leo (@CG_Leo_Bot) | ~/.openclaw/workspace-leo | cognis-ia/leo-workspace-backup |
 | BrIA | bria | Braço operacional Cognis na Bernardelli (tráfego, Hotmart, Astron, Nicochat, relatórios) | telegram:bria (@BE_BrIA_bot) | ~/.openclaw/workspace-bria | cognis-ia/bria-workspace-backup |
 | Gabi | gabi | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | cognis-ia/gabi-workspace-backup |
 | Max | max | Operacional da Marilia — Bernardelli Ensino | telegram:max (@BE_Max_bot) | ~/.openclaw/workspace-max | cognis-ia/max-workspace-backup |
@@ -141,6 +140,7 @@ Runtime Hermes ativo fora do OpenClaw:
 | Agente | Runtime | Papel | Canal Telegram | Base |
 |--------|---------|-------|----------------|------|
 | Rocky | Hermes | Agente pessoal canônico do Bruno a partir de 2026-07-08 | @rocky_bruno_hermes_bot | ~/.hermes |
+| Leo | Hermes | Agente profissional COGNIS IA a partir de 2026-07-10 (bot reaproveitado in-place) | @CG_Leo_Bot | ~/.hermes/profiles/leo |
 | Lia | Hermes | Suporte vivo Bernardelli | @BE_Lia_Suporte_bot | ~/.hermes |
 
 GitHub org: cognis-ia — token no VPS em ~/.openclaw/workspace/.env
@@ -206,16 +206,19 @@ Systemd user timers ativos:
 | vigiar-markdowns-gabi.timer | watcher Markdown Gabi | 20h00 |
 | vigiar-markdowns-max.timer | watcher Markdown Max | 20h00 |
 
-Timers desativados no cutover do Rocky para Hermes em 2026-07-08:
+Timers desativados no cutover do Rocky para Hermes em 2026-07-08 e do Leo em 2026-07-10:
 
 - `heartbeat-runner-rocky.timer`
 - `daily-handoff-rocky.timer`
 - `rocky-revisao-dia.timer`
 - `rocky-focus-checkin.timer`
+- `heartbeat-runner-leo.timer`
+- `daily-handoff-leo.timer`
 
-Permanece ativo por usar o mesmo workspace canônico, independentemente do runtime:
+Permanecem ativos por usarem o mesmo workspace canônico, independentemente do runtime:
 
 - `backup-workspace-rocky.timer`
+- `backup-workspace-leo.timer`
 
 Crons nativos antigos/desativados por arquitetura quebrada em sessão isolated: rocky-heartbeat, bria-heartbeat, vigiar-markdowns-gabi/max, rocky-backup-diario.
 
@@ -227,6 +230,17 @@ Cutover Rocky 2026-07-08:
   - `segundo-cerebro -> ~/.openclaw/workspace-shared`
   - `cerebro-cognis -> ~/.openclaw/cerebro-cognis`
   - `cerebro-governanca -> ~/.openclaw/cerebro-governanca`
+
+Cutover Leo 2026-07-10:
+
+- bot `@CG_Leo_Bot` reaproveitado in-place (mesmo token, migração de runtime só);
+- perfil Hermes em `~/.hermes/profiles/leo` criado via `hermes -p leo claw migrate --preset user-data --overwrite --yes`;
+- `auth.json` do perfil clonado do Rocky (mesma conta OpenAI `contato@pintandotelas.com.br`);
+- `config.yaml` ajustado para `model.default: gpt-5.4` + `model.provider: openai-codex` (padrão Rocky);
+- `SOUL.md` e `HEARTBEAT.md` do perfil viraram symlinks para `~/.openclaw/workspace-leo/`;
+- unit `hermes-gateway-leo.service` instalada (clone do Rocky);
+- `openclaw.json`: bloco `channels.telegram.accounts.leo` teve `botToken` removido e `enabled: false` setado; backup em `openclaw.json.bak-before-leo-hermes-cutover-20260710-114000`;
+- `openclaw-gateway.service` continua servindo BrIA, Gabi, Max, Atlas e default (`agent:main` legado); Sofia sem canal (a aposentar).
 
 Pipeline atual de fechamento diario:
 
