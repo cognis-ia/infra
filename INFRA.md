@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-07-10 (cutover Leo OpenClaw -> Hermes concluído)
+Última atualização: 2026-07-10 (cutover completo: Leo, Max, Gabi, BrIA, Atlas -> Hermes; Sofia aposentada)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -129,11 +129,6 @@ Agentes OpenClaw + runtimes Hermes
 | Agente | ID | Emoji | Papel | Canal Telegram | Workspace | GitHub backup |
 |--------|-----|-------|-------|---------------|-----------|---------------|
 | Rocky | main (default) | Legado OpenClaw do Rocky; sem uso canônico após cutover para Hermes em 2026-07-08 | Telegram default desativado | ~/.openclaw/workspace | cognis-ia/clawdio-workspace-backup |
-| BrIA | bria | Braço operacional Cognis na Bernardelli (tráfego, Hotmart, Astron, Nicochat, relatórios) | telegram:bria (@BE_BrIA_bot) | ~/.openclaw/workspace-bria | cognis-ia/bria-workspace-backup |
-| Gabi | gabi | Criativa/estratégica da Jane — Bernardelli Ensino | telegram:gabi (@BE_Gabi_bot) | ~/.openclaw/workspace-gabi | cognis-ia/gabi-workspace-backup |
-| Max | max | Operacional da Marilia — Bernardelli Ensino | telegram:max (@BE_Max_bot) | ~/.openclaw/workspace-max | cognis-ia/max-workspace-backup |
-| Sofia | sofia | Legado knowledge-base Astron/Bernardelli | sem canal publico | ~/.openclaw/workspace-sofia | cognis-ia/sofia-workspace-backup |
-| Atlas | atlas | Gestor institucional de agentes, auditoria e lifecycle | telegram:atlas (@Cognis_Atlas_bot) | ~/.openclaw/workspace-atlas | cognis-ia/atlas-workspace-backup |
 
 Runtime Hermes ativo fora do OpenClaw:
 
@@ -141,6 +136,10 @@ Runtime Hermes ativo fora do OpenClaw:
 |--------|---------|-------|----------------|------|
 | Rocky | Hermes | Agente pessoal canônico do Bruno a partir de 2026-07-08 | @rocky_bruno_hermes_bot | ~/.hermes |
 | Leo | Hermes | Agente profissional COGNIS IA a partir de 2026-07-10 (bot reaproveitado in-place) | @CG_Leo_Bot | ~/.hermes/profiles/leo |
+| Max | Hermes | Operacional da Marilia — Bernardelli Ensino (cutover 2026-07-10, bot in-place) | @BE_Max_bot | ~/.hermes/profiles/max |
+| Gabi | Hermes | Criativa/estratégica da Jane — Bernardelli Ensino (cutover 2026-07-10, bot in-place) | @BE_Gabi_bot | ~/.hermes/profiles/gabi |
+| BrIA | Hermes | Braço operacional Cognis na Bernardelli (cutover 2026-07-10, bot in-place) | @BE_BrIA_bot | ~/.hermes/profiles/bria |
+| Atlas | Hermes | Gestor do cerebro-cognis (cutover 2026-07-10, bot in-place) | @Cognis_Atlas_bot | ~/.hermes/profiles/atlas |
 | Lia | Hermes | Suporte vivo Bernardelli | @BE_Lia_Suporte_bot | ~/.hermes |
 
 GitHub org: cognis-ia — token no VPS em ~/.openclaw/workspace/.env
@@ -206,7 +205,7 @@ Systemd user timers ativos:
 | vigiar-markdowns-gabi.timer | watcher Markdown Gabi | 20h00 |
 | vigiar-markdowns-max.timer | watcher Markdown Max | 20h00 |
 
-Timers desativados no cutover do Rocky para Hermes em 2026-07-08 e do Leo em 2026-07-10:
+Timers desativados nos cutovers Rocky (2026-07-08) + Leo/Max/Gabi/BrIA (2026-07-10):
 
 - `heartbeat-runner-rocky.timer`
 - `daily-handoff-rocky.timer`
