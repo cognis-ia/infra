@@ -213,11 +213,18 @@ Timers desativados nos cutovers Rocky (2026-07-08) + Leo/Max/Gabi/BrIA (2026-07-
 - `rocky-focus-checkin.timer`
 - `heartbeat-runner-leo.timer`
 - `daily-handoff-leo.timer`
+- `heartbeat-runner-max.timer` / `daily-handoff-max.timer` / `vigiar-markdowns-max.timer`
+- `heartbeat-runner-gabi.timer` / `daily-handoff-gabi.timer` / `vigiar-markdowns-gabi.timer`
+- `heartbeat-runner-bria.timer` / `daily-handoff-bria.timer` / `bria-july-campaign-monitor.timer`
 
 Permanecem ativos por usarem o mesmo workspace canônico, independentemente do runtime:
 
 - `backup-workspace-rocky.timer`
 - `backup-workspace-leo.timer`
+- `backup-workspace-max.timer`
+- `backup-workspace-gabi.timer`
+- `backup-workspace-bria.timer`
+- `backup-workspace-sofia.timer` (Sofia aposentada; backup preservado por histórico)
 
 Crons nativos antigos/desativados por arquitetura quebrada em sessão isolated: rocky-heartbeat, bria-heartbeat, vigiar-markdowns-gabi/max, rocky-backup-diario.
 
@@ -240,6 +247,26 @@ Cutover Leo 2026-07-10:
 - unit `hermes-gateway-leo.service` instalada (clone do Rocky);
 - `openclaw.json`: bloco `channels.telegram.accounts.leo` teve `botToken` removido e `enabled: false` setado; backup em `openclaw.json.bak-before-leo-hermes-cutover-20260710-114000`;
 - `openclaw-gateway.service` continua servindo BrIA, Gabi, Max, Atlas e default (`agent:main` legado); Sofia sem canal (a aposentar).
+
+Cutover Max / Gabi / BrIA / Atlas 2026-07-10 (em sequência, mesmo padrão):
+
+- Todos os bots (@BE_Max_bot, @BE_Gabi_bot, @BE_BrIA_bot, @Cognis_Atlas_bot) reaproveitados in-place: mesmo token, migração de runtime só.
+- Receita por agente: `hermes profile create <a>` -> `hermes -p <a> claw migrate --preset user-data --overwrite --yes` -> ajustar config.yaml para model.default=gpt-5.4 + model.provider=openai-codex -> copiar auth.json do Rocky -> criar .env com TELEGRAM_BOT_TOKEN, TELEGRAM_ALLOWED_USERS e TELEGRAM_HOME_CHANNEL -> symlinks SOUL.md e HEARTBEAT.md para workspace-<a> canônico -> clonar unit systemd rocky->'<a>' -> daemon-reload e enable --now.
+- openclaw.json: bloco channels.telegram.accounts.<a> teve botToken removido e enabled=false setado; hot-reload nativo do gateway aplicou sem restart. Backups nomeados openclaw.json.bak-before-<a>-hermes-cutover-<ts>.
+- openclaw-gateway.service ficou sem servir nenhum bot Telegram (todos accounts enabled=false). Ele foi acidentalmente disabled no commit anterior; re-enabled em 2026-07-10 12:11 mas mantido inactive por não ter carga. Bruno decide quando desligar de vez com systemctl --user disable --now openclaw-gateway.service. Timers do Atlas (atlas-*, cognis-consolidar) usam a CLI openclaw diretamente, não o gateway.
+- Sofia aposentada: sem bot Telegram, workspace-sofia congelado, backup-workspace-sofia.timer preservado pra histórico. Rotinas operacionais que Sofia cobria já migraram pra Lia.
+
+Estado dos gateways Hermes ao final do 2026-07-10:
+
+| Service | Agente | Perfil |
+|---------|--------|--------|
+| hermes-gateway-rocky.service | Rocky | ~/.hermes/profiles/rocky |
+| hermes-gateway-leo.service | Leo | ~/.hermes/profiles/leo |
+| hermes-gateway-max.service | Max | ~/.hermes/profiles/max |
+| hermes-gateway-gabi.service | Gabi | ~/.hermes/profiles/gabi |
+| hermes-gateway-bria.service | BrIA | ~/.hermes/profiles/bria |
+| hermes-gateway-atlas.service | Atlas | ~/.hermes/profiles/atlas |
+| hermes-lia.service | Lia | ~/.hermes (default) |
 
 Pipeline atual de fechamento diario:
 
