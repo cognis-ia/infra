@@ -216,7 +216,6 @@ Timers desativados nos cutovers Rocky (2026-07-08) + Leo/Max/Gabi/BrIA (2026-07-
 - `daily-handoff-leo.timer`
 - `heartbeat-runner-max.timer` / `daily-handoff-max.timer` / `vigiar-markdowns-max.timer`
 - `heartbeat-runner-gabi.timer` / `daily-handoff-gabi.timer` / `vigiar-markdowns-gabi.timer`
-- `daily-handoff-bria.timer` (handoff antigo ainda não reativado; heartbeat e monitor de julho já são Hermes nativos)
 
 Permanecem ativos por usarem o mesmo workspace canônico, independentemente do runtime:
 
@@ -277,7 +276,8 @@ Finalização integral da BrIA em 2026-07-13:
 - skills nativas: `~/.hermes/profiles/bria/skills/bernardelli/{hotmart-api,meta-ads-api,astron-members-api}`;
 - scripts de recuperação Nicochat preservados em `workspace/scripts/nicochat-recovery/`; não havia API Nicochat live configurada no runtime anterior, apenas geração de CSV para importação manual;
 - `approvals.mode: smart`, mantendo confirmação para risco real sem interromper análises benignas;
-- heartbeat, monitor de campanha e backup reativados com binários/caminhos Hermes;
+- heartbeat, monitor de campanha, handoff diário e backup reativados com binários/caminhos Hermes;
+- handoff é gerado em `workspace/handoffs/atlas/` e entregue também no diretório de consolidação do Atlas enquanto a migração institucional dele não elimina esse caminho de compatibilidade;
 - validação real: Telegram enviado pelo `hermes send`, Hotmart autenticada e consultada pela própria BrIA, Meta Ads conta ativa em BRL, Astron respondendo, monitor de julho e heartbeat concluídos com sucesso;
 - backup Git do novo workspace: commit `79c95d7` em `cognis-ia/bria-workspace-backup`;
 - legado `~/.openclaw/workspace-bria` preservado apenas para rollback, sem serviço ativo dependente.
