@@ -275,6 +275,7 @@ Finalização integral da BrIA em 2026-07-13:
 - `SOUL.md`, `HEARTBEAT.md`, `AGENTS.md`, identidade e memória deixaram de ser symlinks para o OpenClaw;
 - credenciais Hotmart, Meta Ads e Astron migradas para `~/.hermes/profiles/bria/.env` com permissão `0600`;
 - skills nativas: `~/.hermes/profiles/bria/skills/bernardelli/{hotmart-api,meta-ads-api,astron-members-api}`;
+- scripts de recuperação Nicochat preservados em `workspace/scripts/nicochat-recovery/`; não havia API Nicochat live configurada no runtime anterior, apenas geração de CSV para importação manual;
 - `approvals.mode: smart`, mantendo confirmação para risco real sem interromper análises benignas;
 - heartbeat, monitor de campanha e backup reativados com binários/caminhos Hermes;
 - validação real: Telegram enviado pelo `hermes send`, Hotmart autenticada e consultada pela própria BrIA, Meta Ads conta ativa em BRL, Astron respondendo, monitor de julho e heartbeat concluídos com sucesso;
