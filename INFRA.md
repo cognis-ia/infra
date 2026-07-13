@@ -1,6 +1,6 @@
 INFRA — OpenClaw (Bruno Eduardo)
 Arquivo único e canônico. Atualizar ao final de cada sessão — nunca criar um novo.
-Última atualização: 2026-07-10 (cutover completo: Leo, Max, Gabi, BrIA, Atlas -> Hermes; Sofia aposentada)
+Última atualização: 2026-07-13 (BrIA finalizada em runtime Hermes nativo, com workspace, skills, APIs e automações validados)
 
 Como iniciar uma nova sessão
 Selecione a pasta D:\COGNIS\Curso Openclaw no Cowork — o CLAUDE.md dispara
@@ -138,7 +138,7 @@ Runtime Hermes ativo fora do OpenClaw:
 | Leo | Hermes | Agente profissional COGNIS IA a partir de 2026-07-10 (bot reaproveitado in-place) | @CG_Leo_Bot | ~/.hermes/profiles/leo |
 | Max | Hermes | Operacional da Marilia — Bernardelli Ensino (cutover 2026-07-10, bot in-place) | @BE_Max_bot | ~/.hermes/profiles/max |
 | Gabi | Hermes | Criativa/estratégica da Jane — Bernardelli Ensino (cutover 2026-07-10, bot in-place) | @BE_Gabi_bot | ~/.hermes/profiles/gabi |
-| BrIA | Hermes | Braço operacional Cognis na Bernardelli (cutover 2026-07-10, bot in-place) | @BE_BrIA_bot | ~/.hermes/profiles/bria |
+| BrIA | Hermes | Braço operacional Cognis na Bernardelli (cutover 2026-07-10; migração integral validada 2026-07-13) | @BE_BrIA_bot | ~/.hermes/profiles/bria |
 | Atlas | Hermes | Gestor do cerebro-cognis (cutover 2026-07-10, bot in-place) | @Cognis_Atlas_bot | ~/.hermes/profiles/atlas |
 | Lia | Hermes | Suporte vivo Bernardelli | @BE_Lia_Suporte_bot | ~/.hermes |
 
@@ -184,6 +184,7 @@ Systemd user timers ativos:
 | Timer | Agente/uso | Horário |
 |-------|------------|---------|
 | heartbeat-runner-bria.timer | BrIA heartbeat por estado | 08h02, 12h02, 16h02, 20h02 |
+| bria-july-campaign-monitor.timer | BrIA monitor Meta/Hotmart da campanha de julho via Hermes | 08h, 10h, 12h, 14h, 16h, 18h, 20h, 22h |
 | heartbeat-runner-leo.timer | Leo heartbeat por estado | 08h04, 12h04, 16h04, 20h04 |
 | heartbeat-runner-gabi.timer | Gabi heartbeat por estado | 08h06, 12h06, 16h06, 20h06 |
 | heartbeat-runner-max.timer | Max heartbeat por estado | 08h08, 12h08, 16h08, 20h08 |
@@ -215,7 +216,7 @@ Timers desativados nos cutovers Rocky (2026-07-08) + Leo/Max/Gabi/BrIA (2026-07-
 - `daily-handoff-leo.timer`
 - `heartbeat-runner-max.timer` / `daily-handoff-max.timer` / `vigiar-markdowns-max.timer`
 - `heartbeat-runner-gabi.timer` / `daily-handoff-gabi.timer` / `vigiar-markdowns-gabi.timer`
-- `heartbeat-runner-bria.timer` / `daily-handoff-bria.timer` / `bria-july-campaign-monitor.timer`
+- `daily-handoff-bria.timer` (handoff antigo ainda não reativado; heartbeat e monitor de julho já são Hermes nativos)
 
 Permanecem ativos por usarem o mesmo workspace canônico, independentemente do runtime:
 
@@ -223,7 +224,7 @@ Permanecem ativos por usarem o mesmo workspace canônico, independentemente do r
 - `backup-workspace-leo.timer`
 - `backup-workspace-max.timer`
 - `backup-workspace-gabi.timer`
-- `backup-workspace-bria.timer`
+- `backup-workspace-bria.timer` (desde 2026-07-13 salva `~/.hermes/profiles/bria/workspace`)
 - `backup-workspace-sofia.timer` (Sofia aposentada; backup preservado por histórico)
 
 Crons nativos antigos/desativados por arquitetura quebrada em sessão isolated: rocky-heartbeat, bria-heartbeat, vigiar-markdowns-gabi/max, rocky-backup-diario.
@@ -268,6 +269,18 @@ Estado dos gateways Hermes ao final do 2026-07-10:
 | hermes-gateway-atlas.service | Atlas | ~/.hermes/profiles/atlas |
 | hermes-lia.service | Lia | ~/.hermes (default) |
 
+Finalização integral da BrIA em 2026-07-13:
+
+- workspace canônico: `~/.hermes/profiles/bria/workspace`;
+- `SOUL.md`, `HEARTBEAT.md`, `AGENTS.md`, identidade e memória deixaram de ser symlinks para o OpenClaw;
+- credenciais Hotmart, Meta Ads e Astron migradas para `~/.hermes/profiles/bria/.env` com permissão `0600`;
+- skills nativas: `~/.hermes/profiles/bria/skills/bernardelli/{hotmart-api,meta-ads-api,astron-members-api}`;
+- `approvals.mode: smart`, mantendo confirmação para risco real sem interromper análises benignas;
+- heartbeat, monitor de campanha e backup reativados com binários/caminhos Hermes;
+- validação real: Telegram enviado pelo `hermes send`, Hotmart autenticada e consultada pela própria BrIA, Meta Ads conta ativa em BRL, Astron respondendo, monitor de julho e heartbeat concluídos com sucesso;
+- backup Git do novo workspace: commit `79c95d7` em `cognis-ia/bria-workspace-backup`;
+- legado `~/.openclaw/workspace-bria` preservado apenas para rollback, sem serviço ativo dependente.
+
 Pipeline atual de fechamento diario:
 
 1. agentes geram handoff diario por `systemd`;
@@ -307,7 +320,7 @@ HOTMART (vendas)
   Credenciais: HOTMART_CLIENT_ID, HOTMART_CLIENT_SECRET, HOTMART_BASIC_TOKEN
   OAuth: https://api-sec-vlc.hotmart.com/security/oauth/token
   API: https://api-hot-connect.hotmart.com/
-  Skill: workspace-bria/skills/hotmart-api/SKILL.md
+  BrIA/Hermes: ~/.hermes/profiles/bria/skills/bernardelli/hotmart-api/SKILL.md
 
 ASTRON MEMBERS (entrega de cursos)
   Agentes: BrIA, Gabi, Max, Sofia (legado)
@@ -315,7 +328,8 @@ ASTRON MEMBERS (entrega de cursos)
   Credenciais: ASTRON_AM_KEY, ASTRON_AM_SECRET, ASTRON_CLUB_ID=8194
   Base: https://api.astronmembers.com.br/v1.0/
   Auth: Basic HTTP (user=AM_KEY senha=AM_SECRET)
-  Skill: workspace-max/skills/astron-members-api/SKILL.md
+  BrIA/Hermes: ~/.hermes/profiles/bria/skills/bernardelli/astron-members-api/SKILL.md
+  Legado OpenClaw: workspace-max/skills/astron-members-api/SKILL.md
   Sofia: workspace-sofia/skills/astron-course-mapper/SKILL.md + scripts/astron_discover.py
   CRITICO: usar urllib Python, nunca curl. Parâmetros em query string, nunca no path.
 
@@ -330,7 +344,8 @@ META ADS
   Agentes: BrIA, Gabi, Max, Rocky, Leo
   Credenciais: META_ACCESS_TOKEN, META_AD_ACCOUNT_ID=10201604992032651
   Base: https://graph.facebook.com/v21.0/
-  Skill: workspace-leo/skills/meta-ads-api/SKILL.md
+  BrIA/Hermes: ~/.hermes/profiles/bria/skills/bernardelli/meta-ads-api/SKILL.md
+  Legado OpenClaw: workspace-leo/skills/meta-ads-api/SKILL.md
 
 NOTION (workspace Trabalho - 2025 — Jane + Marilia)
   Agentes: Gabi, Max
@@ -353,7 +368,7 @@ Leo: content-strategy, copywriting, social-content, email-sequence,
 BrIA: copy-editing, email-sequence, marketing-psychology, openclaw-guardian,
       remembering-conversations, hotmart-api, astron-members-api, meta-ads-api,
       analytics-tracking, ab-test-setup, content-strategy, dispatching-parallel-agents, pdf-reports
-  exec-approvals bria.ask = "on-miss" (crons rodam sem aprovacao, novos comandos pedem)
+  Hermes approvals.mode = "smart" (baixo risco autoaprovado; risco real escala para confirmação)
 Gabi: copywriting, social-content, content-strategy, marketing-ideas,
       marketing-psychology, openclaw-guardian, remembering-conversations,
       hotmart-api, astron-members-api, meta-ads-api, notion-api, pdf-reports
